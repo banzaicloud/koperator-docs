@@ -3,7 +3,10 @@ title: Provisioning Kafka Topics
 shorttitle: Kafka topics
 ---
 
-Creating kafka topics can be done either directly against the cluster with command line utilities, or via the `KafkaTopic` CRD.
+You can create Kafka topics either:
+
+- directly against the cluster with command line utilities, or
+- via the `KafkaTopic` CRD.
 
 Below is an example `KafkaTopic` CR.
 
@@ -28,7 +31,7 @@ spec:
     "cleanup.policy": "delete"
 ```
 
-You can apply the above topic with kubectl
+You can apply the above topic with kubectl:
 
 ```shell
 banzai@cloud:~$ kubectl apply -n kafka -f topic.yaml
@@ -36,11 +39,12 @@ banzai@cloud:~$ kubectl apply -n kafka -f topic.yaml
 kafkatopic.kafka.banzaicloud.io/example-topic created
 ```
 
-If you want to update the configuration of the topic after it's been created you can edit the manifest
-and run `kubectl apply` again, or you can run `kubectl edit -n kafka kafkatopic example-topic` and then update
-the configuration in the editor that gets spawned.
+If you want to update the configuration of the topic after it's been created, you can either:
 
-You can increase the partition count for a topic the same way, or for a one-liner using `patch`:
+- edit the manifest and run `kubectl apply` again, or 
+- run `kubectl edit -n kafka kafkatopic example-topic` and then update the configuration in the editor that gets spawned.
+
+You can increase the partition count for a topic the same way, or by running the following one-liner using `patch`:
 
 ```shell
 banzai@cloud:~$ kubectl patch -n kafka kafkatopic example-topic --patch '{"spec": {"partitions": 5}}' --type=merge
@@ -48,7 +52,4 @@ banzai@cloud:~$ kubectl patch -n kafka kafkatopic example-topic --patch '{"spec"
 kafkatopic.kafka.banzaicloud.io/example-topic patched
 ```
 
-Operator created Topics are not enforced in any way. From the Kubernetes perspective Kafka Topics are external resources.
-We removed the logic which periodically checks the topics state from the operator in release 0.7.0. 
-So the operator will not receive any event in case of modification.
-It can have unwanted side effects. E.g. if the user deletes a topic created through the CR the operator will recreate it once an update happens on the related CR.
+> Note: Topics created by the Kafka operator are not enforced in any way. From the Kubernetes perspective, Kafka Topics are external resources.
