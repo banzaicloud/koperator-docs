@@ -1,5 +1,7 @@
-# Test provisioned Kafka Cluster
-
+---
+title: Test provisioned Kafka Cluster
+shorttitle: Test your cluster
+---
 
 ## Create Topic
 

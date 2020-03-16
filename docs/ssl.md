@@ -1,8 +1,11 @@
-## Securing Kafka With SSL
+---
+title: Securing Kafka With SSL
+shorttitle: SSL
+---
 
 The `kafka-operator` makes securing your Kafka cluster with SSL simple.
 You may provide your own certificates, or instruct the operator to create them for you
-from your cluster configuration:
+from your cluster configuration.
 
 Below is an example listeners configuration for SSL:
 

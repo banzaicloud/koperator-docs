@@ -1,4 +1,7 @@
-## Provisioning Kafka Topics
+---
+title: Provisioning Kafka Topics
+shorttitle: Kafka topics
+---
 
 Creating kafka topics can be done either directly against the cluster with command line utilities, or via the `KafkaTopic` CRD.
 
