@@ -1,7 +1,9 @@
-This Readme is intended to help to setup the environment for the Kafka Performance Test using Amazon PKE, GKE, EKS.
+---
+title: Benchmarking Kafka
+---
 
-We are going to use Banzai Cloud CLI to create the cluster:
-```
+How to setup the environment for the Kafka Performance Test using Amazon PKE, GKE, EKS.
+
 brew install banzaicloud/tap/banzai-cli
 banzai login
 ```
