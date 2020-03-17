@@ -54,7 +54,7 @@ The operator fully automates Kafka's SSL support.
 The operator can provision the required secrets and certificates for you, or you can provide your own.
 The Pipeline platform is capable of automating this process, as well.
 
-![SSL support for Kafka](img/kafka-ssl.png)
+![SSL support for Kafka](../img/kafka-ssl.png)
 
 #### Monitoring via Prometheus
 
