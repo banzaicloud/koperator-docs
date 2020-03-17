@@ -1,5 +1,6 @@
 ---
 title: Features
+weight: 200
 ---
 
 {{< contents >}}
