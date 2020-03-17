@@ -4,68 +4,73 @@ shorttitle: Install
 weight: 10
 ---
 
+{{< contents >}}
+
 The operator installs the 2.4.0 version of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.12.0+.
 
 > The operator supports Kafka 2.0+
 
-As a pre-requisite it needs a Kubernetes cluster (you can create one using [Pipeline](https://github.com/banzaicloud/pipeline)). Also, Kafka requires Zookeeper so you need to first have a Zookeeper cluster if you don't already have one.
+## Prerequisites
 
-The operator also uses `cert-manager` for issuing certificates to users and brokers, so you'll need to have it setup in case you haven't already.
+- A Kubernetes cluster. You can create one using the [Banzai Cloud Pipeline platform](/products/pipeline), or any other tool of your choice.
+- Kafka requires Zookeeper, so you need to first have a Zookeeper cluster if you don't already have one.
+- The Kafka operator uses `cert-manager` for issuing certificates to users and brokers, so you'll need to have it setup in case you haven't already.
 
-> We believe in the `separation of concerns` principle, thus the Kafka operator does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes please try it with [Pipeline](https://github.com/banzaicloud/pipeline).
+> We believe in the `separation of concerns` principle, thus the Kafka operator does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try the [Banzai Cloud Pipeline platform](/products/pipeline).
 
-#### Install the operator and all requirements using Supertubes
+## Install Kafka operator and all requirements using Supertubes
 
-Go grab and install the [Supertubes](https://banzaicloud.com/docs/supertubes/overview/) CLI tool.
+1. Download the [Supertubes](/docs/supertubes/overview/) CLI tool.
 
-```bash
-curl https://getsupertubes.sh | sh
-```
+    ```bash
+    curl https://getsupertubes.sh | sh
+    ```
 
-Run the following command:
+1. Run the following command:
 
-```bash
-supertubes install -a
-```
+    ```bash
+    supertubes install -a
+    ```
 
-#### Install the operator and the requirements independently
+## Install Kafka operator and the requirements independently
 
-##### Install cert-manager
+### Install cert-manager
 
-> Cert-manager 0.11.x introduced some API changes. We did not want to drop the 0.10.x line support so we decided to create two releases for the Operator.
+Cert-manager version 0.11.x introduced some API changes:
 
-- Operator 0.8.x line supports cert-manager 0.11.x
-- Operator 0.7.x line supports cert-manager 0.10.x
+- Kafka operator 0.8.x and newer supports cert-manager 0.11.x
+- Kafka operator 0.7.x supports cert-manager 0.10.x
 
-Install cert-manager and CustomResourceDefinitions
+Install cert-manager and CustomResourceDefinitions using one of the following methods:
 
-```bash
-# Install the CustomResourceDefinitions and cert-manager itself
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.11.0/cert-manager.yaml
-```
+- Directly:
 
-Or install with helm
+    ```bash
+    # Install the CustomResourceDefinitions and cert-manager itself
+    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.11.0/cert-manager.yaml
+    ```
 
-```bash
-# Install CustomResourceDefinitions first
-kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
+- Using Helm:
 
-# Add the jetstack helm repo
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
+    ```bash
+    # Install CustomResourceDefinitions first
+    kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
 
-# Install cert-manager into the cluster
-# Using helm3
-# You have to create the namespace before executing following command
-helm install cert-manager --namespace cert-manager --version v0.11.0 jetstack/cert-manager
-# Using previous versions of helm
-helm install --name cert-manager --namespace cert-manager --version v0.11.0 jetstack/cert-manager
-```
+    # Add the jetstack helm repo
+    helm repo add jetstack https://charts.jetstack.io
+    helm repo update
 
-##### Install Zookeeper
+    # Install cert-manager into the cluster
+    # Using helm3
+    # You have to create the namespace before executing following command
+    helm install cert-manager --namespace cert-manager --version v0.11.0 jetstack/cert-manager
+    # Using previous versions of helm
+    helm install --name cert-manager --namespace cert-manager --version v0.11.0 jetstack/cert-manager
+    ```
 
-To install Zookeeper we recommend using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
-You can deploy Zookeeper by using the Helm chart which can be found here [chart](https://github.com/pravega/zookeeper-operator/tree/master/charts/zookeeper-operator).
+### Install Zookeeper
+
+To install Zookeeper we recommend using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator). You can deploy Zookeeper by using this [Helm chart](https://github.com/pravega/zookeeper-operator/tree/master/charts/zookeeper-operator).
 
 ```bash
 # Deprecated, please use Pravega's helm chart
@@ -87,7 +92,7 @@ spec:
 EOF
 ```
 
-##### Install Prometheus-operator
+### Install Prometheus-operator
 
 Install the Operator and CustomResourceDefinitions to the `default` namespace
 
@@ -130,9 +135,16 @@ helm install --name test --namespace default stable/prometheus-operator \
 --set prometheus.enabled=false
 ```
 
-##### Install Operator with Kustomize
+### Install the Kafka operator
 
-We recommend to use a **custom StorageClass** to leverage the volume binding mode `WaitForFirstConsumer`
+If you want to install the Kafka operator separately, use one of the following methods:
+
+- [Install the Kafka operator with Kustomize](#kafka-operator-kustomize)
+- [Install the Kafka operator with Helm](#kafka-operator-helm)
+
+#### Install the Kafka operator with Kustomize {#kafka-operator-kustomize}
+
+We recommend using a **custom StorageClass** to leverage the volume binding mode `WaitForFirstConsumer`
 
 ```bash
 apiVersion: storage.k8s.io/v1
@@ -159,33 +171,32 @@ kubectl create -n kafka -f config/samples/simplekafkacluster.yaml
 kubectl create -n default -f config/samples/kafkacluster-prometheus.yaml
 ```
 
-> In this case you have to install Prometheus with proper configuration if you want the Kafka-Operator to react to alerts. Again, if you need Prometheus and would like to have a fully automated and managed experience of Apache Kafka on Kubernetes please try it with [Pipeline](https://github.com/banzaicloud/pipeline).
+> In this case you have to install Prometheus with proper configuration if you want the Kafka operator to react to alerts. Again, if you need Prometheus and would like to have a fully automated and managed experience of Apache Kafka on Kubernetes please try it with the [Banzai Cloud Pipeline platform](/products/pipeline).
 
-##### Easy way: installing with Helm
+### Install the Kafka operator with Helm {#kafka-operator-helm}
 
-Alternatively, if you are using Helm, you can deploy the operator using a Helm chart [Helm chart](https://github.com/banzaicloud/kafka-operator/tree/master/charts):
+You can deploy the Kafka operator using a Helm chart [Helm chart](https://github.com/banzaicloud/kafka-operator/tree/master/charts) by running the following commands.
 
-> To install the 0.7.x version of the operator use `helm install --name=kafka-operator --namespace=kafka --set operator.image.tag=0.7.x banzaicloud-stable/kafka-operator`
+- If you are using cert-manager 0.10.x and want to install the 0.7.x version of the operator, run the following command: `helm install --name=kafka-operator --namespace=kafka --set operator.image.tag=0.7.x banzaicloud-stable/kafka-operator`
+- Otherwise, run the following commands:
 
-```bash
-helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
-# Using helm3
-# You have to create the namespace before executing following command
-helm install kafka-operator --namespace=kafka banzaicloud-stable/kafka-operator
-# Using previous versions of helm
-helm install --name=kafka-operator --namespace=kafka banzaicloud-stable/kafka-operator
-# Add your zookeeper svc name to the configuration
-kubectl create -n kafka -f config/samples/simplekafkacluster.yaml
-# If prometheus operator installed create the ServiceMonitors
-kubectl create -n kafka -f config/samples/kafkacluster-prometheus.yaml
-```
+    ```bash
+    helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
+    # Using helm3
+    # You have to create the namespace before executing following command
+    helm install kafka-operator --namespace=kafka banzaicloud-stable/kafka-operator
+    # Using previous versions of helm
+    helm install --name=kafka-operator --namespace=kafka banzaicloud-stable/kafka-operator
+    # Add your zookeeper svc name to the configuration
+    kubectl create -n kafka -f config/samples/simplekafkacluster.yaml
+    # If prometheus operator installed create the ServiceMonitors
+    kubectl create -n kafka -f config/samples/kafkacluster-prometheus.yaml
+    ```
 
-> In this case Prometheus will be installed and configured properly for the Kafka-Operator.
+    In this case Prometheus will be installed and configured properly for the Kafka operator.
 
 ## Test Your Deployment
 
-For simple test code please check out the [test docs](docs/test.md)
-
-For a more in-depth view at using SSL and the `KafkaUser` CRD see the [SSL docs](docs/ssl.md)
-
-For creating topics via with `KafkaTopic` CRD there is an example and more information in the [topics docs](docs/topics.md)
+- For simple test, check the [test docs](../test/)
+- For a more in-depth view at using SSL and the `KafkaUser` CRD, see the [SSL docs](../ssl/)
+- To create topics via with `KafkaTopic` CRD there is an example and more information in the [topics docs](docs/topics.md)
