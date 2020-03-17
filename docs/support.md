@@ -3,11 +3,14 @@ title: Support
 weight: 800
 ---
 
-If you have any questions about the Kafka operator, and would like to talk to us and the other members of the Banzai Cloud community, please join our **#kafka-operator** channel on [Slack](https://pages.banzaicloud.com/invite-slack).
+## Support
 
-If you find this project useful, help us:
+The Kafka operator is a core part of [Banzai Cloud Supertubes](/products/supertubes/) that helps you create production-ready Kafka cluster on Kubernetes, with scaling, rebalancing, and alerts based self healing. While the Kafka operator itself is an [open-source project](https://github.com/banzaicloud/kafka-operator/), the [Banzai Cloud Supertubes](https://banzaicloud.com/products/one-eye/) product extends the functionality of the Kafka operator with commercial features (for example, built-in monitoring and multiple ways of disaster recovery).
 
-- Support the development of this project and star this repo! :star:
-- If you use the Kafka operator in a production environment, add yourself to the list of production [adopters](https://github.com/banzaicloud/kafka-operator/blob/master/ADOPTERS.md).:metal: <br>
-- Help new users with issues they may encounter :muscle:
-- Send a pull request with your new features and bug fixes :rocket:
+### Community support
+
+If you encounter problems while using the Logging operator the documentation does not address, [open an issue](https://github.com/banzaicloud/kafka-operator/issues) or talk to us on the Banzai Cloud Slack channel [#kafka-operator](https://pages.banzaicloud.com/invite-slack).
+
+### Commercial support
+
+If you are using the Kafka operator in a production environment and [require commercial support, contact Banzai Cloud](https://banzaicloud.com/contact/), the company backing the development of the Kafka operator.
