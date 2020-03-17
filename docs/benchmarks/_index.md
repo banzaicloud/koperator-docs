@@ -16,13 +16,16 @@ banzai login
 
 1. Create your own VPC and subnets on Amazon Management Console.
 
-- Please use the provided wizard and select VPC with Single Public Subnet. (Please remember the Availability Zone you chose.)
-- Save the used route table id on the generated subnet
-- Create two additional subnet in the VPC (choose different Availability Zones)
-  - Modify your newly created subnet Auto Assign IP setting
-  - Enable auto-assign public IPV4 address
-- Assign the saved route table id to the two additional subnets
-  - On Route Table page click Actions and Edit subnet associations
+    1. Use the provided wizard and select VPC with Single Public Subnet. (Please remember the Availability Zone you chose.)
+    1. Save the used route table id on the generated subnet
+    1. Create two additional subnet in the VPC (choose different Availability Zones)
+
+      - Modify your newly created subnet Auto Assign IP setting
+      - Enable auto-assign public IPV4 address
+
+    1. Assign the saved route table id to the two additional subnets
+
+      - On Route Table page click Actions and Edit subnet associations
 
 1. Create the cluster itself.
 
@@ -30,136 +33,154 @@ banzai login
     banzai cluster create
     ```
 
-    The required cluster template file can be found [here](infrastructure/cluster_pke.json)
+    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/cluster_pke.json)
 
     > Please don't forget to fill out the template with the created ids.
 
     This will create a cluster with 3 nodes for ZK 3 for Kafka 1 Master node and 2 node for clients.
+1. Create a StorageClass which enables high performance disk requests.
+
+    ```bash
+    kubectl create -f - <<EOF
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: fast-ssd
+    provisioner: kubernetes.io/aws-ebs
+    parameters:
+      type: io1
+      iopsPerGB: "50"
+      fsType: ext4
+    volumeBindingMode: WaitForFirstConsumer
+    EOF
+    ```
 
 ## GKE
 
-Create the cluster itself:
+1. Create the cluster itself:
 
-```bash
-banzai cluster create
-```
+    ```bash
+    banzai cluster create
+    ```
 
-The required cluster template file can be found [here](infrastructure/cluster_gke.json)
+    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/cluster_gke.json)
 
-> Please don't forget to fill out the template with the created ids.
+    > Please don't forget to fill out the template with the created ids.
+
+1. Create a StorageClass which enables high performance disk requests.
+
+    ```bash
+    kubectl create -f - <<EOF
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: fast-ssd
+    provisioner: kubernetes.io/gce-pd
+    parameters:
+      type: pd-ssd
+    volumeBindingMode: WaitForFirstConsumer
+    EOF
+    ```
 
 ## EKS
 
-Create the cluster itself:
+1. Create the cluster itself:
 
-```
-banzai cluster create
-```
-The required cluster template file can be found [here](infrastructure/cluster_eks.json)
+    ```bash
+    banzai cluster create
+    ```
 
-> Please don't forget to fill out the template with the created ids.
+    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/cluster_eks.json)
 
-Once your cluster is up and running we can move on to set up the Kubernetes infrastructure.
+    > Please don't forget to fill out the template with the created ids.
 
-First please create a StorageClass which enables high performance disk requests.
+    Once your cluster is up and running we can move on to set up the Kubernetes infrastructure.
 
-EKS/PKE:
+1. Create a StorageClass which enables high performance disk requests.
 
-```bash
-kubectl create -f - <<EOF
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: fast-ssd
-provisioner: kubernetes.io/aws-ebs
-parameters:
-  type: io1
-  iopsPerGB: "50"
-  fsType: ext4
-volumeBindingMode: WaitForFirstConsumer
-EOF
-```
+    ```bash
+    kubectl create -f - <<EOF
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: fast-ssd
+    provisioner: kubernetes.io/aws-ebs
+    parameters:
+      type: io1
+      iopsPerGB: "50"
+      fsType: ext4
+    volumeBindingMode: WaitForFirstConsumer
+    EOF
+    ```
 
-GKE:
+## Install other required components
 
-```bash
-kubectl create -f - <<EOF
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: fast-ssd
-provisioner: kubernetes.io/gce-pd
-parameters:
-  type: pd-ssd
-volumeBindingMode: WaitForFirstConsumer
-EOF
-```
+1. Create a Zookeeper cluster with 3 replicas using Pravega's Zookeeper Operator.
 
-Create a Zookeeper cluster with 3 replicas using Pravega's Zookeeper Operator.
+    ```bash
+    helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
+    helm install --name zookeeper-operator --namespace zookeeper banzaicloud-stable/zookeeper-operator
+    kubectl create -f - <<EOF
+    apiVersion: zookeeper.pravega.io/v1beta1
+    kind: ZookeeperCluster
+    metadata:
+      name: example-zookeepercluster
+      namespace: zookeeper
+    spec:
+      replicas: 1
+    EOF
+    ```
 
-```bash
-helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
-helm install --name zookeeper-operator --namespace zookeeper banzaicloud-stable/zookeeper-operator
-kubectl create -f - <<EOF
-apiVersion: zookeeper.pravega.io/v1beta1
-kind: ZookeeperCluster
-metadata:
-  name: example-zookeepercluster
-  namespace: zookeeper
-spec:
-  replicas: 1
-EOF
-```
+1. Install the latest version of Banzai Cloud Kafka Operator.
 
-Install the latest version of Banzai Cloud Kafka Operator
+    ```bash
+    helm install --name=kafka-operator banzaicloud-stable/kafka-operator
+    ```
 
-```bash
-helm install --name=kafka-operator banzaicloud-stable/kafka-operator
-```
+1. Create a 3 broker Kafka Cluster using the [provided](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/kafka.yaml) yaml.
 
-Create a 3 broker Kafka Cluster using the [provided](infrastructure/kafka.yaml) yaml.
+    This will install 3 brokers partitioned to three different zone with fast ssd.
+1. Create a client container inside the cluster
 
-This will install 3 brokers partitioned to three different zone with fast ssd.
+    ```bash
+    kubectl create -f - <<EOF
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      name: kafka-test
+    spec:
+      containers:
+      - name: kafka-test
+        image: "wurstmeister/kafka:2.12-2.1.1"
+        # Just spin & wait forever
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 3000; done;" ]
+    EOF
+    ```
 
-To create the topic we should create a client container inside the cluster.
+1. Exec into this client and create the `perftest, perftest2, perftes3` topics.
 
-```bash
-kubectl create -f - <<EOF
-apiVersion: v1
-kind: Pod
-metadata:
-  annotations:
-    linkerd.io/inject: enabled
-  name: kafka-test
-spec:
-  containers:
-  - name: kafka-test
-    image: "wurstmeister/kafka:2.12-2.1.1"
-    # Just spin & wait forever
-    command: [ "/bin/bash", "-c", "--" ]
-    args: [ "while true; do sleep 3000; done;" ]
-EOF
-```
-
-Exec into this client and create the `perftest, perftest2, perftes3` topics.
-
-```bash
-kubectl exec -it kafka-test bash
-./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest --create --replication-factor 3 --partitions 3
-./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest2 --create --replication-factor 3 --partitions 3
-./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest3 --create --replication-factor 3 --partitions 3
-```
+    ```bash
+    kubectl exec -it kafka-test bash
+    ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest --create --replication-factor 3 --partitions 3
+    ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest2 --create --replication-factor 3 --partitions 3
+    ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest3 --create --replication-factor 3 --partitions 3
+    ```
 
 Monitoring environment automatically installed, find your cluster and Grafanas UI/credentials on our [UI](https://beta.banzaicloud.io). To monitor the infrastructure we used the official Node Exporter dashboard available with id `1860`.
 
-Run perf test against the cluster, by building the provided Docker [image](loadgens/Dockerfile)
+## Run the tests
+
+1. Run perf test against the cluster, by building the provided Docker [image](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/loadgens/Dockerfile)
 
 ```bash
 docker build -t yourname/perfload:0.1.0 /loadgens
 docker push yourname/perfload:0.1.0
 ```
 
-Submit the perf test application:
+1. Submit the perf test application:
 
 ```yaml
 kubectl create -f - <<EOF
