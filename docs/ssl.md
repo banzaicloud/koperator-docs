@@ -1,6 +1,7 @@
 ---
 title: Securing Kafka With SSL
 shorttitle: SSL
+weight: 300
 ---
 
 The `kafka-operator` makes securing your Kafka cluster with SSL simple.

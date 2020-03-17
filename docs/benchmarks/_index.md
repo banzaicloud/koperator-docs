@@ -1,5 +1,6 @@
 ---
 title: Benchmarking Kafka
+weight: 900
 ---
 
 How to setup the environment for the Kafka Performance Test using Amazon PKE, GKE, EKS.

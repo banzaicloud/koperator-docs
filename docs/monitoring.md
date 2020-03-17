@@ -1,6 +1,7 @@
 ---
 title: Monitoring Kafka on Kubernetes
 shorttitle: Monitoring
+weight: 600
 ---
 
 {{< contents >}}

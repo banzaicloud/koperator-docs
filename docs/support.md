@@ -1,6 +1,6 @@
 ---
 title: Support
-weight: 200
+weight: 800
 ---
 
 If you have any questions about the Kafka operator, and would like to talk to us and the other members of the Banzai Cloud community, please join our **#kafka-operator** channel on [Slack](https://pages.banzaicloud.com/invite-slack).
