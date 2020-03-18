@@ -24,7 +24,7 @@ The Banzai Cloud Kafka operator is a Kubernetes operator to automate provisionin
 
 ![Kafka-operator architecture](/docs/supertubes/kafka-operator/img/kafka-operator-arch.png)
 
->We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](docs/features.md) and some of the [scenarios](docs/scenarios.md) which were driving us to create the Banzai Cloud Kafka operator.
+>We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](features/) and some of the [scenarios](scenarios/) which were driving us to create the Banzai Cloud Kafka operator.
 
 {{% include-headless "doc/kafka-operator-supertubes.md" %}}
 
@@ -57,7 +57,7 @@ Join us as we take a deep dive into some of the details of the most popular pre-
 
 *-if you find any of this information inaccurate, [contact us and we'll fix it](/contact)*
 
->We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](docs/features.md) and some of the [scenarios](docs/scenarios.md) which were driving us to create the Banzai Cloud Kafka operator.
+>We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](features/) and some of the [scenarios](scenarios/) which were driving us to create the Banzai Cloud Kafka operator.
 
 Finally, our motivation is to build an open source solution and a community which drives the innovation and features of this operator. We are long term contributors and active community members of both Apache Kafka and Kubernetes, and we hope to recreate a similar community around this operator.
 

@@ -199,4 +199,4 @@ You can deploy the Kafka operator using a Helm chart [Helm chart](https://github
 
 - For simple test, check the [test docs](../test/)
 - For a more in-depth view at using SSL and the `KafkaUser` CRD, see the [SSL docs](../ssl/)
-- To create topics via with `KafkaTopic` CRD there is an example and more information in the [topics docs](docs/topics.md)
+- To create topics via with `KafkaTopic` CRD there is an example and more information in the [topics docs](../topics/)
