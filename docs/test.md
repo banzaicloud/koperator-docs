@@ -141,13 +141,13 @@ echo $SERVICE_PORT
     kafka-console-consumer.sh --bootstrap-server $SERVICE_IP:$SERVICE_PORT --topic my-topic --from-beginning
     ```
 
-#### SSL Enabled
+### SSL Enabled
 
 You can use the following procedure to send and receive messages outside a Kubernetes cluster when SSL encryption is enabled for Kafka. To test a Kafka instance secured by SSL we recommend using [Kafkacat](https://github.com/edenhill/kafkacat).
 
 > To use the java client instead of Kafkacat, generate the proper truststore and keystore using the [official docs](https://kafka.apache.org/documentation/#security_ssl).
 
-1. Install Kafkacat
+1. Install Kafkacat.
 
     - __MacOS__:
 

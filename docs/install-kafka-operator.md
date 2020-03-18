@@ -173,7 +173,7 @@ kubectl create -n default -f config/samples/kafkacluster-prometheus.yaml
 
 > In this case you have to install Prometheus with proper configuration if you want the Kafka operator to react to alerts. Again, if you need Prometheus and would like to have a fully automated and managed experience of Apache Kafka on Kubernetes please try it with the [Banzai Cloud Pipeline platform](/products/pipeline).
 
-### Install the Kafka operator with Helm {#kafka-operator-helm}
+#### Install the Kafka operator with Helm {#kafka-operator-helm}
 
 You can deploy the Kafka operator using a Helm chart [Helm chart](https://github.com/banzaicloud/kafka-operator/tree/master/charts) by running the following commands.
 
