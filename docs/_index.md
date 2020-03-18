@@ -1,6 +1,7 @@
 ---
 title: Kafka operator
 img: /docs/supertubes/kafka-operator/img/kafka-operator-arch.png
+weight: 700
 cascade:
   module: kafka-operator
   githubEditUrl: "https://github.com/banzaicloud/kafka-operator-docs/edit/master/docs/"
@@ -26,7 +27,7 @@ The Banzai Cloud Kafka operator is a Kubernetes operator to automate provisionin
 
 >We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](features/) and some of the [scenarios](scenarios/) which were driving us to create the Banzai Cloud Kafka operator.
 
-{{% include-headless "doc/kafka-operator-supertubes.md" %}}
+{{% include-headless "doc/kafka-operator-supertubes-intro.md" %}}
 
 ## Motivation
 
