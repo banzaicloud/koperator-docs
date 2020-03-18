@@ -1,17 +1,25 @@
-This documentation is intended to guide you how to enable custom monitoring on operator installed Kafka cluster
+---
+title: Monitoring Kafka on Kubernetes
+shorttitle: Monitoring
+weight: 600
+---
 
-#### Using Helm for Prometheus:
+{{< contents >}}
+
+This documentation shows you how to enable custom monitoring on a Kafka cluster installed using the [Kafka operator](/products/kafka-operator).
+
+## Using Helm for Prometheus
 
 By default operator installs Kafka Pods with the following annotations, also it opens port 9020 in all brokers to enable scraping.
 
-```
+```yaml
     "prometheus.io/scrape": "true"
     "prometheus.io/port":   "9020"
 ```
 
 Prometheus must be configured to recognize these annotations. The following example contains the required config.
 
-```
+```yaml
 # Example scrape config for pods
 #
 # The relabeling allows the actual pod scrape endpoint to be configured via the
@@ -42,9 +50,9 @@ Prometheus must be configured to recognize these annotations. The following exam
 
 Using the provided [CR](https://github.com/banzaicloud/kafka-operator/blob/master/config/samples/banzaicloud_v1beta1_kafkacluster.yaml), the operator installs the official [jmx exporter](https://github.com/prometheus/jmx_exporter) for Prometheus.
 
-To change this behavior please modify the following lines in the end of the CR.
+To change this behavior, modify the following lines in the end of the CR.
 
-```
+```yaml
 monitoringConfig:
    jmxImage describes the used prometheus jmx exporter agent container
     jmxImage: "banzaicloud/jmx-javaagent:0.12.0"
@@ -55,13 +63,13 @@ monitoringConfig:
      lowercaseOutputName: true
 ```
 
-#### Using the ServiceMonitors:
+## Using the ServiceMonitors
 
-To use ServiceMonitors, we recommend to use kafka with unique service/broker instead of headless service.
+To use ServiceMonitors, we recommend to use Kafka with unique service/broker instead of headless service.
 
-Configure the CR in a following way:
+Configure the CR the following way:
 
-```
+```yaml
   # Specify if the cluster should use headlessService for Kafka or individual services
   # using service/broker may come in handy in case of service mesh
   headlessServiceEnabled: false
@@ -71,7 +79,7 @@ Disabling Headless service means the operator will set up Kafka with unique serv
 
 Once you have a cluster up and running create as many ServiceMonitors as brokers.
 
-```
+```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
