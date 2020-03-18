@@ -26,6 +26,8 @@ The Banzai Cloud Kafka operator is a Kubernetes operator to automate provisionin
 
 >We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](docs/features.md) and some of the [scenarios](docs/scenarios.md) which were driving us to create the Banzai Cloud Kafka operator.
 
+{{% include-headless "doc/kafka-operator-supertubes.md" %}}
+
 ## Motivation
 
 At [Banzai Cloud](https://banzaicloud.com) we are building a Kubernetes distribution, [PKE](/products/pke), and a hybrid-cloud container management platform, [Pipeline](/products/pipeline), that operate Kafka clusters (among other types) for our customers. Apache Kafka predates Kubernetes and was designed mostly for `static` on-premise environments. State management, node identity, failover, etc all come part and parcel with Kafka, so making it work properly on Kubernetes and on an underlying dynamic environment can be a challenge.
