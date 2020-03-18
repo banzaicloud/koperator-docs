@@ -39,17 +39,17 @@ With the Banzai Cloud Kafka operator we can:
 
 We needed to be able to react to events in a fine-grained way for each Broker - and not in the limited way StatefulSet does (which, for example, removes the most recently created Brokers). Some of the available solutions try to overcome these deficits by placing scripts inside the container to generate configs at runtime, whereas the Banzai Cloud Kafka operator's configurations are deterministically placed in specific Configmaps.
 
-#### Graceful Kafka Cluster Scaling
+### Graceful Kafka Cluster Scaling
 
 Here at Banzai Cloud, we know how to operate Kafka at scale (we are contributors and have been operating Kafka on Kubernetes for years now). We believe, however, that LinkedIn has even more experience than we do. To scale Kafka clusters both up and down gracefully, we integrated LinkedIn's [Cruise-Control](https://github.com/linkedin/cruise-control) to do the hard work for us. We already have good defaults (i.e. plugins) that react to events, but we also allow our users to write their own.
 
-#### External Access via LoadBalancer
+### External Access via LoadBalancer
 
 The Banzai Cloud Kafka operator externalizes access to Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
 
 ![Kafka External Access](../img/kafka-external.png)
 
-#### Communication via SSL
+### Communication via SSL
 
 The operator fully automates Kafka's SSL support.
 The operator can provision the required secrets and certificates for you, or you can provide your own.
@@ -57,11 +57,11 @@ The Pipeline platform is capable of automating this process, as well.
 
 ![SSL support for Kafka](../img/kafka-ssl.png)
 
-#### Monitoring via Prometheus
+### Monitoring via Prometheus
 
 The Kafka operator exposes Cruise-Control and Kafka JMX metrics to Prometheus.
 
-#### Reacting on Alerts
+### Reacting on Alerts
 
 The Kafka Operator acts as a **Prometheus Alert Manager**. It receives alerts defined in Prometheus, and creates actions based on Prometheus alert annotations.
 
@@ -71,7 +71,7 @@ Currently, there are three default actions (which can be extended):
 - downscale cluster (remove a Broker)
 - add additional disk to a Broker
 
-#### Graceful Rolling Upgrade
+### Graceful Rolling Upgrade
 
 Operator supports graceful rolling upgrade, It means the operator will check if the cluster is healthy.
 It basically checks if the cluster has offline partitions, and all the replicas are in sync.
@@ -80,7 +80,7 @@ It proceeds only when the failure threshold is smaller than the configured one.
 The operator also allows to create special alerts on Prometheus, which affects the rolling upgrade state, by
 increasing the error rate.
 
-#### Dynamic Configuration Support
+### Dynamic Configuration Support
 
 Kafka operates with three type of configs:
 
@@ -92,7 +92,7 @@ Read-only config requires broker restart to update all the others may be updated
 Operator CRD distinguishes these fields, and proceed with the right action. It can be a rolling upgrade, or
 a dynamic reconfiguration.
 
-#### Seamless Istio mesh support
+### Seamless Istio mesh support
 
 - Operator allows to use ClusterIP services instead of Headless, which still works better in case of Service meshes.
 - To avoid too early kafka initialization, which might lead to unready sidecar container. The operator uses a small script to mitigate this behavior. All Kafka image can be used the only one requirement is an available **curl** command.
