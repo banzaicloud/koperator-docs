@@ -98,7 +98,7 @@ You can use the following procedure to send and receive messages within a Kubern
     ```
 
 1. Consume some messages.
-    The following command will use the certificate provisioned with the cluster to connect to Kafka. If you'd like to create and use a different user, create a `KafkaUser` CR, for details, see the [SSL documentation](../ssl).
+    The following command will use the certificate provisioned with the cluster to connect to Kafka. If you'd like to create and use a different user, create a `KafkaUser` CR, for details, see the [SSL documentation](../ssl/).
 
     ```bash
     kafkacat -C -b kafka-headless:29092 -t my-topic \
