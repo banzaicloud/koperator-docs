@@ -5,9 +5,9 @@ weight: 400
 
 {{< contents >}}
 
-As highlighted in the [features section](../features), we removed the reliance on StatefulSet, we support several different scenarios.
+As highlighted in the [features section](../features/), we removed the reliance on StatefulSet, we support several different scenarios.
 
-> Note: this is not a complete list, if you have a specific requirement or question, [contact us](/contact).
+> Note: this is not a complete list, if you have a specific requirement or question, [contact us](/contact/).
 
 ## Vertical capacity scaling
 

@@ -119,7 +119,7 @@ you will need to generate new certificates signed by the CA, and ensure ACLs on 
 
 The operator supports using a back-end other than `cert-manager` for the PKI and user secrets.
 For now there is just an additional option of using `vault`.
-An easy way to get up and running quickly with `vault` on your Kubernetes cluster is to use the open source [`bank-vaults`](/products//bank-vaults).
+An easy way to get up and running quickly with `vault` on your Kubernetes cluster is to use the open source [`bank-vaults`](/products//bank-vaults/).
 
 1. To set up `bank-vaults`, a `vault` instance, and the `vault-secrets-webhook`, you can run the following:
 
