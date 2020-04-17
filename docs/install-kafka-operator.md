@@ -12,11 +12,11 @@ The operator installs the 2.4.0 version of Apache Kafka, and can run on Minikube
 
 ## Prerequisites
 
-- A Kubernetes cluster. You can create one using the [Banzai Cloud Pipeline platform](/products/pipeline), or any other tool of your choice.
+- A Kubernetes cluster. You can create one using the [Banzai Cloud Pipeline platform](/products/pipeline/), or any other tool of your choice.
 - Kafka requires Zookeeper, so you need to first have a Zookeeper cluster if you don't already have one.
 - The Kafka operator uses `cert-manager` for issuing certificates to users and brokers, so you'll need to have it setup in case you haven't already.
 
-> We believe in the `separation of concerns` principle, thus the Kafka operator does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try the [Banzai Cloud Pipeline platform](/products/pipeline).
+> We believe in the `separation of concerns` principle, thus the Kafka operator does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try the [Banzai Cloud Pipeline platform](/products/pipeline/).
 
 ## Install Kafka operator and all requirements using Supertubes
 
@@ -171,7 +171,7 @@ kubectl create -n kafka -f config/samples/simplekafkacluster.yaml
 kubectl create -n default -f config/samples/kafkacluster-prometheus.yaml
 ```
 
-> In this case you have to install Prometheus with proper configuration if you want the Kafka operator to react to alerts. Again, if you need Prometheus and would like to have a fully automated and managed experience of Apache Kafka on Kubernetes please try it with the [Banzai Cloud Pipeline platform](/products/pipeline).
+> In this case you have to install Prometheus with proper configuration if you want the Kafka operator to react to alerts. Again, if you need Prometheus and would like to have a fully automated and managed experience of Apache Kafka on Kubernetes please try it with the [Banzai Cloud Pipeline platform](/products/pipeline/).
 
 #### Install the Kafka operator with Helm {#kafka-operator-helm}
 
