@@ -49,12 +49,12 @@ Join us as we take a deep dive into some of the details of the most popular pre-
 | Fine grained broker volume support  | Yes (learn more) | Limited via StatefulSet|Limited via StatefulSet|Limited via StatefulSet|
 | Monitoring  | Yes | Yes|Yes|Yes|
 | Encryption using SSL  | Yes | Yes|Yes|Yes|
-| Rolling Update  | Yes | No |No|Yes|
+| Rolling Update  | Yes | No |Yes|Yes|
 | Cluster external accesses  | Envoy (single LB) | Nodeport |Nodeport or LB/broker|Yes (N/A)|
 | User Management via CRD  | Yes | No |Yes|No|
 | Topic management via CRD  | Yes | No |Yes|No|
 | Reacting to Alerts| Yes (Prometheus + Cruise Control | No |No|No|
-| Graceful Cluster Scaling (up and down)| Yes (using Cruise Control) | No |No|Yes|
+| Graceful Cluster Scaling (up and down)| Yes (using Cruise Control) | No |Yes(using Cruise Control)|Yes|
 
 *-if you find any of this information inaccurate, [contact us and we'll fix it](/contact/)*
 
