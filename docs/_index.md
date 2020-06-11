@@ -23,7 +23,7 @@ The Banzai Cloud Kafka operator is a Kubernetes operator to automate provisionin
 - graceful rolling upgrade
 - advanced topic and user management via CRD
 
-![Kafka-operator architecture](/docs/supertubes/kafka-operator/img/kafka-operator-arch.png)
+![Kafka-operator architecture](./img/kafka-operator-arch.png)
 
 >We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](features/) and some of the [scenarios](scenarios/) which were driving us to create the Banzai Cloud Kafka operator.
 
