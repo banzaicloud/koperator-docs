@@ -61,7 +61,7 @@ Install cert-manager and CustomResourceDefinitions using one of the following me
     # Install cert-manager into the cluster
     # Using helm3
     # You have to create the namespace before executing following command
-    helm install cert-manager --namespace cert-manager --version v0.15.1 jetstack/cert-manager
+    helm install cert-manager --namespace cert-manager --create-namespace --version v0.15.1 jetstack/cert-manager
     # Using previous versions of helm
     helm install --name cert-manager --namespace cert-manager --version v0.15.1 jetstack/cert-manager
     ```
