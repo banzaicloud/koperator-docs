@@ -6,7 +6,7 @@ weight: 10
 
 {{< contents >}}
 
-The operator installs the 2.4.0 version of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.12.0+.
+The operator installs the 2.4.0 version of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.15.0+.
 
 > The operator supports Kafka 2.0+
 
@@ -36,9 +36,9 @@ The operator installs the 2.4.0 version of Apache Kafka, and can run on Minikube
 
 ### Install cert-manager
 
-Cert-manager version 0.11.x introduced some API changes:
+Cert-manager version 0.15.x introduced some API changes:
 
-- Kafka operator 0.8.x and newer supports cert-manager 0.11.x
+- Kafka operator 0.8.x and newer supports cert-manager 0.15.x
 - Kafka operator 0.7.x supports cert-manager 0.10.x
 
 Install cert-manager and CustomResourceDefinitions using one of the following methods:
@@ -47,14 +47,14 @@ Install cert-manager and CustomResourceDefinitions using one of the following me
 
     ```bash
     # Install the CustomResourceDefinitions and cert-manager itself
-    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.11.0/cert-manager.yaml
+    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager.yaml
     ```
 
 - Using Helm:
 
     ```bash
     # Install CustomResourceDefinitions first
-    kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
+    kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.15.1/deploy/manifests/00-crds.yaml
 
     # Add the jetstack helm repo
     helm repo add jetstack https://charts.jetstack.io
@@ -63,9 +63,9 @@ Install cert-manager and CustomResourceDefinitions using one of the following me
     # Install cert-manager into the cluster
     # Using helm3
     # You have to create the namespace before executing following command
-    helm install cert-manager --namespace cert-manager --version v0.11.0 jetstack/cert-manager
+    helm install cert-manager --namespace cert-manager --version v0.15.1 jetstack/cert-manager
     # Using previous versions of helm
-    helm install --name cert-manager --namespace cert-manager --version v0.11.0 jetstack/cert-manager
+    helm install --name cert-manager --namespace cert-manager --version v0.15.1 jetstack/cert-manager
     ```
 
 ### Install Zookeeper
