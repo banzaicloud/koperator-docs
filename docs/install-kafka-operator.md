@@ -53,7 +53,6 @@ Install cert-manager and CustomResourceDefinitions using one of the following me
 - Using Helm:
 
     ```bash
-    # Install CustomResourceDefinitions first
 
     # Add the jetstack helm repo
     helm repo add jetstack https://charts.jetstack.io
