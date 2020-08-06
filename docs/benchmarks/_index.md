@@ -169,7 +169,7 @@ banzai login
     ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest3 --create --replication-factor 3 --partitions 3
     ```
 
-Monitoring environment automatically installed, find your cluster and Grafanas UI/credentials on our [UI](https://beta.banzaicloud.io). To monitor the infrastructure we used the official Node Exporter dashboard available with id `1860`.
+Monitoring environment automatically installed, find your cluster and Grafanas UI/credentials on our [UI](https://try.pipeline.banzai.cloud). To monitor the infrastructure we used the official Node Exporter dashboard available with id `1860`.
 
 ## Run the tests
 
