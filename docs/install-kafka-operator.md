@@ -175,6 +175,13 @@ kubectl create -n default -f config/samples/kafkacluster-prometheus.yaml
 
 You can deploy the Kafka operator using a Helm chart [Helm chart](https://github.com/banzaicloud/kafka-operator/tree/master/charts) by running the following commands.
 
+Before installing the chart, you must first install the kafka-operator CustomResourceDefinition resources.
+This is performed in a separate step to allow you to easily uninstall and reinstall kafka-operator without deleting your installed custom resources.
+
+```
+kubectl apply --validate=false -f https://github.com/banzaicloud/kafka-operator/releases/download/v0.12.3/kafka-operator.crds.yaml
+```
+
 - If you are using cert-manager 0.10.x and want to install the 0.7.x version of the operator, run the following command: `helm install --name=kafka-operator --namespace=kafka --set operator.image.tag=0.7.x banzaicloud-stable/kafka-operator`
 - Otherwise, run the following commands:
 
