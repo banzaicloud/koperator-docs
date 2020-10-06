@@ -3,7 +3,7 @@ title: Scenarios
 weight: 400
 ---
 
-{{< contents >}}
+
 
 As highlighted in the [features section](../features/), we removed the reliance on StatefulSet, we support several different scenarios.
 

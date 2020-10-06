@@ -3,7 +3,7 @@ title: Features
 weight: 200
 ---
 
-{{< contents >}}
+
 
 Kafka is a stateful application. The first piece of the puzzle is the Broker, which is a simple server capable of creating/forming a cluster with other Brokers. Every Broker has his own **unique** configuration which differs slightly from all others - the most relevant of which is the ***unique broker ID***.
 

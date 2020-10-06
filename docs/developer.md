@@ -3,7 +3,7 @@ title: Developer Guide
 weight: 1000
 ---
 
-{{< contents >}}
+
 
 ## Contributing
 

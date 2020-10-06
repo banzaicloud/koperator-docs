@@ -4,7 +4,7 @@ shorttitle: Install
 weight: 10
 ---
 
-{{< contents >}}
+
 
 The operator installs the 2.5.0 version of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.15.0+.
 
