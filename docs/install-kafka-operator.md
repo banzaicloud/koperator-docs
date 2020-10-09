@@ -90,6 +90,8 @@ spec:
 EOF
 ```
 
+> Note: You are recommended to create a separate Zookeeper deployment for each Kafka cluster. If you want to share the same Zookeeper cluster across multiple Kafka cluster instances, use a unique zk path in the KafkaCluster CR to avoid conflicts (even with previous defunct KafkaCluster instances).
+
 ### Install Prometheus-operator
 
 Install the Operator and CustomResourceDefinitions to the `default` namespace
