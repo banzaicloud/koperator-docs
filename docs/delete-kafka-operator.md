@@ -9,7 +9,6 @@ In case you want to delete the Kafka operator from your cluster, note that becau
 {{< warning >}}It’s important to delete the kafka-operator deployment as the last step.
 {{< /warning >}}
 
-1. First delete all *KafkaUser* and *KafkaTopic* custom resources. The *kafka-operator* watches these types of resources, and when these are deleted, it removes the appropriate resources from the Kafka cluster.
 1. Delete the *KafkaCluster* custom resources that represent the Kafka cluster and Cruise Control.
 1. Wait until kafka-operator deletes all resources.  Note that KafkaCluster, KafkaTopic and KafkaUser custom resources are protected with kubernetes finalizers, so those won’t be actually deleted from Kubernetes until the kafka-operator removes those finalizers. After the kafka-operator has finished cleaning up everything, it removes the finalizers. In case you delete the kafka-operator deployment before it cleans up everything you need to remove the finalizers manually.
 1. Delete the kafka-operator deployment.
