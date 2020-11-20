@@ -75,7 +75,7 @@ To install Zookeeper we recommend using the [Pravega's Zookeeper Operator](https
 helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
 # Using helm3
 # You have to create the namespace before executing following command
-helm install zookeeper-operator --namespace=zookeeper banzaicloud-stable/zookeeper-operator
+helm install zookeeper-operator --namespace=zookeeper --create-namespace banzaicloud-stable/zookeeper-operator
 # Using previous versions of helm
 # Deprecated, please use Pravega's helm chart
 helm install --name zookeeper-operator --namespace=zookeeper banzaicloud-stable/zookeeper-operator
