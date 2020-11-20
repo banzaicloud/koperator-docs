@@ -63,6 +63,9 @@ Install cert-manager and CustomResourceDefinitions using one of the following me
     helm install cert-manager --namespace cert-manager --create-namespace --version v0.15.1 jetstack/cert-manager
     # Using previous versions of helm
     helm install --name cert-manager --namespace cert-manager --version v0.15.1 jetstack/cert-manager
+    
+    # Install the CustomResourceDefinitions
+    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager.crds.yaml
     ```
 
 ### Install Zookeeper
