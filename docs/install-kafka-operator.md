@@ -60,7 +60,6 @@ Install cert-manager and CustomResourceDefinitions using one of the following me
 
     # Install cert-manager into the cluster
     # Using helm3
-    # You have to create the namespace before executing following command
     helm install cert-manager --namespace cert-manager --create-namespace --version v0.15.1 jetstack/cert-manager
     # Using previous versions of helm
     helm install --name cert-manager --namespace cert-manager --version v0.15.1 jetstack/cert-manager
@@ -74,8 +73,7 @@ To install Zookeeper we recommend using the [Pravega's Zookeeper Operator](https
 # Deprecated, please use Pravega's helm chart
 helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
 # Using helm3
-# You have to create the namespace before executing following command
-helm install zookeeper-operator --namespace=zookeeper banzaicloud-stable/zookeeper-operator
+helm install zookeeper-operator --namespace=zookeeper --create-namespace banzaicloud-stable/zookeeper-operator
 # Using previous versions of helm
 # Deprecated, please use Pravega's helm chart
 helm install --name zookeeper-operator --namespace=zookeeper banzaicloud-stable/zookeeper-operator
@@ -115,7 +113,6 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/ma
 
 # Install only the Prometheus-operator
 # Using helm3
-# You have to create the namespace before executing following command
 helm install test --namespace default stable/prometheus-operator \
 # Using previous versions of helm
 helm install --name test --namespace default stable/prometheus-operator \
@@ -190,8 +187,7 @@ kubectl apply --validate=false -f https://github.com/banzaicloud/kafka-operator/
     ```bash
     helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
     # Using helm3
-    # You have to create the namespace before executing following command
-    helm install kafka-operator --namespace=kafka banzaicloud-stable/kafka-operator
+    helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
     # Using previous versions of helm
     helm install --name=kafka-operator --namespace=kafka banzaicloud-stable/kafka-operator
     # Add your zookeeper svc name to the configuration
