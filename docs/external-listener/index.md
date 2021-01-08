@@ -122,11 +122,11 @@ To configure an external listener that uses the LoadBalancer access method, comp
     The `hostnameOverride` behaves differently here than with LoadBalancer access method. In this case, each broker will be advertized as `advertized.listeners=EXTERNAL1://<kafka-cluster-name>-<broker-id>.<namespace><value-specified-in-hostnameOverride-field>:<broker port number>`. If a three-broker Kafka cluster named *kafka* is running in the *kafka* namespace, the `advertized.listeners` for the brokers will look like this:
 
     - broker 0:
-    - advertized.listeners=EXTERNAL1://kafka-0.external1.kafka.dev.my.domain:32000
+      - advertized.listeners=EXTERNAL1://kafka-0.external1.kafka.dev.my.domain:32000
     - broker 1:
-    - advertized.listeners=EXTERNAL1://kafka-1.external1.kafka.dev.my.domain:32001
+      - advertized.listeners=EXTERNAL1://kafka-1.external1.kafka.dev.my.domain:32001
     - broker 2:
-    - advertized.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:32002
+      - advertized.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:32002
 
 1. Apply the `KafkaCluster` custom resource to the cluster.
 
