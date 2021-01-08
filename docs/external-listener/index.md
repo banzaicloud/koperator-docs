@@ -152,20 +152,20 @@ brokers:
 
 If *hostnameOverride* field is not set, then broker address is advertized as follows:
 
-* broker 0:
-  * advertized.listeners=EXTERNAL1://13.53.214.23:9094
-* broker 1:
-  * advertized.listeners=EXTERNAL1://13.48.71.170:9094
-* broker 2:
-  * advertized.listeners=EXTERNAL1://13.49.70.146:9094
+- broker 0:
+  - advertized.listeners=EXTERNAL1://13.53.214.23:9094
+- broker 1:
+  - advertized.listeners=EXTERNAL1://13.48.71.170:9094
+- broker 2:
+  - advertized.listeners=EXTERNAL1://13.49.70.146:9094
 
 If both *hostnameOverride* and *nodePortExternalIP* fields are set:
 
-* broker 0:
-  * advertized.listeners=EXTERNAL1://kafka-0.external1.kafka.dev.my.domain:9094
-* broker 1:
-  * advertized.listeners=EXTERNAL1://kafka-1.external1.kafka.dev.my.domain:9094
-* broker 2:
-  * advertized.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:9094
+- broker 0:
+  - advertized.listeners=EXTERNAL1://kafka-0.external1.kafka.dev.my.domain:9094
+- broker 1:
+  - advertized.listeners=EXTERNAL1://kafka-1.external1.kafka.dev.my.domain:9094
+- broker 2:
+  - advertized.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:9094
 
 > Note: If *nodePortExternalIP* is set, then the *containerPort* from the external listener config is used as a broker port, and is the same for each broker.
