@@ -1,5 +1,6 @@
 ---
-title: Tips and tricks
+title: Tips and tricks for the Kafka operator
+shorttitle: Tips and tricks
 weight: 970
 ---
 
