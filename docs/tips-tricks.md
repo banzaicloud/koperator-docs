@@ -21,3 +21,7 @@ Cruise Control UI will be available at [http://localhost:8090](http://localhost:
 When the **headlessServiceEnabled** option is enabled (true) in your KafkaCluster CR, it creates a headless service for accessing the kafka cluster from within the Kubernetes cluster.
 
 When the **headlessServiceEnabled** option is disabled (false), it creates a ClusterIP service. When using a ClusterIP service, your client application doesn’t need to be aware of every Kafka broker endpoint, it simply connects to *kafka-all-broker:29092* which covers dynamically all the available brokers. That way if the Kafka cluster is scaled dynamically, there is no need to reconfigure the client applications.
+
+## Schema registry
+
+Because of licensing reasons, the Kafka Operator does not instantiate a Schema Registry. To achieve this, you can either use Confluent's Helm chart, or the commercial [Supertubes product](/docs/supertubes/kafka-schema-registry/).
