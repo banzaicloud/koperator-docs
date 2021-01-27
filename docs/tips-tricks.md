@@ -11,7 +11,7 @@ The Kafka operator installs Cruise Control (CC) to oversee your Kafka cluster. W
 You can also trigger rebalancing manually from the CC UI:
 
 ```bash
-kubectl port-forward -n kafka svc/cruisecontrol-svc 8090:8090
+kubectl port-forward -n kafka svc/kafka-cruisecontrol-svc 8090:8090
 ```
 
 Cruise Control UI will be available at [http://localhost:8090](http://localhost:8090).
