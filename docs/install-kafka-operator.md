@@ -12,7 +12,7 @@ The operator installs the 2.5.0 version of Apache Kafka, and can run on Minikube
 
 ## Prerequisites
 
-- A Kubernetes cluster. You can create one using the [Banzai Cloud Pipeline platform](/products/pipeline/), or any other tool of your choice.
+- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). You can create one using the [Banzai Cloud Pipeline platform](/products/pipeline/), or any other tool of your choice.
 
 > We believe in the `separation of concerns` principle, thus the Kafka operator does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Banzai Cloud Supertubes](/products/supertubes/).
 
@@ -68,6 +68,14 @@ Install cert-manager and the CustomResourceDefinitions using one of the followin
 
     # Install the CustomResourceDefinitions
     kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager.crds.yaml
+
+    # Verify that the cert-manager pods have been created
+    kubectl get pods -n cert-manager
+
+    NAME                                      READY   STATUS    RESTARTS   AGE
+    cert-manager-7747db9d88-vgggn             1/1     Running   0          29m
+    cert-manager-cainjector-87c85c6ff-q945h   1/1     Running   1          29m
+    cert-manager-webhook-64dc9fff44-2p6tx     1/1     Running   0          29m
     ```
 
 ### Install Zookeeper {#install-zookeeper}
@@ -76,9 +84,7 @@ Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper clu
 
 > Note: You are recommended to create a separate Zookeeper deployment for each Kafka cluster. If you want to share the same Zookeeper cluster across multiple Kafka cluster instances, use a unique zk path in the KafkaCluster CR to avoid conflicts (even with previous defunct KafkaCluster instances).
 
-Install Zookeeper using one of the following methods:
-
-- **Recommended**: Install Zookeeper using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
+1. Install Zookeeper using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
 
     ```bash
     helm repo add pravega https://charts.pravega.io
@@ -86,15 +92,9 @@ Install Zookeeper using one of the following methods:
     helm install zookeeper-operator --namespace=zookeeper --create-namespace pravega/zookeeper-operator
     ```
 
-- **Deprecated**: Run the following commands to install Zookeeper:
+1. Create a Zookeeper cluster.
 
     ```bash
-    # Deprecated method, use Pravega's helm chart if possible
-    helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
-    # Using helm3
-    helm install zookeeper-operator --namespace=zookeeper --create-namespace banzaicloud-stable/zookeeper-operator
-    # Using previous versions of helm
-    helm install --name zookeeper-operator --namespace=zookeeper banzaicloud-stable/zookeeper-operator
     kubectl create --namespace zookeeper -f - <<EOF
     apiVersion: zookeeper.pravega.io/v1beta1
     kind: ZookeeperCluster
@@ -104,6 +104,16 @@ Install Zookeeper using one of the following methods:
     spec:
       replicas: 3
     EOF
+    ```
+
+1. Verify that Zookeeper has beeb deployed.
+
+    ```bash
+    kubectl get pods -n zookeeper
+
+    NAME                                  READY   STATUS    RESTARTS   AGE
+    zookeeper-0                           1/1     Running   0          27m
+    zookeeper-operator-54444dbd9d-2tccj   1/1     Running   0          28m
     ```
 
 ### Install Prometheus-operator
@@ -119,21 +129,13 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
 - Using Helm:
 
     ```bash
-    # Install CustomResourceDefinitions
-    kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
-    kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
-    kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
-    kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
-    kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
-    kubectl apply -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
-
+    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+    helm repo update
 
     # Install only the Prometheus-operator
     # Using helm3
-    helm install test --namespace default stable/prometheus-operator
-    # Using previous versions of helm
-    helm install --name test --namespace default stable/prometheus-operator \
-    --set prometheusOperator.createCustomResource=false \
+    helm install prometheus --namespace default stable/prometheus-operator \
+    --set prometheusOperator.createCustomResource=true \
     --set defaultRules.enabled=false \
     --set alertmanager.enabled=false \
     --set grafana.enabled=false \
@@ -149,46 +151,7 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
     --set prometheus.enabled=false
     ```
 
-### Install the Kafka operator
-
-If you want to install the Kafka operator separately, use one of the following methods:
-
-- [Install the Kafka operator with Kustomize](#kafka-operator-kustomize)
-- [Install the Kafka operator with Helm](#kafka-operator-helm)
-
-#### Install the Kafka operator with Kustomize {#kafka-operator-kustomize}
-
-We recommend using a **custom StorageClass** to leverage the volume binding mode `WaitForFirstConsumer`
-
-```yaml
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: exampleStorageclass
-parameters:
-  type: pd-standard
-provisioner: kubernetes.io/gce-pd
-reclaimPolicy: Delete
-volumeBindingMode: WaitForFirstConsumer
-```
-
-> Remember to set your Kafka CR properly to use the newly created StorageClass.
-
-1. Point your `KUBECONFIG` to your cluster.
-2. Run `make deploy` (deploys the operator in the `kafka` namespace into the cluster)
-3. Set your Kafka configurations in a Kubernetes custom resource [see this sample in the project repository](https://github.com/banzaicloud/kafka-operator/blob/master/config/samples/simplekafkacluster.yaml)
-4. Run this command to deploy the Kafka components:
-
-    ```bash
-    # Add your zookeeper svc name to the configuration
-    kubectl create -n kafka -f config/samples/simplekafkacluster.yaml
-    # If prometheus operator installed create the ServiceMonitors
-    kubectl create -n default -f config/samples/kafkacluster-prometheus.yaml
-    ```
-
-> In this case you have to install Prometheus with proper configuration if you want the Kafka operator to react to alerts. Again, if you need Prometheus and would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Banzai Cloud Supertubes](/products/supertubes/).
-
-#### Install the Kafka operator with Helm {#kafka-operator-helm}
+### Install the Kafka operator with Helm {#kafka-operator-helm}
 
 You can deploy the Kafka operator using a [Helm chart](https://github.com/banzaicloud/kafka-operator/tree/master/charts). Complete the following steps.
 
@@ -207,17 +170,9 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
 
 1. Install the Kafka operator into the *kafka* namespace:
 
-    - Using Helm 3:
-
-        ```bash
-        helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
-        ```
-
-    - Using previous versions of Helm:
-
-        ```bash
-        helm install --name=kafka-operator --namespace=kafka banzaicloud-stable/kafka-operator
-        ```
+    ```bash
+    helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
+    ```
 
 1. Add your zookeeper service name to the configuration.
 
@@ -229,6 +184,20 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
 
     ```bash
     kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/kafkacluster-prometheus.yaml
+    ```
+
+1. Verify that the Kafka cluster has been created.
+
+    ```bash
+    kubectl get pods -n kafka
+
+    NAME                                      READY   STATUS    RESTARTS   AGE
+    kafka-0-nvx8c                             1/1     Running   0          16m
+    kafka-1-swps9                             1/1     Running   0          15m
+    kafka-2-lppzr                             1/1     Running   0          15m
+    kafka-cruisecontrol-fb659b84b-7cwpn       1/1     Running   0          15m
+    kafka-operator-operator-8bb75c7fb-7w4lh   2/2     Running   0          17m
+    prometheus-kafka-prometheus-0             2/2     Running   1          16m
     ```
 
 ## Test your deployment
