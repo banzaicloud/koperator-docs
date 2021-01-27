@@ -6,9 +6,9 @@ weight: 100
 
 ## Create Topic
 
-1. Topic creation by default is enabled in Kafka, but if it is configured otherwise, you'll need to create a topic first.
+Topic creation by default is enabled in Kafka, but if it is configured otherwise, you'll need to create a topic first.
 
-    You can use the `KafkaTopic` CRD to make a topic like this:
+- You can use the `KafkaTopic` CRD to make a topic like this:
 
     ```bash
     cat << EOF | kubectl apply -n kafka -f -
@@ -27,7 +27,7 @@ weight: 100
 
     > Note: The previous command will fail if the cluster has not finished provisioning.
 
-1. To create a sample topic from the CLI you can run the following:
+- To create a sample topic from the CLI you can run the following:
 
     ```bash
     kubectl -n kafka run kafka-topics -it --image=banzaicloud/kafka:2.13-2.4.0 --rm=true --restart=Never -- /opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic my-topic --create --partitions 1 --replication-factor 1
@@ -43,11 +43,15 @@ You can use the following commands to send and receive messages within a Kuberne
     kubectl -n kafka run kafka-producer -it --image=banzaicloud/kafka:2.13-2.4.0 --rm=true --restart=Never -- /opt/kafka/bin/kafka-console-producer.sh --broker-list kafka-headless:29092 --topic my-topic
     ```
 
+    And type some test messages.
+
 - Consume messages:
 
     ```bash
     kubectl -n kafka run kafka-consumer -it --image=banzaicloud/kafka:2.13-2.4.0 --rm=true --restart=Never -- /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-headless:29092 --topic my-topic --from-beginning
     ```
+
+    You should see the messages you have created.
 
 ## Send and receive messages with SSL within a cluster
 
