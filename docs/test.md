@@ -10,20 +10,7 @@ Topic creation by default is enabled in Kafka, but if it is configured otherwise
 
 - You can use the `KafkaTopic` CRD to make a topic like this:
 
-    ```bash
-    cat << EOF | kubectl apply -n kafka -f -
-    apiVersion: kafka.banzaicloud.io/v1alpha1
-    kind: KafkaTopic
-    metadata:
-      name: my-topic
-    spec:
-      clusterRef:
-        name: kafka
-      name: my-topic
-      partitions: 1
-      replicationFactor: 1
-    EOF
-    ```
+    {{< include-code "create-topic.sample" "bash" >}}
 
     > Note: The previous command will fail if the cluster has not finished provisioning.
 

@@ -69,14 +69,20 @@ Install cert-manager and the CustomResourceDefinitions using one of the followin
     # Install the CustomResourceDefinitions
     kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager.crds.yaml
 
-    # Verify that the cert-manager pods have been created
-    kubectl get pods -n cert-manager
+Verify that the cert-manager pods have been created:
 
-    NAME                                      READY   STATUS    RESTARTS   AGE
-    cert-manager-7747db9d88-vgggn             1/1     Running   0          29m
-    cert-manager-cainjector-87c85c6ff-q945h   1/1     Running   1          29m
-    cert-manager-webhook-64dc9fff44-2p6tx     1/1     Running   0          29m
-    ```
+```bash
+kubectl get pods -n cert-manager
+```
+
+Expected output:
+
+```bash
+NAME                                      READY   STATUS    RESTARTS   AGE
+cert-manager-7747db9d88-vgggn             1/1     Running   0          29m
+cert-manager-cainjector-87c85c6ff-q945h   1/1     Running   1          29m
+cert-manager-webhook-64dc9fff44-2p6tx     1/1     Running   0          29m
+```
 
 ### Install Zookeeper {#install-zookeeper}
 
@@ -94,23 +100,17 @@ Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper clu
 
 1. Create a Zookeeper cluster.
 
-    ```bash
-    kubectl create --namespace zookeeper -f - <<EOF
-    apiVersion: zookeeper.pravega.io/v1beta1
-    kind: ZookeeperCluster
-    metadata:
-      name: zookeeper
-      namespace: zookeeper
-    spec:
-      replicas: 3
-    EOF
-    ```
+    {{< include-code "create-zookeeper.sample" "bash" >}}
 
 1. Verify that Zookeeper has beeb deployed.
 
     ```bash
     kubectl get pods -n zookeeper
+    ```
 
+    Expected output:
+
+    ```bash
     NAME                                  READY   STATUS    RESTARTS   AGE
     zookeeper-0                           1/1     Running   0          27m
     zookeeper-operator-54444dbd9d-2tccj   1/1     Running   0          28m
@@ -128,13 +128,18 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
 
 - Using Helm:
 
+    Add the prometheus repository to Helm:
+
     ```bash
     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
     helm repo update
 
-    # Install only the Prometheus-operator
-    # Using helm3
-    helm install prometheus --namespace default stable/prometheus-operator \
+    ```
+
+    Install only the Prometheus-operator:
+
+    ```bash
+    helm install prometheus --namespace default prometheus-community/kube-prometheus-stack \
     --set prometheusOperator.createCustomResource=true \
     --set defaultRules.enabled=false \
     --set alertmanager.enabled=false \
@@ -190,7 +195,11 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
 
     ```bash
     kubectl get pods -n kafka
+    ```
 
+    Expected output:
+
+    ```bash
     NAME                                      READY   STATUS    RESTARTS   AGE
     kafka-0-nvx8c                             1/1     Running   0          16m
     kafka-1-swps9                             1/1     Running   0          15m
