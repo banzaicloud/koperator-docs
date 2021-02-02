@@ -24,9 +24,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 1. Install the [Supertubes](/docs/supertubes/overview/) CLI tool for your environment by running the following command:
 
-    ```bash
-    curl https://getsupertubes.sh | sh
-    ```
+    {{< include-headless "download-supertubes.md" >}}
 
 1. Run the following command:
 
