@@ -37,5 +37,3 @@ There are already several approaches to operating Kafka on Kubernetes, however, 
 >We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](features/) and some of the [scenarios](scenarios/) which were driving us to create the Banzai Cloud Kafka operator.
 
 Finally, our motivation is to build an open source solution and a community which drives the innovation and features of this operator. We are long term contributors and active community members of both Apache Kafka and Kubernetes, and we hope to recreate a similar community around this operator.
-
-If you are willing to kickstart your managed Apache Kafka experience on 5 cloud providers, on-premise or hybrid environments, check out the free developer beta of the [Banzai Cloud Pipeline platform](/products/pipeline/):
