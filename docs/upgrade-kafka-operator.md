@@ -10,10 +10,10 @@ When upgrading your Kafka operator deployment to a new version, complete the fol
 
     {{< warning >}}**Hazard of data loss** Do not delete the old CRD from the cluster. Deleting the CRD removes your Kafka cluster.{{< /warning >}}
 
-1. Apply the new KafkaCluster CRD manually to your cluster by running the following command (replace &lt;versionnumber> with the release you are upgrading to, for example, **v0.14.0**).
+1. Replace the KafkaCluster CRD with the new one on your cluster by running the following command (replace &lt;versionnumber> with the release you are upgrading to, for example, **v0.14.0**).
 
     ```bash
-    kubectl apply --validate=false -f https://github.com/banzaicloud/kafka-operator/releases/download/<versionnumber>/kafka-operator.crds.yaml
+    kubectl replace --validate=false -f https://github.com/banzaicloud/kafka-operator/releases/download/<versionnumber>/kafka-operator.crds.yaml
     ```
 
 1. Update the Kafka operator by running:
