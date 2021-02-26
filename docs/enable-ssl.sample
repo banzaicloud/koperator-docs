@@ -1,0 +1,15 @@
+listenersConfig:
+  externalListeners:
+    - type: "ssl"
+      name: "external"
+      externalStartingPort: 19090
+      containerPort: 29092
+  internalListeners:
+    - type: "ssl"
+      name: "ssl"
+      containerPort: 29092
+      usedForInnerBrokerCommunication: true
+  sslSecrets:
+    tlsSecretName: "test-kafka-operator"
+    jksPasswordName: "test-kafka-operator-pass"
+    create: true

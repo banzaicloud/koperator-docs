@@ -4,29 +4,17 @@ shorttitle: SSL
 weight: 300
 ---
 
-The `kafka-operator` makes securing your Kafka cluster with SSL simple.
-You may provide your own certificates, or instruct the operator to create them for you
-from your cluster configuration.
+The Kafka operator makes securing your Kafka cluster with SSL simple.
 
-Below is an example listeners configuration for SSL:
+## Enable SSL encryption in Kafka {#enable-ssl}
 
-```yaml
-listenersConfig:
-  externalListeners:
-    - type: "ssl"
-      name: "external"
-      externalStartingPort: 19090
-      containerPort: 29092
-  internalListeners:
-    - type: "ssl"
-      name: "ssl"
-      containerPort: 29092
-      usedForInnerBrokerCommunication: true
-  sslSecrets:
-    tlsSecretName: "test-kafka-operator"
-    jksPasswordName: "test-kafka-operator-pass"
-    create: true
-```
+To create a Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own certificates, or instruct the operator to create them for you from your cluster configuration.
+
+{{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
+
+The following example enables SSL and automatically generates the certificates:
+
+{{< include-code "enable-ssl.sample" "yaml" >}}
 
 If `sslSecrets.create` is `false`, the operator will look for the secret at `sslSecrets.tlsSecretName` and expect these values:
 
@@ -49,10 +37,10 @@ You can leave the `topicGrants` out as they will not have any effect.
 
 1. To enable ACL support for your kafka cluster, pass the following configurations along with your `brokerConfig`:
 
-```yaml
-authorizer.class.name=kafka.security.auth.SimpleAclAuthorizer
-allow.everyone.if.no.acl.found=false
-```
+    ```yaml
+    authorizer.class.name=kafka.security.auth.SimpleAclAuthorizer
+    allow.everyone.if.no.acl.found=false
+    ```
 
 1. The operator will ensure that cruise control and itself can still access the cluster, however, to create new clients
 you will need to generate new certificates signed by the CA, and ensure ACLs on the topic. The operator can automate this process for you using the `KafkaUser` CRD.

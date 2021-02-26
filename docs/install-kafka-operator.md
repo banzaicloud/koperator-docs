@@ -179,7 +179,7 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
 
 1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [Kafka operator repository](https://github.com/banzaicloud/kafka-operator/tree/master/config/samples).
 
-    {{< warning >}}After the cluster is created, you cannot change the way the listeners are configured. If a cluster is created with unencrypted (plain text) listener, it cannot be changed later to use SSL encrypted listeners, or the way around.{{< /warning >}}
+    {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
 
     - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
 
@@ -187,7 +187,7 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster.yaml
         ```
 
-    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command:
+    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" %}}.
 
         ```bash
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster_ssl.yaml
