@@ -177,11 +177,21 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
     helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
     ```
 
-1. Add your zookeeper service name to the configuration.
+1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [Kafka operator repository](https://github.com/banzaicloud/kafka-operator/tree/master/config/samples).
 
-    ```bash
-    kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster.yaml
-    ```
+    {{< warning >}}After the cluster is created, you cannot change the way the listeners are configured. If a cluster is created with unencrypted (plain text) listener, it cannot be changed later to use SSL encrypted listeners, or the way around.{{< /warning >}}
+
+    - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
+
+        ```bash
+        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster.yaml
+        ```
+
+    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command:
+
+        ```bash
+        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster_ssl.yaml
+        ```
 
 1. If you have installed the Prometheus operator, create the ServiceMonitors. Prometheus will be installed and configured properly for the Kafka operator.
 
