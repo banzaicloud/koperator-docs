@@ -104,38 +104,60 @@ You can use the following procedure to send and receive messages within a Kubern
 
 ## Send and receive messages outside a cluster
 
-Obtain the LoadBalancer address first by running the following command.
+### Prerequisites
 
-```bash
-export SERVICE_IP=$(kubectl get svc --namespace kafka -o jsonpath="{.status.loadBalancer.ingress[0].ip}" envoy-loadbalancer)
+1. Producers and consumers that are not in the same Kubernetes cluster can access the Kafka cluster only if an [external listener]({{< relref "/docs/supertubes/kafka-operator/external-listener/index.md" >}}) is configured in your KafkaCluster CR. Check that the **listenersConfig.externalListeners** section exists in the KafkaCluster CR.
+1. Obtain the external address and port number of the cluster by running the following commands.
 
-echo $SERVICE_IP
+    <!-- FIXME How is this different if we use nodeport for the external listener? -->
+    - If the external listener uses a LoadBalancer:
 
-export SERVICE_PORTS=($(kubectl get svc --namespace kafka -o jsonpath="{.spec.ports[*].port}" envoy-loadbalancer))
+        ```bash
+        export SERVICE_IP=$(kubectl get svc --namespace kafka -o jsonpath="{.status.loadBalancer.ingress[0].hostname}" envoy-loadbalancer-external-kafka); echo $SERVICE_IP
 
-echo ${SERVICE_PORTS[@]}
+        export SERVICE_PORTS=($(kubectl get svc --namespace kafka -o jsonpath="{.spec.ports[*].port}" envoy-loadbalancer-external-kafka)); echo ${SERVICE_PORTS[@]}
 
-# depending on the shell of your choice, arrays may be indexed starting from 0 or 1
-export SERVICE_PORT=${SERVICE_PORTS[@]:0:1}
+        # depending on the shell you are using, arrays may be indexed starting from 0 or 1
+        export SERVICE_PORT=${SERVICE_PORTS[@]:0:1}; echo $SERVICE_PORT
+        ```
 
-echo $SERVICE_PORT
-```
+1. If the external listener of your Kafka cluster accepts encrypted connections, proceed to [SSL enabled](#external-ssl). Otherwise, proceed to [SSL disabled](#external-nossl).
 
-### SSL Disabled
+### SSL disabled {#external-nossl}
 
-- Produce messages:
+1. Produce some test messages on the the external client.
 
-    ```bash
-    kafka-console-producer.sh --broker-list $SERVICE_IP:$SERVICE_PORT --topic my-topic
-    ```
+    - If you have [Kafkacat](https://github.com/edenhill/kafkacat) installed, run:
 
-- Consume messages
+        ```bash
+        kafkacat -P -b $SERVICE_IP:$SERVICE_PORT -t my-topic
+        ```
 
-    ```bash
-    kafka-console-consumer.sh --bootstrap-server $SERVICE_IP:$SERVICE_PORT --topic my-topic --from-beginning
-    ```
+    - If you have the Java Kafka client installed, run:
 
-### SSL Enabled
+        ```bash
+        kafka-console-producer.sh --broker-list $SERVICE_IP:$SERVICE_PORT --topic my-topic
+        ```
+
+    And type some test messages.
+
+1. Consume some messages.
+
+    - If you have [Kafkacat](https://github.com/edenhill/kafkacat) installed, run:
+
+        ```bash
+        kafkacat -C -b $SERVICE_IP:$SERVICE_PORT -t my-topic
+        ```
+
+    - If you have the Java Kafka client installed, run:
+
+        ```bash
+        kafka-console-consumer.sh --bootstrap-server $SERVICE_IP:$SERVICE_PORT --topic my-topic --from-beginning
+        ```
+
+    You should see the messages you have created.
+
+### SSL enabled {#external-ssl}
 
 You can use the following procedure to send and receive messages outside a Kubernetes cluster when SSL encryption is enabled for Kafka. To test a Kafka instance secured by SSL we recommend using [Kafkacat](https://github.com/edenhill/kafkacat).
 
