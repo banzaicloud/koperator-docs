@@ -60,7 +60,7 @@ You can use the following procedure to send and receive messages within a Kubern
       - name: kafka-test
         image: solsson/kafkacat
         # Just spin & wait forever
-        command: [ "/bin/bash", "-c", "--" ]
+        command: [ "/bin/sh", "-c", "--" ]
         args: [ "while true; do sleep 3000; done;" ]
         volumeMounts:
         - name: sslcerts
@@ -68,7 +68,7 @@ You can use the following procedure to send and receive messages within a Kubern
       volumes:
       - name: sslcerts
         secret:
-          secretName: kafka-operator-server-cert
+          secretName: kafka-operator-serving-cert
     EOF
     ```
 
@@ -156,9 +156,9 @@ You can use the following procedure to send and receive messages outside a Kuber
 1. Extract secrets from the given Kubernetes Secret:
 
     ```bash
-    kubectl get secrets -n kafka kafka-operator-server-cert -o jsonpath="{['data']['\tls.crt']}" | base64 -D > client.crt.pem
-    kubectl get secrets -n kafka kafka-operator-server-cert -o jsonpath="{['data']['\tls.key']}" | base64 -D > client.key.pem
-    kubectl get secrets -n kafka kafka-operator-server-cert -o jsonpath="{['data']['\ca.crt']}" | base64 -D > ca.crt.pem
+    kubectl get secrets -n kafka kafka-operator-serving-cert -o jsonpath="{['data']['\tls.crt']}" | base64 -D > client.crt.pem
+    kubectl get secrets -n kafka kafka-operator-serving-cert -o jsonpath="{['data']['\tls.key']}" | base64 -D > client.key.pem
+    kubectl get secrets -n kafka kafka-operator-serving-cert -o jsonpath="{['data']['\ca.crt']}" | base64 -D > ca.crt.pem
     ```
 
 1. Produce some test messages.
