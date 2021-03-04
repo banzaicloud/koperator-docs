@@ -161,7 +161,7 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
 1. Install the kafka-operator CustomResourceDefinition resources (adjust the version number to the Kafka operator release you want to install). This is performed in a separate step to allow you to easily uninstall and reinstall kafka-operator without deleting your installed custom resources.
 
     ```bash
-    kubectl apply --validate=false -f https://github.com/banzaicloud/kafka-operator/releases/download/v0.14.0/kafka-operator.crds.yaml
+    kubectl apply --validate=false -f https://github.com/banzaicloud/kafka-operator/releases/download/v0.15.1/kafka-operator.crds.yaml
     ```
 
 1. Add the Banzai Cloud repository to Helm.
