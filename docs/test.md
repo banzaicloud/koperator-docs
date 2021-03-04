@@ -136,7 +136,7 @@ You can use the following procedure to send and receive messages within a Kubern
     - If you have the Java Kafka client installed, run:
 
         ```bash
-        kafka-console-producer.sh --broker-list $SERVICE_IP:$SERVICE_PORT --topic my-topic
+        kafka-console-producer.sh --bootstrap-server $SERVICE_IP:$SERVICE_PORT --topic my-topic
         ```
 
     And type some test messages.
