@@ -38,7 +38,7 @@ You can leave the `topicGrants` out as they will not have any effect.
 1. To enable ACL support for your kafka cluster, pass the following configurations along with your `brokerConfig`:
 
     ```yaml
-    authorizer.class.name=kafka.security.auth.SimpleAclAuthorizer
+    authorizer.class.name=kafka.security.authorizer.AclAuthorizer
     allow.everyone.if.no.acl.found=false
     ```
 
