@@ -10,7 +10,7 @@ Topic creation by default is enabled in Kafka, but if it is configured otherwise
 
 - You can use the `KafkaTopic` CRD to create a topic called **my-topic** like this:
 
-    {{< include-code "create-topic.sample" "bash" >}}
+    {{< include-code "create-topic.sample" "yaml" >}}
 
     > Note: The previous command will fail if the cluster has not finished provisioning.
 
