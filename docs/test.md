@@ -104,7 +104,7 @@ You can use the following procedure to send and receive messages within a Kubern
 
 ## Send and receive messages outside a cluster
 
-### Prerequisites
+### Prerequisites {#external-prerequisites}
 
 1. Producers and consumers that are not in the same Kubernetes cluster can access the Kafka cluster only if an [external listener]({{< relref "/docs/supertubes/kafka-operator/external-listener/index.md" >}}) is configured in your KafkaCluster CR. Check that the **listenersConfig.externalListeners** section exists in the KafkaCluster CR.
 1. Obtain the external address and port number of the cluster by running the following commands.
@@ -159,7 +159,7 @@ You can use the following procedure to send and receive messages within a Kubern
 
 ### SSL enabled {#external-ssl}
 
-You can use the following procedure to send and receive messages outside a Kubernetes cluster when SSL encryption is enabled for Kafka. To test a Kafka instance secured by SSL we recommend using [Kafkacat](https://github.com/edenhill/kafkacat).
+You can use the following procedure to send and receive messages from an external host that is outside a Kubernetes cluster when SSL encryption is enabled for Kafka. To test a Kafka instance secured by SSL we recommend using [Kafkacat](https://github.com/edenhill/kafkacat).
 
 > To use the java client instead of Kafkacat, generate the proper truststore and keystore using the [official docs](https://kafka.apache.org/documentation/#security_ssl).
 
@@ -178,15 +178,25 @@ You can use the following procedure to send and receive messages outside a Kuber
         apt-get install kafkacat
         ```
 
-1. Extract secrets from the given Kubernetes Secret:
+1. Connect to the Kubernetes cluster that runs your Kafka deployment.
+
+1. Create a Kafka user. The client will use this user account to access Kafka. You can use the KafkaUser custom resource to customize the access rights as needed. For example:
+
+    {{< include-code "create-kafkauser.sample" "bash" >}}
+
+1. Download the certificate and the key of the user, and the CA certificate used to verify the certificate of the Kafka server. These are available in the Kubernetes Secret created for the KafkaUser.
 
     ```bash
-    kubectl get secrets -n kafka kafka-operator-server-cert -o jsonpath="{['data']['\tls.crt']}" | base64 -D > client.crt.pem
-    kubectl get secrets -n kafka kafka-operator-server-cert -o jsonpath="{['data']['\tls.key']}" | base64 -D > client.key.pem
-    kubectl get secrets -n kafka kafka-operator-server-cert -o jsonpath="{['data']['\ca.crt']}" | base64 -D > ca.crt.pem
+    kubectl get secrets -n kafka <name-of-the-user-secret> -o jsonpath="{['data']['tls\.crt']}" | base64 -D > client.crt.pem
+    kubectl get secrets -n kafka <name-of-the-user-secret> -o jsonpath="{['data']['tls\.key']}" | base64 -D > client.key.pem
+    kubectl get secrets -n kafka <name-of-the-user-secret> -o jsonpath="{['data']['ca\.crt']}" | base64 -D > ca.crt.pem
     ```
 
-1. Produce some test messages.
+1. Copy the downloaded certificates to a location that is accessible to the external host.
+
+1. If you haven't done so already, [obtain the external address and port number of the cluster](#external-prerequisites).
+
+1. Produce some test messages on the host that is outside your cluster.
 
     ```bash
     kafkacat -b $SERVICE_IP:$SERVICE_PORT -P -X security.protocol=SSL \
@@ -195,6 +205,8 @@ You can use the following procedure to send and receive messages outside a Kuber
     -X ssl.ca.location=ca.crt.pem \
     -t my-topic
     ```
+
+    And type some test messages.
 
 1. Consume some messages.
 
@@ -205,3 +217,5 @@ You can use the following procedure to send and receive messages outside a Kuber
     -X ssl.ca.location=ca.crt.pem \
     -t my-topic
     ```
+
+    You should see the messages you have created.
