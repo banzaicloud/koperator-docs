@@ -91,10 +91,10 @@ To configure an external listener that uses the LoadBalancer access method, comp
 
 Using the *NodePort* access method, external listeners make Kafka brokers accessible through either the external IP of a Kubernetes cluster's node, or on an external IP that routes into the cluster.
 
-To configure an external listener that uses the LoadBalancer access method, complete the following steps.
+To configure an external listener that uses the NodePort access method, complete the following steps.
 
 1. Edit the `KafkaCluster` custom resource.
-1. Add an `externalListeners` section under `listenersConfig`. The following example creates a [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport) type service will be created separately for each broker. Brokers can be reached from outside the Kubernetes cluster at `<any node public ip>:<broker port number>` where the `<broker port number>` is computed as *externalStartingPort + broker id*. The *externalStartingPort* must fall into the range allocated for nodeports on the Kubernetes cluster, which is specified via *--service-node-port-range* (see [the Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)).
+1. Add an `externalListeners` section under `listenersConfig`. The following example creates a [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport) type service separately for each broker. Brokers can be reached from outside the Kubernetes cluster at `<any node public ip>:<broker port number>` where the `<broker port number>` is computed as *externalStartingPort + broker id*. The *externalStartingPort* must fall into the range allocated for nodeports on the Kubernetes cluster, which is specified via *--service-node-port-range* (see [the Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)).
 
     ```yaml
     listenersConfig:

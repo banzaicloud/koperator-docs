@@ -161,7 +161,7 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
 1. Install the kafka-operator CustomResourceDefinition resources (adjust the version number to the Kafka operator release you want to install). This is performed in a separate step to allow you to easily uninstall and reinstall kafka-operator without deleting your installed custom resources.
 
     ```bash
-    kubectl apply --validate=false -f https://github.com/banzaicloud/kafka-operator/releases/download/v0.14.0/kafka-operator.crds.yaml
+    kubectl create --validate=false -f https://github.com/banzaicloud/kafka-operator/releases/download/v0.15.1/kafka-operator.crds.yaml
     ```
 
 1. Add the Banzai Cloud repository to Helm.
@@ -177,11 +177,21 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
     helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
     ```
 
-1. Add your zookeeper service name to the configuration.
+1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [Kafka operator repository](https://github.com/banzaicloud/kafka-operator/tree/master/config/samples).
 
-    ```bash
-    kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster.yaml
-    ```
+    {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
+
+    - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
+
+        ```bash
+        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster.yaml
+        ```
+
+    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" %}}.
+
+        ```bash
+        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster_ssl.yaml
+        ```
 
 1. If you have installed the Prometheus operator, create the ServiceMonitors. Prometheus will be installed and configured properly for the Kafka operator.
 
