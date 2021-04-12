@@ -169,3 +169,65 @@ If both *hostnameOverride* and *nodePortExternalIP* fields are set:
   - advertized.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:9094
 
 > Note: If *nodePortExternalIP* is set, then the *containerPort* from the external listener config is used as a broker port, and is the same for each broker.
+
+## SASL authentication on external listeners {#sasl}
+
+To enable sasl_plaintext authentication on the external listener, modify the **externalListeners** section of the KafkaCluster CR according to the following example. This will enable an external listener on port 19090.
+
+```yaml
+  listenersConfig:
+    externalListeners:
+    - config:
+        defaultIngressConfig: ingress-sasl
+        ingressConfig:
+          ingress-sasl:
+            istioIngressConfig:
+              gatewayConfig:
+                credentialName: istio://sds
+                mode: SIMPLE
+      containerPort: 9094
+      externalStartingPort: 19090
+      name: external
+      type: sasl_plaintext
+```
+
+To connect to this listener using the Kafka console producer, complete the following steps:
+
+1. Set the producer properties like this:
+
+    ```ini
+    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="producer";
+    sasl.mechanism=OAUTHBEARER
+    security.protocol=SASL_SSL
+    ssl.truststore.location=/ssl/trustore.jks
+    ssl.truststore.password=truststorepass
+    ssl.endpoint.identification.algorithm=
+    ```
+
+1. Run the following command:
+
+    ```bash
+    kafka-console-producer.sh --bootstrap-server <your-loadbalancer-ip>:19090 --topic <your-topic-name> --producer.config producer.properties
+    ```
+
+To consume messages from this listener using the Kafka console consumer, complete the following steps:
+
+1. Set the producer properties like this:
+
+    ```ini
+    group.id=consumer-1
+    group.instance.id=consumer-1-instance-1
+    client.id=consumer-1-instance-1
+    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="consumer";
+    sasl.mechanism=OAUTHBEARER
+    security.protocol=SASL_SSL
+    ssl.endpoint.identification.algorithm=
+    ssl.truststore.location=/ssl/trustore.jks
+    ssl.truststore.password=trustorepass
+    ```
+
+1. Run the following command:
+
+    ```bash
+    kafka-console-consumer.sh --bootstrap-server <your-loadbalancer-ip>:19090 --topic <your-topic-name> --consumer.config /opt/kafka/config/consumer.properties --from-beginning
+    ```
