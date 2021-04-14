@@ -119,7 +119,7 @@ To configure an external listener that uses the NodePort access method, complete
           hostnameOverride: .dev.example.com
     ```
 
-    The `hostnameOverride` behaves differently here than with LoadBalancer access method. In this case, each broker will be advertized as `advertized.listeners=EXTERNAL1://<kafka-cluster-name>-<broker-id>.<namespace><value-specified-in-hostnameOverride-field>:<broker port number>`. If a three-broker Kafka cluster named *kafka* is running in the *kafka* namespace, the `advertized.listeners` for the brokers will look like this:
+    The `hostnameOverride` behaves differently here than with LoadBalancer access method. In this case, each broker will be advertized as `advertized.listeners=EXTERNAL1://<kafka-cluster-name>-<broker-id>.<external listener name>.<namespace><value-specified-in-hostnameOverride-field>:<broker port number>`. If a three-broker Kafka cluster named *kafka* is running in the *kafka* namespace, the `advertized.listeners` for the brokers will look like this:
 
     - broker 0:
       - advertized.listeners=EXTERNAL1://kafka-0.external1.kafka.dev.my.domain:32000
