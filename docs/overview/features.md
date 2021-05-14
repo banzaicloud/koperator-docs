@@ -11,7 +11,7 @@ All Kafka on Kubernetes operators use [StatefulSet](https://kubernetes.io/docs/c
 
 >StatefulSet manages the deployment and scaling of a set of Pods, and provide guarantees about their ordering and uniqueness. Like a Deployment, a StatefulSet manages Pods that are based on an identical container spec. Unlike a Deployment, a StatefulSet maintains sticky identities for each of its Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that is maintained across any rescheduling.
 
-How does this looks from the perspective of Apache Kafka?
+How does this look from the perspective of Apache Kafka?
 
 With StatefulSet we get:
 
@@ -47,7 +47,7 @@ Here at Banzai Cloud, we know how to operate Kafka at scale (we are contributors
 
 The Banzai Cloud Kafka operator externalizes access to Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
 
-![Kafka External Access](../img/kafka-external.png)
+![Kafka External Access](../../img/kafka-external.png)
 
 ### Communication via SSL
 
@@ -55,7 +55,7 @@ The operator fully automates Kafka's SSL support.
 The operator can provision the required secrets and certificates for you, or you can provide your own.
 The Pipeline platform is capable of automating this process, as well.
 
-![SSL support for Kafka](../img/kafka-ssl.png)
+![SSL support for Kafka](../../img/kafka-ssl.png)
 
 ### Monitoring via Prometheus
 
@@ -77,7 +77,7 @@ Operator supports graceful rolling upgrade, It means the operator will check if 
 It basically checks if the cluster has offline partitions, and all the replicas are in sync.
 It proceeds only when the failure threshold is smaller than the configured one.
 
-The operator also allows to create special alerts on Prometheus, which affects the rolling upgrade state, by
+The operator also allows creating special alerts on Prometheus, which affects the rolling upgrade state, by
 increasing the error rate.
 
 ### Dynamic Configuration Support
@@ -94,6 +94,6 @@ a dynamic reconfiguration.
 
 ### Seamless Istio mesh support
 
-- Operator allows to use ClusterIP services instead of Headless, which still works better in case of Service meshes.
+- Operator allows using ClusterIP services instead of Headless, which still works better in case of Service meshes.
 - To avoid too early kafka initialization, which might lead to unready sidecar container. The operator uses a small script to mitigate this behavior. All Kafka image can be used the only one requirement is an available **curl** command.
 - To access a Kafka cluster which runs inside the mesh. Operator supports creating Istio ingress gateways.

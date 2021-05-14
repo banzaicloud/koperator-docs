@@ -158,7 +158,7 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
 
 You can deploy the Kafka operator using a [Helm chart](https://github.com/banzaicloud/kafka-operator/tree/master/charts). Complete the following steps.
 
-1. Install the kafka-operator CustomResourceDefinition resources (adjust the version number to the Kafka operator release you want to install). This is performed in a separate step to allow you to easily uninstall and reinstall kafka-operator without deleting your installed custom resources.
+1. Install the kafka-operator CustomResourceDefinition resources (adjust the version number to the Kafka operator release you want to install). This is performed in a separate step to allow you to uninstall and reinstall kafka-operator without deleting your installed custom resources.
 
     ```bash
     kubectl create --validate=false -f https://github.com/banzaicloud/kafka-operator/releases/download/v0.15.1/kafka-operator.crds.yaml
@@ -187,7 +187,7 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster.yaml
         ```
 
-    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" %}}.
+    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/configuration/ssl.md#enable-ssl" %}}.
 
         ```bash
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster_ssl.yaml
@@ -220,5 +220,5 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
 ## Test your deployment
 
 - For a simple test, see [Test provisioned Kafka Cluster](../test/).
-- For a more in-depth view at using SSL and the `KafkaUser` CRD, see [Securing Kafka With SSL](../ssl/).
-- To create topics via with the `KafkaTopic` CRD, see [Provisioning Kafka Topics](../topics/).
+- For a more in-depth view at using SSL and the `KafkaUser` CRD, see [Securing Kafka With SSL](../../configuration/ssl/).
+- To create topics via with the `KafkaTopic` CRD, see [Provisioning Kafka Topics](../../configuration/topics/).
