@@ -1,5 +1,19 @@
 version: 2.1
 
+parameters:
+  remote-trigger:
+    type: boolean
+    default: false
+  project:
+    type: string
+    default: ""
+  release-tag:
+    type: string
+    default: ""
+  build-dir:
+    type: string
+    default: ""
+
 jobs:
   trigger-submodule-update:
     docker:
@@ -27,10 +41,14 @@ jobs:
       - run:
           name: Update docs
           command: |
-            scripts/update-generated-docs.sh "<<pipeline.parameters.release-tag>>"
+            scripts/update-generated-docs.sh \
+              "<<pipeline.parameters.project>>" \
+              "<<pipeline.parameters.release-tag>>" \
+              "<<pipeline.parameters.build-dir>>"
 
 workflows:
-  ci:
+  docgen:
+    when: << pipeline.parameters.project >>
     jobs:
       - trigger-submodule-update:
           filters:
