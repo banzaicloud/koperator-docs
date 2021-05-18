@@ -10,7 +10,7 @@ This documentation shows you how to enable custom monitoring on a Kafka cluster 
 
 ## Using Helm for Prometheus
 
-By default operator installs Kafka Pods with the following annotations, also it opens port 9020 in all brokers to enable scraping.
+By default, the Kafka operator installs Kafka Pods with the following annotations, also it opens port 9020 in all brokers to enable scraping.
 
 ```yaml
     "prometheus.io/scrape": "true"
@@ -50,7 +50,7 @@ Prometheus must be configured to recognize these annotations. The following exam
 
 Using the provided [CR](https://github.com/banzaicloud/kafka-operator/blob/master/config/samples/banzaicloud_v1beta1_kafkacluster.yaml), the operator installs the official [jmx exporter](https://github.com/prometheus/jmx_exporter) for Prometheus.
 
-To change this behavior, modify the following lines in the end of the CR.
+To change this behavior, modify the following lines at the end of the CR.
 
 ```yaml
 monitoringConfig:
