@@ -10,7 +10,7 @@ The Kafka operator makes securing your Kafka cluster with SSL simple.
 
 To create a Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own certificates, or instruct the operator to create them for you from your cluster configuration.
 
-{{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
+{{< include-headless "warning-listener-protocol.md" "kafka-operator" >}}
 
 The following example enables SSL and automatically generates the certificates:
 
@@ -29,8 +29,8 @@ If `sslSecrets.create` is `false`, the operator will look for the secret at `ssl
 
 ## Using Kafka ACLs with SSL
 
-> Note: The Kafka operator provides only basic ACL support. For a more complete and robust solution, consider using the [Supertubes](/products/supertubes/) product.
-> {{< include-headless "doc/kafka-operator-supertubes-intro.md" >}}
+> Note: The Kafka operator provides only basic ACL support. For a more complete and robust solution, consider using the [Supertubes](https://banzaicloud.com/products/supertubes/) product.
+> {{< include-headless "kafka-operator-supertubes-intro.md" >}}
 
 If you choose not to enable ACLs for your kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.
 You can leave the `topicGrants` out as they will not have any effect.
@@ -110,7 +110,7 @@ you will need to generate new certificates signed by the CA, and ensure ACLs on 
 
 The operator supports using a back-end other than `cert-manager` for the PKI and user secrets.
 For now there is just an additional option of using `vault`.
-An easy way to get up and running quickly with `vault` on your Kubernetes cluster is to use the open source [`bank-vaults`](/products//bank-vaults/).
+An easy way to get up and running quickly with `vault` on your Kubernetes cluster is to use the open source [`bank-vaults`](https://banzaicloud.com/products//bank-vaults/).
 
 1. To set up `bank-vaults`, a `vault` instance, and the `vault-secrets-webhook`, you can run the following:
 

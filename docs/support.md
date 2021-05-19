@@ -5,7 +5,7 @@ weight: 800
 
 ## Support
 
-{{% include-headless "doc/kafka-operator-supertubes-intro.md" %}}
+{{% include-headless "kafka-operator-supertubes-intro.md" %}}
 
 ### Community support
 
@@ -13,4 +13,4 @@ If you encounter problems while using the Kafka operator the documentation does 
 
 ### Commercial support
 
-If you are using the Kafka operator in a production environment and [require commercial support, contact Banzai Cloud](/contact/), the company backing the development of the Kafka operator.
+If you are using the Kafka operator in a production environment and [require commercial support, contact Banzai Cloud](https://banzaicloud.com/contact/), the company backing the development of the Kafka operator.

@@ -6,7 +6,7 @@ weight: 600
 
 
 
-This documentation shows you how to enable custom monitoring on a Kafka cluster installed using the [Kafka operator](/products/kafka-operator/).
+This documentation shows you how to enable custom monitoring on a Kafka cluster installed using the [Kafka operator](https://github.com/banzaicloud/kafka-operator).
 
 ## Using Helm for Prometheus
 

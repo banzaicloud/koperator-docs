@@ -69,7 +69,7 @@ To configure an external listener that uses the LoadBalancer access method, comp
     The ingress controllers that are currently supported are:
 
     -  envoy: uses Envoy Proxy as an ingress controller.
-    -  istioingress: uses Istio Gateway as an ingress controller. This is the default controller for Kafka clusters provisioned with [Supertubes](/docs/supertubes/overview/), since those clusters run inside an Istio mesh.
+    -  istioingress: uses Istio Gateway as an ingress controller. This is the default controller for Kafka clusters provisioned with [Supertubes](/docs/overview/), since those clusters run inside an Istio mesh.
 
 1. Configure additional parameters for the ingress controller as needed for your environment, for example, number of replicas, resource requirements and resource limits. You can be configure such parameters using the *envoyConfig* and *istioIngressConfig* fields, respectively.
 1. (Optional) For external access through a static URL instead of the load balancer's public IP, specify the URL in the `hostnameOverride` field of the external listener that resolves to the public IP of the load balancer. The broker address will be advertized as, `advertized.listeners=EXTERNAL1://kafka-1.dev.my.domain:<broker port number>`.
