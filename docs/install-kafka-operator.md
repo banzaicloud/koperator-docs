@@ -13,15 +13,15 @@ The operator installs the 2.5.0 version of Apache Kafka, and can run on Minikube
 ## Prerequisites
 
 - A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM).
-> We believe in the `separation of concerns` principle, thus the Kafka operator does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Banzai Cloud Supertubes](https://banzaicloud.com/products/supertubes/).
+> We believe in the `separation of concerns` principle, thus the Kafka operator does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/).
 
-## Install Kafka operator and all requirements using Supertubes
+## Install Kafka operator and all requirements using Streaming Data Manager
 
-This method uses a command-line tool of the commercial [Banzai Cloud Supertubes](https://banzaicloud.com/products/supertubes/) product to install the Kafka operator and its prerequisites. If you'd prefer to install these components manually, see [Install Kafka operator and the requirements independently](#manual-install).
+This method uses a command-line tool of the commercial [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product to install the Kafka operator and its prerequisites. If you'd prefer to install these components manually, see [Install Kafka operator and the requirements independently](#manual-install).
 
-1. [Register for an evaluation version of Supertubes](https://banzaicloud.com/products/try-supertubes/).
+1. [Register for an evaluation version of Streaming Data Manager](https://banzaicloud.com/products/try-supertubes/).
 
-1. Install the [Supertubes](/docs/overview/) CLI tool for your environment by running the following command:
+1. Install the [Streaming Data Manager](/docs/overview/) CLI tool for your environment by running the following command:
 
     {{< include-headless "download-supertubes.md" >}}
 
