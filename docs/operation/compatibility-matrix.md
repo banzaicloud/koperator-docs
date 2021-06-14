@@ -2,6 +2,8 @@
 title: Supported versions and compatibility matrix
 shorttitle: Supported versions
 weight: 770
+aliases:
+    - /docs/supertubes/kafka-operator/compatibility-matrix/
 ---
 
 This page shows you the list of supported Kafka operator versions, and the versions of other components they are compatible with.

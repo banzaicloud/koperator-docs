@@ -1,6 +1,8 @@
 ---
 title: Benchmarking Kafka
 weight: 900
+aliases:
+    - /docs/supertubes/kafka-operator/benchmarks/
 ---
 
 How to setup the environment for the Kafka Performance Test using Amazon PKE, GKE, EKS.

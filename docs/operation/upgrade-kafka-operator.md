@@ -2,6 +2,8 @@
 title: Upgrade the Kafka operator
 shorttitle: Upgrade
 weight: 15
+aliases:
+    - /docs/supertubes/kafka-operator/upgrade-kafka-operator/
 ---
 
 When upgrading your Kafka operator deployment to a new version, complete the following steps.

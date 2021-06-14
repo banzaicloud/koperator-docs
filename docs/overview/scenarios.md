@@ -1,6 +1,8 @@
 ---
 title: Scenarios
 weight: 400
+aliases:
+    - /docs/supertubes/kafka-operator/scenarios/
 ---
 
 

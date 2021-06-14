@@ -2,6 +2,8 @@
 title: Expose the Kafka cluster to external applications
 shorttitle: External listeners
 weight: 700
+aliases:
+    - /docs/supertubes/kafka-operator/external-listener/
 ---
 
 There are two methods to expose your Kafka cluster so that external client applications that run outside the Kubernetes cluster can access it:

@@ -2,6 +2,8 @@
 title: Kafka operator troubleshooting
 shorttitle: Troubleshooting
 weight: 400
+aliases:
+    - /docs/supertubes/kafka-operator/troubleshooting/
 ---
 
 The following tips and commands can help you to troubleshoot your Kafka operator installation.

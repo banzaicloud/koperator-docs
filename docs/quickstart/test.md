@@ -2,6 +2,8 @@
 title: Test provisioned Kafka Cluster
 shorttitle: Test your cluster
 weight: 100
+aliases:
+    - /docs/supertubes/kafka-operator/test/
 ---
 
 ## Create Topic

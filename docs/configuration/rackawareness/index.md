@@ -2,6 +2,8 @@
 title: Configure rack awareness
 shorttitle: Rack awareness
 weight: 750
+aliases:
+    - /docs/supertubes/kafka-operator/rackawareness/
 ---
 
 Kafka automatically replicates partitions across brokers, so if a broker fails, the data is safely preserved on another. Kafka's rack awareness feature spreads replicas of the same partition across different **failure groups** (racks or availability zones). This extends the guarantees Kafka provides for broker-failure to cover rack and availability zone (AZ) failures, limiting the risk of data loss should all the brokers in the same ack or AZ fail at once.

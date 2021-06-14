@@ -2,6 +2,8 @@
 title: Delete Kafka operator
 shorttitle: Delete operator
 weight: 950
+aliases:
+    - /docs/supertubes/kafka-operator/delete-kafka-operator/
 ---
 
 In case you want to delete the Kafka operator from your cluster, note that because of dependencies between the various components, they must be deleted in specific order.

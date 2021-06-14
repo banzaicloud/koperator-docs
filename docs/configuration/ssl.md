@@ -2,6 +2,8 @@
 title: Securing Kafka With SSL
 shorttitle: SSL
 weight: 300
+aliases:
+    - /docs/supertubes/kafka-operator/ssl/
 ---
 
 The Kafka operator makes securing your Kafka cluster with SSL simple.

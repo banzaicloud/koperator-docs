@@ -2,6 +2,8 @@
 title: Install the Kafka operator
 shorttitle: Install
 weight: 10
+aliases:
+    - /docs/supertubes/kafka-operator/install-kafka-operator/
 ---
 
 

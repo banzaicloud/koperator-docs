@@ -1,6 +1,8 @@
 ---
 title: Common errors
 weight: 100
+aliases:
+    - /docs/supertubes/kafka-operator/troubleshooting/common-errors/
 ---
 
 ## Upgrade failed

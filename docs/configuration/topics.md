@@ -2,6 +2,8 @@
 title: Provisioning Kafka Topics
 shorttitle: Kafka topics
 weight: 200
+aliases:
+    - /docs/supertubes/kafka-operator/topics/
 ---
 
 You can create Kafka topics either:

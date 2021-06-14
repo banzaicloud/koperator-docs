@@ -1,6 +1,8 @@
 ---
 title: Features
 weight: 200
+aliases:
+    - /docs/supertubes/kafka-operator/features/
 ---
 
 
