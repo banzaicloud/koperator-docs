@@ -12,17 +12,16 @@ The operator installs the 2.7.0 version of Apache Kafka, and can run on Minikube
 
 ## Prerequisites
 
-- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). You can create one using the [Banzai Cloud Pipeline platform](/products/pipeline/), or any other tool of your choice.
+- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM).
+> We believe in the `separation of concerns` principle, thus the Kafka operator does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/).
 
-> We believe in the `separation of concerns` principle, thus the Kafka operator does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Banzai Cloud Supertubes](/products/supertubes/).
+## Install Kafka operator and all requirements using Streaming Data Manager
 
-## Install Kafka operator and all requirements using Supertubes
+This method uses a command-line tool of the commercial [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product to install the Kafka operator and its prerequisites. If you'd prefer to install these components manually, see [Install Kafka operator and the requirements independently](#manual-install).
 
-This method uses a command-line tool of the commercial [Banzai Cloud Supertubes](/products/supertubes/) product to install the Kafka operator and its prerequisites. If you'd prefer to install these components manually, see [Install Kafka operator and the requirements independently](#manual-install).
+1. [Register for an evaluation version of Streaming Data Manager](https://banzaicloud.com/products/try-supertubes/).
 
-1. [Register for an evaluation version of Supertubes](/products/try-supertubes/).
-
-1. Install the [Supertubes](/docs/supertubes/overview/) CLI tool for your environment by running the following command:
+1. Install the [Streaming Data Manager](/docs/overview/) CLI tool for your environment by running the following command:
 
     {{< include-headless "download-supertubes.md" >}}
 
@@ -179,7 +178,7 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
 
 1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [Kafka operator repository](https://github.com/banzaicloud/kafka-operator/tree/master/config/samples).
 
-    {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
+    {{< include-headless "warning-listener-protocol.md" "kafka-operator" >}}
 
     - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
 
@@ -187,7 +186,7 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster.yaml
         ```
 
-    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" %}}.
+    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/kafka-operator/ssl.md#enable-ssl" %}}.
 
         ```bash
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster_ssl.yaml

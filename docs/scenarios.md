@@ -7,11 +7,11 @@ weight: 400
 
 As highlighted in the [features section](../features/), we removed the reliance on StatefulSet, we support several different scenarios.
 
-> Note: this is not a complete list, if you have a specific requirement or question, [contact us](/contact/).
+> Note: this is not a complete list, if you have a specific requirement or question, [contact us](mailto:cnan-feedback@cisco.com).
 
 ## Vertical capacity scaling
 
-We've encountered many situations in which the horizontal scaling of a cluster is impossible. When **only one Broker is throttling** and needs more CPU or requires additional disks (because it handles the most partitions), a StatefulSet-based solution is useless, since it does not distinguishes between replicas' specifications. The handling of such a case requires *unique* Broker configurations. If we need to add a new disk to a unique Broker, we waste a lot of disk space (and money) with a StatefulSet-based solution, since it can't add a disk to a specific Broker, the StatefulSet adds one to each replica.
+We've encountered many situations in which the horizontal scaling of a cluster is impossible. When **only one Broker is throttling** and needs more CPU or requires additional disks (because it handles the most partitions), a StatefulSet-based solution is useless, since it does not distinguish between replicas' specifications. The handling of such a case requires *unique* Broker configurations. If we need to add a new disk to a unique Broker, we waste a lot of disk space (and money) with a StatefulSet-based solution, since it can't add a disk to a specific Broker, the StatefulSet adds one to each replica.
 
 With the [Banzai Cloud Kafka operator](https://github.com/banzaicloud/kafka-operator), adding a new disk to any Broker is as easy as changing a CR configuration. Similarly, any Broker-specific configuration can be done on a Broker by Broker basis.
 
@@ -33,6 +33,4 @@ Use of monitoring is essential for any application, and all relevant information
 
 ## LinkedIn's Cruise Control
 
-We have a lot of experience in operating both Kafka and Kubernetes at scale. However, we believe that LinkedIn knows how to operate Kafka even better than we do. They built a tool, called Cruise Control, to operate their Kafka infrastructure, and we wanted to build an operator which **handled the infrastructure but did not reinvent the wheel insofar as operating Kafka**. We didn't want to redevelop proven concepts, but wanted to create an operator which leveraged our deep Kubernetes expertise (after all, we've already built a CNCF certified Kubernetes distribution, [PKE](https://github.com/banzaicloud/pke) and a hybrid cloud container management platform, [Pipeline](https://github.com/banzaicloud/pipeline)) by handling all Kafka infrastructure related issues in the way we thought best. We believe managing Kafka is a separate issue, for which there already exist some unique tools and solutions that are standard across the industry, so we took LinkedIn's Cruise Control and integrated it with the operator.
-
-
+We have a lot of experience in operating both Kafka and Kubernetes at scale. However, we believe that LinkedIn knows how to operate Kafka even better than we do. They built a tool, called Cruise Control, to operate their Kafka infrastructure, and we wanted to build an operator which **handled the infrastructure but did not reinvent the wheel insofar as operating Kafka**. We didn't want to redevelop proven concepts, but wanted to create an operator which leveraged our deep Kubernetes expertise by handling all Kafka infrastructure related issues in the way we thought best. We believe managing Kafka is a separate issue, for which there already exist some unique tools and solutions that are standard across the industry, so we took LinkedIn's Cruise Control and integrated it with the operator.
