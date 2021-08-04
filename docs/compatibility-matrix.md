@@ -34,6 +34,7 @@ This page shows you the list of supported Kafka operator versions, and the versi
 |ghcr.io/banzaicloud/kafka:2.13-2.6.1-bzc.1|11|
 |ghcr.io/banzaicloud/kafka:2.13-2.7.0-bzc.1|11|
 |ghcr.io/banzaicloud/kafka:2.13-2.7.0-bzc.2|11|
+|ghcr.io/banzaicloud/kafka:2.13-2.8.0|11|
 
 ## Available JMX Exporter images
 
@@ -51,3 +52,4 @@ This page shows you the list of supported Kafka operator versions, and the versi
 |ghcr.io/banzaicloud/cruise-control:2.5.34|11|
 |ghcr.io/banzaicloud/cruise-control:2.5.37|11|
 |ghcr.io/banzaicloud/cruise-control:2.5.43|11|
+|ghcr.io/banzaicloud/cruise-control:2.5.53|11|
