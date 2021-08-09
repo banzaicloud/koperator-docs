@@ -20,12 +20,12 @@ banzai login
     1. Save the used route table id on the generated subnet
     1. Create two additional subnet in the VPC (choose different Availability Zones)
 
-      - Modify your newly created subnet Auto Assign IP setting
-      - Enable auto-assign public IPV4 address
+        - Modify your newly created subnet Auto Assign IP setting
+        - Enable auto-assign public IPV4 address
 
     1. Assign the saved route table id to the two additional subnets
 
-      - On Route Table page click Actions and Edit subnet associations
+        - On Route Table page click Actions and Edit subnet associations
 
 1. Create the cluster itself.
 
@@ -175,10 +175,10 @@ Monitoring environment automatically installed, find your cluster and Grafanas U
 
 1. Run perf test against the cluster, by building the provided Docker [image](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/loadgens/Dockerfile)
 
-```bash
-docker build -t yourname/perfload:0.1.0 /loadgens
-docker push yourname/perfload:0.1.0
-```
+    ```bash
+    docker build -t yourname/perfload:0.1.0 /loadgens
+    docker push yourname/perfload:0.1.0
+    ```
 
 1. Submit the perf test application:
 

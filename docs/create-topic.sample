@@ -9,4 +9,7 @@ spec:
     name: my-topic
     partitions: 1
     replicationFactor: 1
+    config:
+        "retention.ms": "604800000"
+        "cleanup.policy": "delete"
 EOF
