@@ -10,11 +10,21 @@ This documentation shows you how to enable custom monitoring on a Kafka cluster 
 
 ## Using Helm for Prometheus
 
-By default operator installs Kafka Pods with the following annotations, also it opens port 9020 in all brokers to enable scraping.
+By default, the Kafka Operator does not set annotations on the broker pods. To set annotations on the broker pods, specify them in the KafkaCluster CR. Also, you must open port 9020 on brokers and in CruiseControl to enable scraping. For example:
 
 ```yaml
-    "prometheus.io/scrape": "true"
-    "prometheus.io/port":   "9020"
+brokerConfigGroups:
+  default:
+    brokerAnnotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9020"
+
+...
+
+cruiseControlConfig:
+  cruiseControlAnnotations:
+    prometheus.io/port: "9020"
+    prometheus.io/scrape: "true"
 ```
 
 Prometheus must be configured to recognize these annotations. The following example contains the required config.
@@ -48,9 +58,9 @@ Prometheus must be configured to recognize these annotations. The following exam
       target_label: __address__
 ```
 
-Using the provided [CR](https://github.com/banzaicloud/kafka-operator/blob/master/config/samples/banzaicloud_v1beta1_kafkacluster.yaml), the operator installs the official [jmx exporter](https://github.com/prometheus/jmx_exporter) for Prometheus.
+If you are using the provided [CR](https://github.com/banzaicloud/kafka-operator/blob/master/config/samples/banzaicloud_v1beta1_kafkacluster.yaml), the operator installs the official [jmx exporter](https://github.com/prometheus/jmx_exporter) for Prometheus.
 
-To change this behavior, modify the following lines in the end of the CR.
+To change this behavior, modify the following lines at the end of the CR.
 
 ```yaml
 monitoringConfig:
@@ -77,7 +87,7 @@ Configure the CR the following way:
 
 Disabling Headless service means the operator will set up Kafka with unique services per broker.
 
-Once you have a cluster up and running create as many ServiceMonitors as brokers.
+Once you have a cluster up and running, create as many ServiceMonitors as brokers.
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
