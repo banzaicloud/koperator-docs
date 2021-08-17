@@ -8,7 +8,7 @@ cascade:
   operatorName: "Kafka Operator"
 ---
 
-The Banzai Cloud {{< kafka-operator >}} is a Kubernetes operator to automate provisioning, management, autoscaling and operations of [Apache Kafka](https://kafka.apache.org) clusters deployed to K8s.
+The Banzai Cloud {{< kafka-operator >}} (formerly called Kafka Operator) is a Kubernetes operator to automate provisioning, management, autoscaling and operations of [Apache Kafka](https://kafka.apache.org) clusters deployed to K8s.
 
 ## Overview
 
