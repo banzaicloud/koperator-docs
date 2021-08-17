@@ -4,11 +4,11 @@ shorttitle: SSL
 weight: 300
 ---
 
-The Kafka operator makes securing your Kafka cluster with SSL simple.
+The Kafka operator makes securing your Apache Kafka cluster with SSL simple.
 
-## Enable SSL encryption in Kafka {#enable-ssl}
+## Enable SSL encryption in Apache Kafka {#enable-ssl}
 
-To create a Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own certificates, or instruct the operator to create them for you from your cluster configuration.
+To create an Apache Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own certificates, or instruct the operator to create them for you from your cluster configuration.
 
 {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
 
@@ -32,10 +32,10 @@ If `sslSecrets.create` is `false`, the operator will look for the secret at `ssl
 > Note: The Kafka operator provides only basic ACL support. For a more complete and robust solution, consider using the [Supertubes](/products/supertubes/) product.
 > {{< include-headless "doc/kafka-operator-supertubes-intro.md" >}}
 
-If you choose not to enable ACLs for your kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.
+If you choose not to enable ACLs for your Apache Kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.
 You can leave the `topicGrants` out as they will not have any effect.
 
-1. To enable ACL support for your kafka cluster, pass the following configurations along with your `brokerConfig`:
+1. To enable ACL support for your Kafka cluster, pass the following configurations along with your `brokerConfig`:
 
     ```yaml
     authorizer.class.name=kafka.security.authorizer.AclAuthorizer

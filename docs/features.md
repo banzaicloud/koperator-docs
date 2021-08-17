@@ -41,11 +41,11 @@ We needed to be able to react to events in a fine-grained way for each Broker - 
 
 ### Graceful Kafka Cluster Scaling
 
-Here at Banzai Cloud, we know how to operate Kafka at scale (we are contributors and have been operating Kafka on Kubernetes for years now). We believe, however, that LinkedIn has even more experience than we do. To scale Kafka clusters both up and down gracefully, we integrated LinkedIn's [Cruise-Control](https://github.com/linkedin/cruise-control) to do the hard work for us. We already have good defaults (i.e. plugins) that react to events, but we also allow our users to write their own.
+Here at Banzai Cloud, we know how to operate Apache Kafka at scale (we are contributors and have been operating Kafka on Kubernetes for years now). We believe, however, that LinkedIn has even more experience than we do. To scale Kafka clusters both up and down gracefully, we integrated LinkedIn's [Cruise-Control](https://github.com/linkedin/cruise-control) to do the hard work for us. We already have good defaults (i.e. plugins) that react to events, but we also allow our users to write their own.
 
 ### External Access via LoadBalancer
 
-The Banzai Cloud Kafka operator externalizes access to Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
+The Banzai Cloud Kafka operator externalizes access to Apache Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
 
 ![Kafka External Access](../img/kafka-external.png)
 
@@ -95,5 +95,5 @@ a dynamic reconfiguration.
 ### Seamless Istio mesh support
 
 - Operator allows to use ClusterIP services instead of Headless, which still works better in case of Service meshes.
-- To avoid too early kafka initialization, which might lead to unready sidecar container. The operator uses a small script to mitigate this behavior. All Kafka image can be used the only one requirement is an available **curl** command.
+- To avoid too early Kafka initialization, which might lead to unready sidecar container. The operator uses a small script to mitigate this behavior. All Kafka image can be used the only one requirement is an available **curl** command.
 - To access a Kafka cluster which runs inside the mesh. Operator supports creating Istio ingress gateways.

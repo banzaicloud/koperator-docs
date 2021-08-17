@@ -1,12 +1,12 @@
 ---
-title: Monitoring Kafka on Kubernetes
+title: Monitoring Apache Kafka on Kubernetes
 shorttitle: Monitoring
 weight: 600
 ---
 
 
 
-This documentation shows you how to enable custom monitoring on a Kafka cluster installed using the [Kafka operator](/products/kafka-operator/).
+This documentation shows you how to enable custom monitoring on an Apache Kafka cluster installed using the [Kafka operator](/products/kafka-operator/).
 
 ## Using Helm for Prometheus
 
