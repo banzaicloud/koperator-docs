@@ -1,10 +1,10 @@
 ---
-title: Delete Kafka operator
+title: Delete the operator
 shorttitle: Delete operator
 weight: 950
 ---
 
-In case you want to delete the Kafka operator from your cluster, note that because of dependencies between the various components, they must be deleted in specific order.
+In case you want to delete the {{< kafka-operator >}} from your cluster, note that because of dependencies between the various components, they must be deleted in specific order.
 
 {{< warning >}}It’s important to delete the kafka-operator deployment as the last step.
 {{< /warning >}}

@@ -4,7 +4,7 @@ shorttitle: SSL
 weight: 300
 ---
 
-The Kafka operator makes securing your Apache Kafka cluster with SSL simple.
+The {{< kafka-operator >}} makes securing your Apache Kafka cluster with SSL simple.
 
 ## Enable SSL encryption in Apache Kafka {#enable-ssl}
 
@@ -29,7 +29,7 @@ If `sslSecrets.create` is `false`, the operator will look for the secret at `ssl
 
 ## Using Kafka ACLs with SSL
 
-> Note: The Kafka operator provides only basic ACL support. For a more complete and robust solution, consider using the [Supertubes](/products/supertubes/) product.
+> Note: The {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Supertubes](/products/supertubes/) product.
 > {{< include-headless "doc/kafka-operator-supertubes-intro.md" >}}
 
 If you choose not to enable ACLs for your Apache Kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.

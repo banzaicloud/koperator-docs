@@ -25,9 +25,9 @@ Using StatefulSet we **lose:**
 - to remove a specific Broker from a cluster (StatefulSet always removes the most recently created Broker)
 - to use multiple, different Persistent Volumes for each Broker
 
-The Banzai Cloud Kafka Operator uses `simple` Pods, ConfigMaps, and PersistentVolumeClaims, instead of StatefulSet. Using these resources allows us to build an Operator which is better suited to Kafka.
+The Banzai Cloud {{< kafka-operator >}} uses `simple` Pods, ConfigMaps, and PersistentVolumeClaims, instead of StatefulSet. Using these resources allows us to build an Operator which is better suited to Kafka.
 
-With the Banzai Cloud Kafka operator we can:
+With the Banzai Cloud {{< kafka-operator >}} we can:
 
 - modify the configuration of unique Brokers
 - remove specific Brokers from clusters
@@ -37,7 +37,7 @@ With the Banzai Cloud Kafka operator we can:
 
 ### Fine Grained Broker Config Support
 
-We needed to be able to react to events in a fine-grained way for each Broker - and not in the limited way StatefulSet does (which, for example, removes the most recently created Brokers). Some of the available solutions try to overcome these deficits by placing scripts inside the container to generate configs at runtime, whereas the Banzai Cloud Kafka operator's configurations are deterministically placed in specific Configmaps.
+We needed to be able to react to events in a fine-grained way for each Broker - and not in the limited way StatefulSet does (which, for example, removes the most recently created Brokers). Some of the available solutions try to overcome these deficits by placing scripts inside the container to generate configs at runtime, whereas the Banzai Cloud {{< kafka-operator >}}'s configurations are deterministically placed in specific Configmaps.
 
 ### Graceful Kafka Cluster Scaling
 
@@ -45,7 +45,7 @@ Here at Banzai Cloud, we know how to operate Apache Kafka at scale (we are contr
 
 ### External Access via LoadBalancer
 
-The Banzai Cloud Kafka operator externalizes access to Apache Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
+The Banzai Cloud {{< kafka-operator >}} externalizes access to Apache Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
 
 ![Kafka External Access](../img/kafka-external.png)
 
@@ -59,11 +59,11 @@ The Pipeline platform is capable of automating this process, as well.
 
 ### Monitoring via Prometheus
 
-The Kafka operator exposes Cruise-Control and Kafka JMX metrics to Prometheus.
+The {{< kafka-operator >}} exposes Cruise-Control and Kafka JMX metrics to Prometheus.
 
 ### Reacting on Alerts
 
-The Kafka Operator acts as a **Prometheus Alert Manager**. It receives alerts defined in Prometheus, and creates actions based on Prometheus alert annotations.
+The {{< kafka-operator >}} acts as a **Prometheus Alert Manager**. It receives alerts defined in Prometheus, and creates actions based on Prometheus alert annotations.
 
 Currently, there are three default actions (which can be extended):
 

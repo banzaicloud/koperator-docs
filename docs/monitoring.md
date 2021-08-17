@@ -6,11 +6,11 @@ weight: 600
 
 
 
-This documentation shows you how to enable custom monitoring on an Apache Kafka cluster installed using the [Kafka operator](/products/kafka-operator/).
+This documentation shows you how to enable custom monitoring on an Apache Kafka cluster installed using the [{{< kafka-operator >}}](/products/kafka-operator/).
 
 ## Using Helm for Prometheus
 
-By default, the Kafka Operator does not set annotations on the broker pods. To set annotations on the broker pods, specify them in the KafkaCluster CR. Also, you must open port 9020 on brokers and in CruiseControl to enable scraping. For example:
+By default, the {{< kafka-operator >}} does not set annotations on the broker pods. To set annotations on the broker pods, specify them in the KafkaCluster CR. Also, you must open port 9020 on brokers and in CruiseControl to enable scraping. For example:
 
 ```yaml
 brokerConfigGroups:

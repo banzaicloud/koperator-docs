@@ -13,11 +13,11 @@ If you find this project useful here's how you can help:
 - Help new users with issues they may encounter
 - Support the development of this project and [star this repo](https://github.com/banzaicloud/kafka-operator/)!
 
-When you are opening a PR to Kafka operator the first time we will require you to sign a standard CLA.
+When you are opening a PR to {{< kafka-operator >}} the first time we will require you to sign a standard CLA.
 
 ## How to run Kafka-operator in your cluster with your changes
 
-The Kafka operator is built on the [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) project.
+The {{< kafka-operator >}} is built on the [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) project.
 
 To build the operator and run tests:
 

@@ -131,7 +131,7 @@ banzai login
     EOF
     ```
 
-1. Install the latest version of Banzai Cloud Kafka Operator.
+1. Install the latest version of Banzai Cloud {{< kafka-operator >}}.
 
     ```bash
     helm install --name=kafka-operator banzaicloud-stable/kafka-operator

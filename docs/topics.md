@@ -32,4 +32,4 @@ kubectl patch -n kafka kafkatopic example-topic --patch '{"spec": {"partitions":
 kafkatopic.kafka.banzaicloud.io/example-topic patched
 ```
 
-> Note: Topics created by the Kafka operator are not enforced in any way. From the Kubernetes perspective, Kafka Topics are external resources.
+> Note: Topics created by the {{< kafka-operator >}} are not enforced in any way. From the Kubernetes perspective, Kafka Topics are external resources.
