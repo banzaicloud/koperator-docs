@@ -11,7 +11,7 @@ All Kafka on Kubernetes operators use [StatefulSet](https://kubernetes.io/docs/c
 
 >StatefulSet manages the deployment and scaling of a set of Pods, and provide guarantees about their ordering and uniqueness. Like a Deployment, a StatefulSet manages Pods that are based on an identical container spec. Unlike a Deployment, a StatefulSet maintains sticky identities for each of its Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that is maintained across any rescheduling.
 
-How does this looks from the perspective of Apache Kafka?
+How does this look from the perspective of Apache Kafka?
 
 With StatefulSet we get:
 
