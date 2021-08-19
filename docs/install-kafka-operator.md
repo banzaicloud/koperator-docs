@@ -100,7 +100,7 @@ Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper clu
 
     {{< include-code "create-zookeeper.sample" "bash" >}}
 
-1. Verify that Zookeeper has beeb deployed.
+1. Verify that Zookeeper has been deployed.
 
     ```bash
     kubectl get pods -n zookeeper
