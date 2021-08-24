@@ -13,7 +13,7 @@ As highlighted in the [features section](../features/), we removed the reliance 
 
 We've encountered many situations in which the horizontal scaling of a cluster is impossible. When **only one Broker is throttling** and needs more CPU or requires additional disks (because it handles the most partitions), a StatefulSet-based solution is useless, since it does not distinguish between replicas' specifications. The handling of such a case requires *unique* Broker configurations. If we need to add a new disk to a unique Broker, we waste a lot of disk space (and money) with a StatefulSet-based solution, since it can't add a disk to a specific Broker, the StatefulSet adds one to each replica.
 
-With the [{{< kafka-operator >}}](https://github.com/banzaicloud/kafka-operator), adding a new disk to any Broker is as easy as changing a CR configuration. Similarly, any Broker-specific configuration can be done on a Broker by Broker basis.
+With the [{{< kafka-operator >}}](https://github.com/banzaicloud/koperator), adding a new disk to any Broker is as easy as changing a CR configuration. Similarly, any Broker-specific configuration can be done on a Broker by Broker basis.
 
 ## An unhandled error with Broker #1 in a three Broker cluster
 
