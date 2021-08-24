@@ -5,7 +5,7 @@ weight: 700
 cascade:
   module: kafka-operator
   githubEditUrl: "https://github.com/banzaicloud/kafka-operator-docs/edit/master/docs/"
-  operatorName: "Kafka Operator"
+  operatorName: "Koperator"
 ---
 
 The Banzai Cloud {{< kafka-operator >}} (formerly called Kafka Operator) is a Kubernetes operator to automate provisioning, management, autoscaling and operations of [Apache Kafka](https://kafka.apache.org) clusters deployed to K8s.
