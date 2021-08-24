@@ -131,7 +131,7 @@ banzai login
     EOF
     ```
 
-1. Install the latest version of Banzai Cloud {{< kafka-operator >}}.
+1. Install the latest version of {{< kafka-operator >}}, the Operator for managing Apache Kafka on Kubernetes.
 
     ```bash
     helm install --name=kafka-operator banzaicloud-stable/kafka-operator
