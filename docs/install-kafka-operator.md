@@ -156,12 +156,12 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
 
 ### Install the {{< kafka-operator >}} with Helm {#kafka-operator-helm}
 
-You can deploy the {{< kafka-operator >}} using a [Helm chart](https://github.com/banzaicloud/kafka-operator/tree/master/charts). Complete the following steps.
+You can deploy the {{< kafka-operator >}} using a [Helm chart](https://github.com/banzaicloud/koperator/tree/master/charts). Complete the following steps.
 
 1. Install the kafka-operator CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install). This is performed in a separate step to allow you to easily uninstall and reinstall kafka-operator without deleting your installed custom resources.
 
     ```bash
-    kubectl create --validate=false -f https://github.com/banzaicloud/kafka-operator/releases/download/v0.15.1/kafka-operator.crds.yaml
+    kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v0.15.1/kafka-operator.crds.yaml
     ```
 
 1. Add the Banzai Cloud repository to Helm.
@@ -177,7 +177,7 @@ You can deploy the {{< kafka-operator >}} using a [Helm chart](https://github.co
     helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
     ```
 
-1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/kafka-operator/tree/master/config/samples).
+1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/master/config/samples).
 
     {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
 
