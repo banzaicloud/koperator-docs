@@ -158,7 +158,7 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
 
 You can deploy the {{< kafka-operator >}} using a [Helm chart](https://github.com/banzaicloud/koperator/tree/master/charts). Complete the following steps.
 
-1. Install the kafka-operator CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install). This is performed in a separate step to allow you to easily uninstall and reinstall kafka-operator without deleting your installed custom resources.
+1. Install the {{< kafka-operator >}} CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install). This is performed in a separate step to allow you to uninstall and reinstall {{< kafka-operator >}} without deleting your installed custom resources.
 
     ```bash
     kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v0.15.1/kafka-operator.crds.yaml

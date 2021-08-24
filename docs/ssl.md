@@ -143,7 +143,7 @@ An easy way to get up and running quickly with `vault` on your Kubernetes cluste
     kubectl -n kafka create secret generic vault-keys --from-literal=vault.token=${VAULT_TOKEN} --from-literal=ca.crt="${VAULT_CACERT}"
     ```
 
-1. Then, if using the `kafka-operator` helm chart:
+1. Then, if using the `kafka-operator` Helm chart:
 
     ```bash
     helm install \

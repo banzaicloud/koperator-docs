@@ -12,7 +12,7 @@ The {{< kafka-operator >}} (formerly called Kafka Operator) is a Kubernetes oper
 
 ## Overview
 
-[Apache Kafka](https://kafka.apache.org) is an open-source distributed streaming platform, and some of the main features of the **Kafka-operator** are:
+[Apache Kafka](https://kafka.apache.org) is an open-source distributed streaming platform, and some of the main features of the **{{< kafka-operator >}}** are:
 
 - the provisioning of secure and production-ready Kafka clusters
 - **fine grained** broker configuration support
@@ -24,7 +24,7 @@ The {{< kafka-operator >}} (formerly called Kafka Operator) is a Kubernetes oper
 - graceful rolling upgrade
 - advanced topic and user management via CRD
 
-![Kafka-operator architecture](./img/kafka-operator-arch.png)
+![{{< kafka-operator >}} architecture](./img/kafka-operator-arch.png)
 
 >We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](features/) and some of the [scenarios](scenarios/) which drove us to create the {{< kafka-operator >}}.
 

@@ -15,7 +15,7 @@ If you find this project useful here's how you can help:
 
 When you are opening a PR to {{< kafka-operator >}} the first time we will require you to sign a standard CLA.
 
-## How to run Kafka-operator in your cluster with your changes
+## How to run {{< kafka-operator >}} in your cluster with your changes
 
 The {{< kafka-operator >}} is built on the [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) project.
 
