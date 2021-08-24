@@ -1,5 +1,5 @@
 ---
-title: Kafka Operator
+title: Koperator
 img: /docs/supertubes/kafka-operator/img/kafka-operator-arch.png
 weight: 700
 cascade:
