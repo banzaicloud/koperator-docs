@@ -33,7 +33,7 @@ banzai login
     banzai cluster create
     ```
 
-    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/cluster_pke.json)
+    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/cluster_pke.json)
 
     > Please don't forget to fill out the template with the created ids.
 
@@ -63,7 +63,7 @@ banzai login
     banzai cluster create
     ```
 
-    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/cluster_gke.json)
+    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/cluster_gke.json)
 
     > Please don't forget to fill out the template with the created ids.
 
@@ -90,7 +90,7 @@ banzai login
     banzai cluster create
     ```
 
-    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/cluster_eks.json)
+    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/cluster_eks.json)
 
     > Please don't forget to fill out the template with the created ids.
 
@@ -137,7 +137,7 @@ banzai login
     helm install --name=kafka-operator banzaicloud-stable/kafka-operator
     ```
 
-1. Create a 3 broker Kafka Cluster using the [provided](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/kafka.yaml) yaml.
+1. Create a 3 broker Kafka Cluster using the [provided](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/kafka.yaml) yaml.
 
     This will install 3 brokers partitioned to three different zone with fast ssd.
 1. Create a client container inside the cluster
@@ -173,7 +173,7 @@ Monitoring environment automatically installed, find your cluster and Grafanas U
 
 ## Run the tests
 
-1. Run perf test against the cluster, by building the provided Docker [image](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/loadgens/Dockerfile)
+1. Run perf test against the cluster, by building the provided Docker [image](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/loadgens/Dockerfile)
 
     ```bash
     docker build -t yourname/perfload:0.1.0 /loadgens

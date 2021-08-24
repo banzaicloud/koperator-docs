@@ -184,19 +184,19 @@ You can deploy the {{< kafka-operator >}} using a [Helm chart](https://github.co
     - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
 
         ```bash
-        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster.yaml
+        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster.yaml
         ```
 
     - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" %}}.
 
         ```bash
-        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster_ssl.yaml
+        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster_ssl.yaml
         ```
 
 1. If you have installed the Prometheus operator, create the ServiceMonitors. Prometheus will be installed and configured properly for the {{< kafka-operator >}}.
 
     ```bash
-    kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/kafkacluster-prometheus.yaml
+    kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/kafkacluster-prometheus.yaml
     ```
 
 1. Verify that the Kafka cluster has been created.
