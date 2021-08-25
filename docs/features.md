@@ -95,5 +95,5 @@ a dynamic reconfiguration.
 ### Seamless Istio mesh support
 
 - Operator allows to use ClusterIP services instead of Headless, which still works better in case of Service meshes.
-- To avoid too early Kafka initialization, which might lead to unready sidecar container. The operator uses a small script to mitigate this behavior. All Kafka image can be used the only one requirement is an available **curl** command.
+- To avoid too early Kafka initialization, which might lead to unready sidecar container. The operator uses a small script to mitigate this behaviour. Any Kafka image can be used with the only requirement of an available **curl** command.
 - To access a Kafka cluster which runs inside the mesh. Operator supports creating Istio ingress gateways.
