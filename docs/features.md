@@ -25,7 +25,7 @@ Using StatefulSet we **lose:**
 - to remove a specific Broker from a cluster (StatefulSet always removes the most recently created Broker)
 - to use multiple, different Persistent Volumes for each Broker
 
-{{< kafka-operator >}} uses `simple` Pods, ConfigMaps, and PersistentVolumeClaims, instead of StatefulSet. Using these resources allows us to build an Operator which is better suited to managing Apache Kafka.
+{{< kafka-operator >}} uses `simple` Pods, ConfigMaps, and PersistentVolumeClaims, instead of StatefulSet. Using these resources allows us to build an Operator which is better suited to manage Apache Kafka.
 
 With the {{< kafka-operator >}} you can:
 
