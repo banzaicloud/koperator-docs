@@ -11,7 +11,7 @@ All Kafka on Kubernetes operators use [StatefulSet](https://kubernetes.io/docs/c
 
 >StatefulSet manages the deployment and scaling of a set of Pods, and provide guarantees about their ordering and uniqueness. Like a Deployment, a StatefulSet manages Pods that are based on an identical container spec. Unlike a Deployment, a StatefulSet maintains sticky identities for each of its Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that is maintained across any rescheduling.
 
-How does this looks from the perspective of Apache Kafka?
+How does this look from the perspective of Apache Kafka?
 
 With StatefulSet we get:
 
@@ -25,9 +25,9 @@ Using StatefulSet we **lose:**
 - to remove a specific Broker from a cluster (StatefulSet always removes the most recently created Broker)
 - to use multiple, different Persistent Volumes for each Broker
 
-The Banzai Cloud Kafka Operator uses `simple` Pods, ConfigMaps, and PersistentVolumeClaims, instead of StatefulSet. Using these resources allows us to build an Operator which is better suited to Kafka.
+{{< kafka-operator >}} uses `simple` Pods, ConfigMaps, and PersistentVolumeClaims, instead of StatefulSet. Using these resources allows us to build an Operator which is better suited to manage Apache Kafka.
 
-With the Banzai Cloud Kafka operator we can:
+With the {{< kafka-operator >}} you can:
 
 - modify the configuration of unique Brokers
 - remove specific Brokers from clusters
@@ -37,15 +37,15 @@ With the Banzai Cloud Kafka operator we can:
 
 ### Fine Grained Broker Config Support
 
-We needed to be able to react to events in a fine-grained way for each Broker - and not in the limited way StatefulSet does (which, for example, removes the most recently created Brokers). Some of the available solutions try to overcome these deficits by placing scripts inside the container to generate configs at runtime, whereas the Banzai Cloud Kafka operator's configurations are deterministically placed in specific Configmaps.
+We needed to be able to react to events in a fine-grained way for each Broker - and not in the limited way StatefulSet does (which, for example, removes the most recently created Brokers). Some of the available solutions try to overcome these deficits by placing scripts inside the container to generate configs at runtime, whereas the {{< kafka-operator >}}'s configurations are deterministically placed in specific Configmaps.
 
 ### Graceful Kafka Cluster Scaling
 
-Here at Banzai Cloud, we know how to operate Kafka at scale (we are contributors and have been operating Kafka on Kubernetes for years now). We believe, however, that LinkedIn has even more experience than we do. To scale Kafka clusters both up and down gracefully, we integrated LinkedIn's [Cruise-Control](https://github.com/linkedin/cruise-control) to do the hard work for us. We already have good defaults (i.e. plugins) that react to events, but we also allow our users to write their own.
+Here at Banzai Cloud, we know how to operate Apache Kafka at scale (we are contributors and have been operating Kafka on Kubernetes for years now). We believe, however, that LinkedIn has even more experience than we do. To scale Kafka clusters both up and down gracefully, we integrated LinkedIn's [Cruise-Control](https://github.com/linkedin/cruise-control) to do the hard work for us. We already have good defaults (i.e. plugins) that react to events, but we also allow our users to write their own.
 
 ### External Access via LoadBalancer
 
-The Banzai Cloud Kafka operator externalizes access to Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
+The {{< kafka-operator >}} externalizes access to Apache Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
 
 ![Kafka External Access](../img/kafka-external.png)
 
@@ -59,11 +59,11 @@ The Pipeline platform is capable of automating this process, as well.
 
 ### Monitoring via Prometheus
 
-The Kafka operator exposes Cruise-Control and Kafka JMX metrics to Prometheus.
+The {{< kafka-operator >}} exposes Cruise-Control and Kafka JMX metrics to Prometheus.
 
 ### Reacting on Alerts
 
-The Kafka Operator acts as a **Prometheus Alert Manager**. It receives alerts defined in Prometheus, and creates actions based on Prometheus alert annotations.
+The {{< kafka-operator >}} acts as a **Prometheus Alert Manager**. It receives alerts defined in Prometheus, and creates actions based on Prometheus alert annotations.
 
 Currently, there are three default actions (which can be extended):
 
@@ -95,5 +95,5 @@ a dynamic reconfiguration.
 ### Seamless Istio mesh support
 
 - Operator allows to use ClusterIP services instead of Headless, which still works better in case of Service meshes.
-- To avoid too early kafka initialization, which might lead to unready sidecar container. The operator uses a small script to mitigate this behavior. All Kafka image can be used the only one requirement is an available **curl** command.
+- To avoid too early Kafka initialization, which might lead to unready sidecar container. The operator uses a small script to mitigate this behaviour. Any Kafka image can be used with the only requirement of an available **curl** command.
 - To access a Kafka cluster which runs inside the mesh. Operator supports creating Istio ingress gateways.

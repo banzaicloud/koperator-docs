@@ -4,7 +4,7 @@ shorttitle: External listeners
 weight: 700
 ---
 
-There are two methods to expose your Kafka cluster so that external client applications that run outside the Kubernetes cluster can access it:
+There are two methods to expose your Apache Kafka cluster so that external client applications that run outside the Kubernetes cluster can access it:
 
 - using [LoadBalancer](#loadbalancer) type services
 - using [NodePort](#nodeport) type services

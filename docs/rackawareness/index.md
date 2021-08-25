@@ -6,11 +6,11 @@ weight: 750
 
 Kafka automatically replicates partitions across brokers, so if a broker fails, the data is safely preserved on another. Kafka's rack awareness feature spreads replicas of the same partition across different **failure groups** (racks or availability zones). This extends the guarantees Kafka provides for broker-failure to cover rack and availability zone (AZ) failures, limiting the risk of data loss should all the brokers in the same ack or AZ fail at once.
 
-> Note: All brokers deployed by the Kafka operator must belong to the same Kubernetes cluster. If you want to spread your brokers across multiple Kubernetes clusters, as in a hybrid-cloud or multi-clouds environment (or just to add geo-redundancy to your setup), consider using our commercial [Supertubes](/products/supertubes/) solution.
+> Note: All brokers deployed by the {{< kafka-operator >}} must belong to the same Kubernetes cluster. If you want to spread your brokers across multiple Kubernetes clusters, as in a hybrid-cloud or multi-clouds environment (or just to add geo-redundancy to your setup), consider using our commercial [Supertubes](/products/supertubes/) solution.
 
-Since rack awareness is so vitally important, especially in multi-region and hybrid-cloud environments, the [Kafka operator](https://github.com/banzaicloud/kafka-operator) provides an automated solution for it, and allows fine-grained broker rack configuration based on pod affinities and anti-affinities. (To learn more about affinities and anti-affinities, see [Taints and tolerations, pod and node affinities demystified]({{< blogref "k8s-taints-tolerations-affinities.md" >}}).)
+Since rack awareness is so vitally important, especially in multi-region and hybrid-cloud environments, the [{{< kafka-operator >}}](https://github.com/banzaicloud/koperator) provides an automated solution for it, and allows fine-grained broker rack configuration based on pod affinities and anti-affinities. (To learn more about affinities and anti-affinities, see [Taints and tolerations, pod and node affinities demystified]({{< blogref "k8s-taints-tolerations-affinities.md" >}}).)
 
-When [well-known Kubernetes labels](https://kubernetes.io/docs/reference/kubernetes-api/labels-annotations-taints/) are available (for example, AZ, node labels, and so on), the Kafka operator attempts to improve broker resilience by default.
+When [well-known Kubernetes labels](https://kubernetes.io/docs/reference/kubernetes-api/labels-annotations-taints/) are available (for example, AZ, node labels, and so on), the {{< kafka-operator >}} attempts to improve broker resilience by default.
 
 ![Rack Awareness](kafkarack.png)
 
@@ -43,7 +43,7 @@ Note that depending on your use case, you might need additional configuration on
 
 ## Under the hood
 
-As mentioned earlier, `broker.rack` is a read-only broker config, so is set whenever the broker starts or restarts. The Banzai Cloud [Kafka operator](https://github.com/banzaicloud/kafka-operator) holds all its configs within a ConfigMap in each broker.
+As mentioned earlier, `broker.rack` is a read-only broker config, so is set whenever the broker starts or restarts. The [{{< kafka-operator >}}](https://github.com/banzaicloud/koperator) holds all its configs within a ConfigMap in each broker.
 Getting label values from nodes and using them to generate a ConfigMap is relatively easy, but to determine where the exact broker/pod is scheduled, the operator has to wait until the pod is *actually* scheduled to a node. Luckily, Kubernetes schedules pods even when a given ConfigMap is unavailable. However, the corresponding pod will remain in a pending state as long as the ConfigMap is not available to mount. The operator makes use of this pending state to gather all the necessary node labels and initialize a ConfigMap with the fetched data. To take advantage of this, we introduced a status field called `RackAwarenessState` in our CRD. The operator populates this status field with two values, `WaitingForRackAwareness` and `Configured`.
 
 ![Rack Awareness](/img/blog/kafka-rack-awareness/kafkarack.gif)
