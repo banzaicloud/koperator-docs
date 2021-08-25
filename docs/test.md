@@ -6,7 +6,7 @@ weight: 100
 
 ## Create Topic
 
-Topic creation by default is enabled in Kafka, but if it is configured otherwise, you'll need to create a topic first.
+Topic creation by default is enabled in Apache Kafka, but if it is configured otherwise, you'll need to create a topic first.
 
 - You can use the `KafkaTopic` CRD to create a topic called **my-topic** like this:
 

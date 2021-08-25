@@ -4,11 +4,11 @@ shorttitle: SSL
 weight: 300
 ---
 
-The Kafka operator makes securing your Kafka cluster with SSL simple.
+The {{< kafka-operator >}} makes securing your Apache Kafka cluster with SSL simple.
 
-## Enable SSL encryption in Kafka {#enable-ssl}
+## Enable SSL encryption in Apache Kafka {#enable-ssl}
 
-To create a Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own certificates, or instruct the operator to create them for you from your cluster configuration.
+To create an Apache Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own certificates, or instruct the operator to create them for you from your cluster configuration.
 
 {{< include-headless "warning-listener-protocol.md" "kafka-operator" >}}
 
@@ -29,13 +29,13 @@ If `sslSecrets.create` is `false`, the operator will look for the secret at `ssl
 
 ## Using Kafka ACLs with SSL
 
-> Note: The Kafka operator provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product.
+> Note: {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product.
 > {{< include-headless "kafka-operator-supertubes-intro.md" >}}
 
-If you choose not to enable ACLs for your kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.
+If you choose not to enable ACLs for your Apache Kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.
 You can leave the `topicGrants` out as they will not have any effect.
 
-1. To enable ACL support for your kafka cluster, pass the following configurations along with your `brokerConfig`:
+1. To enable ACL support for your Apache Kafka cluster, pass the following configurations along with your `brokerConfig`:
 
     ```yaml
     authorizer.class.name=kafka.security.authorizer.AclAuthorizer
@@ -110,7 +110,7 @@ you will need to generate new certificates signed by the CA, and ensure ACLs on 
 
 The operator supports using a back-end other than `cert-manager` for the PKI and user secrets.
 For now there is just an additional option of using `vault`.
-An easy way to get up and running quickly with `vault` on your Kubernetes cluster is to use the open source [`bank-vaults`](https://banzaicloud.com/products//bank-vaults/).
+An easy way to get up and running quickly with `vault` on your Kubernetes cluster is to use the open source [`bank-vaults`](https://banzaicloud.com/products/bank-vaults/).
 
 1. To set up `bank-vaults`, a `vault` instance, and the `vault-secrets-webhook`, you can run the following:
 
@@ -143,7 +143,7 @@ An easy way to get up and running quickly with `vault` on your Kubernetes cluste
     kubectl -n kafka create secret generic vault-keys --from-literal=vault.token=${VAULT_TOKEN} --from-literal=ca.crt="${VAULT_CACERT}"
     ```
 
-1. Then, if using the `kafka-operator` helm chart:
+1. Then, if using the {{< kafka-operator >}} Helm chart:
 
     ```bash
     helm install \
