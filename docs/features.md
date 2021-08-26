@@ -53,7 +53,6 @@ The {{< kafka-operator >}} externalizes access to Apache Kafka using a dynamical
 
 The operator fully automates Kafka's SSL support.
 The operator can provision the required secrets and certificates for you, or you can provide your own.
-The Pipeline platform is capable of automating this process, as well.
 
 ![SSL support for Kafka](../img/kafka-ssl.png)
 
@@ -63,7 +62,7 @@ The {{< kafka-operator >}} exposes Cruise-Control and Kafka JMX metrics to Prome
 
 ### Reacting on Alerts
 
-The {{< kafka-operator >}} acts as a **Prometheus Alert Manager**. It receives alerts defined in Prometheus, and creates actions based on Prometheus alert annotations.
+{{< kafka-operator >}} acts as a **Prometheus Alert Manager**. It receives alerts defined in Prometheus, and creates actions based on Prometheus alert annotations.
 
 Currently, there are three default actions (which can be extended):
 
