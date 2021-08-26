@@ -13,4 +13,4 @@ If you encounter problems while using the {{< kafka-operator >}} the documentati
 
 ### Commercial support
 
-If you are using the {{< kafka-operator >}} in a production environment and [require commercial support, contact Banzai Cloud](/contact/), the company backing the development of the {{< kafka-operator >}}.
+If you are using {{< kafka-operator >}} in a production environment and [require commercial support, contact Banzai Cloud](/contact/), the company backing the development of {{< kafka-operator >}}.

@@ -36,7 +36,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 ### Install cert-manager {#install-cert-manager}
 
-The {{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers. Deploy and configure cert-manager if you haven't already done so.
+{{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers. Deploy and configure cert-manager if you haven't already done so.
 
 > Note:
 >
@@ -154,9 +154,9 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
     --set prometheus.enabled=false
     ```
 
-### Install the {{< kafka-operator >}} with Helm {#kafka-operator-helm}
+### Install {{< kafka-operator >}} with Helm {#kafka-operator-helm}
 
-You can deploy the {{< kafka-operator >}} using a [Helm chart](https://github.com/banzaicloud/koperator/tree/master/charts). Complete the following steps.
+You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/banzaicloud/koperator/tree/master/charts). Complete the following steps.
 
 1. Install the {{< kafka-operator >}} CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install). This is performed in a separate step to allow you to uninstall and reinstall {{< kafka-operator >}} without deleting your installed custom resources.
 
@@ -171,7 +171,7 @@ You can deploy the {{< kafka-operator >}} using a [Helm chart](https://github.co
     helm repo update
     ```
 
-1. Install the {{< kafka-operator >}} into the *kafka* namespace:
+1. Install {{< kafka-operator >}} into the *kafka* namespace:
 
     ```bash
     helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
@@ -193,7 +193,7 @@ You can deploy the {{< kafka-operator >}} using a [Helm chart](https://github.co
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster_ssl.yaml
         ```
 
-1. If you have installed the Prometheus operator, create the ServiceMonitors. Prometheus will be installed and configured properly for the {{< kafka-operator >}}.
+1. If you have installed the Prometheus operator, create the ServiceMonitors. Prometheus will be installed and configured properly for {{< kafka-operator >}}.
 
     ```bash
     kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/kafkacluster-prometheus.yaml

@@ -17,7 +17,7 @@ When you are opening a PR to {{< kafka-operator >}} the first time we will requi
 
 ## How to run {{< kafka-operator >}} in your cluster with your changes
 
-The {{< kafka-operator >}} is built on the [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) project.
+{{< kafka-operator >}} is built on the [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) project.
 
 To build the operator and run tests:
 

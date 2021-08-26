@@ -16,7 +16,7 @@ When upgrading your {{< kafka-operator >}} deployment to a new version, complete
     kubectl replace --validate=false -f https://github.com/banzaicloud/koperator/releases/download/<versionnumber>/kafka-operator.crds.yaml
     ```
 
-1. Update the {{< kafka-operator >}} by running:
+1. Update your {{< kafka-operator >}} deployment by running:
 
     ```bash
     helm repo update

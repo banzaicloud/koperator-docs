@@ -19,7 +19,7 @@ With the [{{< kafka-operator >}}](https://github.com/banzaicloud/koperator), add
 
 In the event of an error with Broker #1, we want to handle it without disrupting the other Brokers. Maybe we would like to temporarily remove this Broker from the cluster, and fix its state, reconciling the node that serves the node, or maybe reconfigure the Broker using a new configuration. Again, when using StatefulSet, we lose the ability to remove specific Brokers from the cluster. StatefulSet only supports a field name replica that determines how many replicas an application should use. If there's a downscale/removal, this number can be lowered, however, this means that Kubernetes will remove the most recently added Pod (Broker #3) from the cluster - which, in this case, happens to suit our purposes quite well.
 
-To remove the #1 Broker from the cluster, we need to lower the number of brokers in the cluster from three to one. This will cause a state in which only one Broker is live, while we kill the brokers that handle traffic. The {{< kafka-operator >}} supports removing specific brokers without disrupting traffic in the cluster.
+To remove the #1 Broker from the cluster, we need to lower the number of brokers in the cluster from three to one. This will cause a state in which only one Broker is live, while we kill the brokers that handle traffic. {{< kafka-operator >}} supports removing specific brokers without disrupting traffic in the cluster.
 
 ## Fine grained Broker config support
 
@@ -29,7 +29,7 @@ Apache Kafka is a stateful application, where Brokers create/form a cluster with
 
 ## Monitoring based control
 
-Use of monitoring is essential for any application, and all relevant information about Kafka should be published to a monitoring solution. When using Kubernetes, the de facto solution is Prometheus, which supports configuring alerts based on previously consumed metrics. We wanted to build a standards-based solution (Prometheus and Alert Manager) that could handle and react to alerts automatically, so human operators wouldn't have to. The {{< kafka-operator >}} supports alert-based Kafka cluster management.
+Use of monitoring is essential for any application, and all relevant information about Kafka should be published to a monitoring solution. When using Kubernetes, the de facto solution is Prometheus, which supports configuring alerts based on previously consumed metrics. We wanted to build a standards-based solution (Prometheus and Alert Manager) that could handle and react to alerts automatically, so human operators wouldn't have to. {{< kafka-operator >}} supports alert-based Kafka cluster management.
 
 ## LinkedIn's Cruise Control
 

@@ -4,7 +4,7 @@ img: /docs/supertubes/kafka-operator/img/kafka-operator-arch.png
 weight: 700
 cascade:
   module: kafka-operator
-  githubEditUrl: "https://github.com/banzaicloud/kafka-operator-docs/edit/master/docs/"
+  githubEditUrl: "https://github.com/banzaicloud/koperator-docs/edit/master/docs/"
   operatorName: "Koperator"
 ---
 

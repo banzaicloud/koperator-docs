@@ -29,13 +29,13 @@ If `sslSecrets.create` is `false`, the operator will look for the secret at `ssl
 
 ## Using Kafka ACLs with SSL
 
-> Note: The {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Supertubes](/products/supertubes/) product.
+> Note: {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Supertubes](/products/supertubes/) product.
 > {{< include-headless "doc/kafka-operator-supertubes-intro.md" >}}
 
 If you choose not to enable ACLs for your Apache Kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.
 You can leave the `topicGrants` out as they will not have any effect.
 
-1. To enable ACL support for your Kafka cluster, pass the following configurations along with your `brokerConfig`:
+1. To enable ACL support for your Apache Kafka cluster, pass the following configurations along with your `brokerConfig`:
 
     ```yaml
     authorizer.class.name=kafka.security.authorizer.AclAuthorizer
