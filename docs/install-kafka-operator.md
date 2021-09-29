@@ -17,7 +17,7 @@ The operator installs the 2.7.0 version of Apache Kafka, and can run on Minikube
 
 ## Install {{< kafka-operator >}} and all requirements using Streaming Data Manager
 
-This method uses a command-line tool of the commercial [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product to install the Kafka operator and its prerequisites. If you'd prefer to install these components manually, see [Install {{< kafka-operator >}} and the requirements independently](#manual-install).
+This method uses a command-line tool of the commercial [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product to install the Koperator and its prerequisites. If you'd prefer to install these components manually, see [Install {{< kafka-operator >}} and the requirements independently](#manual-install).
 
 1. [Register for an evaluation version of Streaming Data Manager](https://banzaicloud.com/products/try-supertubes/).
 
