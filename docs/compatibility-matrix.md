@@ -10,18 +10,15 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 
 |Operator Version|Apache Kafka Version|JMX Exporter Version|Cruise Control Version|Istio Operator Version|Example cluster CR|Maintained|
 |-------|------|----------------|-------|----|---|-|
-|v0.16.0|2.5.0+|0.15.0|2.5.37|1.9|[link](https://github.com/banzaicloud/koperator/blob/v0.16.1/config/samples/simplekafkacluster.yaml)|+|
 |v0.17.0|2.5.0+|0.15.0|2.5.37|1.9|[link](https://github.com/banzaicloud/koperator/blob/v0.17.0/config/samples/simplekafkacluster.yaml)|+|
-|v0.18.0|2.5.0+|0.15.0|2.5.68|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.17.0/config/samples/simplekafkacluster.yaml)|+|
+|v0.18.3|2.5.0+|0.15.0|2.5.68|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.17.0/config/samples/simplekafkacluster.yaml)|+|
 
 ## Available {{< kafka-operator >}} images
 
 |Image|Go version|
 |-|-|
-|ghcr.io/banzaicloud/kafka-operator:v0.16.0|1.15|
-|ghcr.io/banzaicloud/kafka-operator:v0.16.1|1.15|
 |ghcr.io/banzaicloud/kafka-operator:v0.17.0|1.16|
-|ghcr.io/banzaicloud/kafka-operator:v0.18.0|1.16|
+|ghcr.io/banzaicloud/kafka-operator:v0.18.3|1.16|
 
 ## Available Apache Kafka images
 
