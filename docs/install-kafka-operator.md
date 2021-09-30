@@ -6,9 +6,9 @@ weight: 10
 
 
 
-The operator installs the 2.7.0 version of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.18.0+.
+The operator installs version 2.8.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.18.0+.
 
-> The operator supports Kafka 2.0+
+> The operator supports Kafka 2.5.0-2.8.x.
 
 ## Prerequisites
 
@@ -39,9 +39,8 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 {{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers. Deploy and configure cert-manager if you haven't already done so.
 
 > Note:
->
-> - {{< kafka-operator >}} 0.8.x and newer supports cert-manager 1.3.x
-> - {{< kafka-operator >}} 0.7.x supports cert-manager 0.10.x
+> - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3
+> - {{< kafka-operator >}} 0.8.x-0.17.0 supports cert-manager 1.3.x
 
 Install cert-manager and the CustomResourceDefinitions using one of the following methods:
 
@@ -49,7 +48,7 @@ Install cert-manager and the CustomResourceDefinitions using one of the followin
 
     ```bash
     # Install the CustomResourceDefinitions and cert-manager itself
-    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
+    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
     ```
 
 - Using Helm:
@@ -62,10 +61,10 @@ Install cert-manager and the CustomResourceDefinitions using one of the followin
 
     # Install cert-manager into the cluster
     # Using helm3
-    helm install cert-manager --namespace cert-manager --create-namespace --version v1.3.1 jetstack/cert-manager
+    helm install cert-manager --namespace cert-manager --create-namespace --version v1.5.3 jetstack/cert-manager
 
     # Install the CustomResourceDefinitions
-    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.crds.yaml
+    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.crds.yaml
 
 Verify that the cert-manager pods have been created:
 
