@@ -6,11 +6,7 @@ weight: 10
 
 
 
-<<<<<<< HEAD
-The operator installs version 2.8.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.18.0+.
-=======
-The operator installs the 2.7.0 version of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.18.0+.
->>>>>>> d321200 (Update cert-manager version to 1.3.1 from 0.15.1)
+The operator installs version 2.8.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.19.0+.
 
 > The operator supports Kafka 2.5.0-2.8.x.
 
@@ -42,14 +38,8 @@ This method uses a command-line tool of the commercial [Cisco Streaming Data Man
 {{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers. Deploy and configure cert-manager if you haven't already done so.
 
 > Note:
-<<<<<<< HEAD
 > - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3
 > - {{< kafka-operator >}} 0.8.x-0.17.0 supports cert-manager 1.3.x
-=======
->
-> - Kafka operator 0.8.x and newer supports cert-manager 1.3.x
-> - Kafka operator 0.7.x supports cert-manager 0.10.x
->>>>>>> d321200 (Update cert-manager version to 1.3.1 from 0.15.1)
 
 Install cert-manager and the CustomResourceDefinitions using one of the following methods:
 
@@ -57,11 +47,7 @@ Install cert-manager and the CustomResourceDefinitions using one of the followin
 
     ```bash
     # Install the CustomResourceDefinitions and cert-manager itself
-<<<<<<< HEAD
     kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
-=======
-    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.yaml
->>>>>>> d321200 (Update cert-manager version to 1.3.1 from 0.15.1)
     ```
 
 - Using Helm:
@@ -74,17 +60,10 @@ Install cert-manager and the CustomResourceDefinitions using one of the followin
 
     # Install cert-manager into the cluster
     # Using helm3
-<<<<<<< HEAD
     helm install cert-manager --namespace cert-manager --create-namespace --version v1.5.3 jetstack/cert-manager
 
     # Install the CustomResourceDefinitions
     kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.crds.yaml
-=======
-    helm install cert-manager --namespace cert-manager --create-namespace --version v1.3.1 jetstack/cert-manager
-
-    # Install the CustomResourceDefinitions
-    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.3.1/cert-manager.crds.yaml
->>>>>>> d321200 (Update cert-manager version to 1.3.1 from 0.15.1)
 
 Verify that the cert-manager pods have been created:
 
