@@ -130,11 +130,6 @@ cruise.control.metrics.topic.replication.factor=2
 
   Rolling Upgrade Config:
     Failure Threshold:  1
-  Vault Config:
-    Auth Role:   
-    Issue Path:  
-    Pki Path:    
-    User Store:  
   Zk Addresses:
     zookeeper-client.zookeeper:2181
 Status:
