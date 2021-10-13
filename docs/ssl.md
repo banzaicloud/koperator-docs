@@ -22,10 +22,6 @@ If `sslSecrets.create` is `false`, the operator will look for the secret at `ssl
 |:------------:|:-------------------|
 | `caCert`     | The CA certificate |
 | `caKey`      | The CA private key |
-| `clientCert` | A client certificate (this will be used by cruise control and the operator for kafka operations) |
-| `clientKey`  | The private key for `clientCert` |
-| `peerCert`   | The certificate for the kafka brokers |
-| `peerKey`    | The private key for the kafka brokers |
 
 ## Using Kafka ACLs with SSL
 
