@@ -5,5 +5,5 @@ metadata:
     name: zookeeper
     namespace: zookeeper
 spec:
-    replicas: 3
+    replicas: 1
 EOF
