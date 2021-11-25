@@ -58,12 +58,12 @@ Install cert-manager and the CustomResourceDefinitions using one of the followin
     helm repo add jetstack https://charts.jetstack.io
     helm repo update
 
+    # Install the CustomResourceDefinitions
+    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.crds.yaml
+
     # Install cert-manager into the cluster
     # Using helm3
     helm install cert-manager --namespace cert-manager --create-namespace --version v1.5.3 jetstack/cert-manager
-
-    # Install the CustomResourceDefinitions
-    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.crds.yaml
 
 Verify that the cert-manager pods have been created:
 
