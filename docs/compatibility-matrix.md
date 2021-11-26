@@ -11,7 +11,7 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 |Operator Version|Apache Kafka Version|JMX Exporter Version|Cruise Control Version|Istio Operator Version|Example cluster CR|Maintained|
 |-------|------|----------------|-------|----|---|-|
 |v0.18.3|2.6.2+|0.15.0|2.5.37|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.18.3/config/samples/simplekafkacluster.yaml)|+|
-|v0.19.0|2.6.2+|0.15.0|2.5.37|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.19.0/config/samples/simplekafkacluster.yaml)|+|
+|v0.19.0|2.6.2+|0.15.0|2.5.68|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.19.0/config/samples/simplekafkacluster.yaml)|+|
 |v0.20.0|2.6.2+|0.15.0|2.5.68|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.20.0/config/samples/simplekafkacluster.yaml)|+|
 
 ## Available {{< kafka-operator >}} images
