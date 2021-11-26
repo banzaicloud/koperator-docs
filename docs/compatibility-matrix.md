@@ -10,8 +10,9 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 
 |Operator Version|Apache Kafka Version|JMX Exporter Version|Cruise Control Version|Istio Operator Version|Example cluster CR|Maintained|
 |-------|------|----------------|-------|----|---|-|
-|v0.17.0|2.5.0+|0.15.0|2.5.37|1.9|[link](https://github.com/banzaicloud/koperator/blob/v0.17.0/config/samples/simplekafkacluster.yaml)|+|
-|v0.18.3|2.5.0+|0.15.0|2.5.37|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.18.3/config/samples/simplekafkacluster.yaml)|+|
+|v0.18.3|2.6.2+|0.15.0|2.5.37|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.18.3/config/samples/simplekafkacluster.yaml)|+|
+|v0.19.0|2.6.2+|0.15.0|2.5.68|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.19.0/config/samples/simplekafkacluster.yaml)|+|
+|v0.20.0|2.6.2+|0.15.0|2.5.68|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.20.0/config/samples/simplekafkacluster.yaml)|+|
 
 ## Available {{< kafka-operator >}} images
 
@@ -19,15 +20,14 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 |-|-|
 |ghcr.io/banzaicloud/kafka-operator:v0.17.0|1.16|
 |ghcr.io/banzaicloud/kafka-operator:v0.18.3|1.16|
+|ghcr.io/banzaicloud/kafka-operator:v0.19.0 |1.16|
+|ghcr.io/banzaicloud/kafka-operator:v0.20.0 |1.17|
 
 ## Available Apache Kafka images
 
 |Image|Java version|
 |-|-|
-|banzaicloud/kafka:2.13-2.5.0-bzc.1|11|
-|banzaicloud/kafka:2.13-2.5.1-bzc.1|11|
-|ghcr.io/banzaicloud/kafka:2.13-2.6.0-bzc.1|11|
-|ghcr.io/banzaicloud/kafka:2.13-2.6.1-bzc.1|11|
+|ghcr.io/banzaicloud/kafka:2.13-2.6.2-bzc.1|11|
 |ghcr.io/banzaicloud/kafka:2.13-2.7.0-bzc.1|11|
 |ghcr.io/banzaicloud/kafka:2.13-2.7.0-bzc.2|11|
 |ghcr.io/banzaicloud/kafka:2.13-2.8.0|11|
