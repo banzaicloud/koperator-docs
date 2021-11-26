@@ -20,6 +20,8 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 |-|-|
 |ghcr.io/banzaicloud/kafka-operator:v0.17.0|1.16|
 |ghcr.io/banzaicloud/kafka-operator:v0.18.3|1.16|
+|ghcr.io/banzaicloud/kafka-operator:v0.19.0 |1.16|
+|ghcr.io/banzaicloud/kafka-operator:v0.20.0 |1.17|
 
 ## Available Apache Kafka images
 
