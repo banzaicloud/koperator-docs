@@ -1,0 +1,30 @@
+listenersConfig:
+  externalListeners:
+    - type: "ssl"
+      name: "external"
+      serverSSLCertSecret:
+        name: kafka-custom-server-cert-1
+    # accessMethod: LoadBalancer
+    # hostnameOverride: kafka-1.dev.my.domain
+      externalStartingPort: 19090
+      containerPort: 29095
+  internalListeners:
+    - type: "ssl"
+      name: "customssl"
+      serverSSLCertSecret:
+        name: kafka-custom-server-cert-2
+      containerPort: 29094
+      usedForInnerBrokerCommunication: false
+    - type: "ssl"
+      name: "internal"
+      containerPort: 29092
+      usedForInnerBrokerCommunication: true
+    - type: "ssl"
+      name: "controller"
+      containerPort: 29093
+      usedForInnerBrokerCommunication: false
+      usedForControllerCommunication: true
+  sslSecrets:
+    tlsSecretName: "test-kafka-operator"
+    jksPasswordName: "test-kafka-operator-pass"
+    create: true
