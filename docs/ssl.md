@@ -8,9 +8,8 @@ The {{< kafka-operator >}} makes securing your Apache Kafka cluster with SSL sim
 
 ## Enable SSL encryption in Apache Kafka {#enable-ssl}
 
-To create an Apache Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own CA cert and CA key, or instruct the operator to create them for you from your cluster configuration. Using **ssLSecrets** koperator  generates client and server certificates signed by the provided or genetared CA. Listeners will share the same server certificate. The client certificate will be used by the koperator, cruise control and cruise control metrics reporter to communicate with listener on SSL which is used for inner broker communication.
-    
-From koperator version and kafka version* You can also add your own generated certificates per listener. You can use hybrid solutions like you add your own generated certificate for one external listener and other listeners can use the auto generated one. See details below.
+To create an Apache Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own CA cert and CA key, or instruct the operator to create them for you from your cluster configuration. Using **ssLSecrets** Koperator  generates client and server certificates signed by the provided or genetared CA. Listeners will share the same server certificate. The client certificate will be used by the Koperator, Cruise Control and Cruise Control Metrics Reporter to communicate with listener on SSL which is used for inner broker communication.
+From Koperator 0.21.0+ you can also add your own certificates per listener. You can use hybrid solutions like you add your own certificate for one external listener and other listeners can use the auto generated one. See details below.
 
 ## Using auto generated certificates ( **ssLSecrets** )
 {{< include-headless "warning-listener-protocol.md" "kafka-operator" >}}
