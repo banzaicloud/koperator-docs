@@ -8,11 +8,13 @@ The {{< kafka-operator >}} makes securing your Apache Kafka cluster with SSL sim
 
 ## Enable SSL encryption in Apache Kafka {#enable-ssl}
 
-To create an Apache Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own CA cert and CA key, or instruct the operator to create them for you from your cluster configuration. Using **ssLSecrets** Koperator  generates client and server certificates signed by the provided or genetared CA. Listeners will share the same server certificate. The client certificate will be used by the Koperator, Cruise Control and Cruise Control Metrics Reporter to communicate with listener on SSL which is used for inner broker communication.
-From Koperator 0.21.0+ you can also add your own certificates per listener. You can use hybrid solutions like you add your own certificate for one external listener and other listeners can use the auto generated one. See details below.
+To create an Apache Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own CA cert and CA key, or instruct the operator to create them for you from your cluster configuration. Using **sslSecrets**, {{< kafka-operator >}} generates client and server certificates signed by the provided or generated CA. Listeners will share the same server certificate. The client certificate will be used by the {{< kafka-operator >}}, Cruise Control, and Cruise Control Metrics Reporter to communicate with the listener on SSL, which is used for internal broker communication.
 
-## Using auto generated certificates ( **ssLSecrets** )
-{{< include-headless "warning-listener-protocol.md" "kafka-operator" >}}
+From {{< kafka-operator >}} 0.21.0+ you can also add your own certificates per listener. You can use hybrid solutions, like adding your own certificate for one external listener and using the auto-generated one for other listeners. See details below.
+
+## Using auto-generated certificates (**ssLSecrets**)
+
+{{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
 
 The following example enables SSL and automatically generates the certificates:
 
@@ -26,9 +28,12 @@ If `sslSecrets.create` is `false`, the operator will look for the secret at `ssl
 | `caKey`      | The CA private key |
 
 ## Using own certificates
-### For listener which is not used for inner broker communication
-In this **KafkaCluster** custom resource (https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_hybrid_customcert.yaml) SSL is enabled for all listeners and certificates will be auto generated for "inner" and "controller" listeners. The "external" and "internal" listeners will use the user provided certificates. **ServerSSLCertSecret** is a reference to the Kubernetes secret that contains the server certificate for the listener to be used for SSL communication.
-In the server secret these keys - values must be set:
+
+### Listeners not used for internal broker communication
+
+In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_hybrid_customcert.yaml), SSL is enabled for all listeners, and certificates are automatically generated for "internal" and "controller" listeners. The "external" and "internal" listeners will use the user-provided certificates. The **serverSSLCertSecret** key is a reference to the Kubernetes secret that contains the server certificate for the listener to be used for SSL communication.
+
+In the server secret the following keys must be set:
 
 | Key              | Value                                     |
 |:----------------:|:------------------------------------------|
@@ -36,30 +41,36 @@ In the server secret these keys - values must be set:
 | `truststore.jks` | Trusted CA certificate in JKS format     |
 | `password`       | Password for the key and trust store      |
 
-Koperator using JKS format based certificate for listener config. 
-### For listener which is used for inner broker communication
-In this **KafkaCluster** custom resource (https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml ) SSL is enabled for all listeners and user provided certificates used. In that case when custom certificate is used for listener which is used for inner broker communication than client certificate need to be specified also. Client certificate will be used by Koperator, Cruise Control, Cruise Control Metrics Reporter to communicate on SSL. **ClientSSLCertSecret** is a reference to the Kubernetes secret where custom client SSL certificate can be provided. Client secret data keys must be the same as the server secret. Client certificate must be signed by the same CA authority as the server certificate for the corresponding listener. **ClientSSLCertSecret** has to be in the **KafkaCluster** custom resource spec field. 
+{{< kafka-operator >}} using JKS format based certificate for listener config.
 
-### Generate JKS certificate 
-JKS format certificates can be generated by openssl and keystore applications. This script also can be used to generate them: https://github.com/confluentinc/confluent-platform-security-tools/blob/master/kafka-generate-ssl.sh.
-Kafka listeners using 2-way-SSL mutual authentication. This is why important to set properly the CNAME (Common Name) and if needed the SAN (Subject Alternative Name) fields in certificates. In the following description we assume that the kafka cluster is in the kafka namespace. 
-For the client certificate CNAME must be "kafka-controller.kafka.mgt.cluster.local". (where .kafka. is the namespace of the kafka cluster) 
-For internal listeners which are exposed by a headless service (kafka-headless) CNAME must be "kafka-headless.kafka.svc.cluster.local" and SAN field must contains the following:
-- *.kafka-headless.kafka.svc.cluster.local
-- kafka-headless.kafka.svc.cluster.local
-- *.kafka-headless.kafka.svc
-- kafka-headless.kafka.svc
-- *.kafka-headless.kafka
-- kafka-headless.kafka
-- kafka-headless
-For internal listeners which are exposed by a normal service (kafka-all-broker) CNAME must be "kafka-all-broker.kafka.svc.cluster.local"
-For external listener you need to use the advertised load balancer hostname as CNAME. The hostname need to be specified in the **KafkaCluster** custom resource with **hostnameOverride** and the **accessMethod** has to be "LoadBalancer". You can read more about this override here (https://sdm-docs.eticloud.io/docs/kafka-operator/external-listener/?hostName#loadbalancer 5th section).
+### Listeners used for internal broker communication
 
+In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml), SSL is enabled for all listeners, and user-provided certificates are used. In that case, when a custom certificate is used for a listener which is used for internal broker communication, you must also specify the client certificate. The client certificate will be used by {{< kafka-operator >}}, Cruise Control, Cruise Control Metrics Reporter to communicate on SSL. The **clientSSLCertSecret** key is a reference to the Kubernetes secret where the custom client SSL certificate can be provided. Client secret data keys must be the same as the server secret. The client certificate must be signed by the same CA authority as the server certificate for the corresponding listener. The **clientSSLCertSecret** has to be in the **KafkaCluster** custom resource spec field.
+
+### Generate JKS certificate
+
+Certificates in JKS format can be generated using OpenSSL and keystore applications. You can also use [this script](https://github.com/confluentinc/confluent-platform-security-tools/blob/master/kafka-generate-ssl.sh).
+
+Kafka listeners use 2-way-SSL mutual authentication, so you must properly set the CNAME (Common Name) fields and if needed the SAN (Subject Alternative Name) fields in the certificates. In the following description we assume that the Kafka cluster is in the `kafka` namespace.
+
+- **For the client certificate**, CNAME must be "kafka-controller.kafka.mgt.cluster.local" (where .kafka. is the namespace of the kafka cluster).
+- **For internal listeners which are exposed by a headless service** (kafka-headless), CNAME must be "kafka-headless.kafka.svc.cluster.local", and the SAN field must contain the following:
+
+    - *.kafka-headless.kafka.svc.cluster.local
+    - kafka-headless.kafka.svc.cluster.local
+    - *.kafka-headless.kafka.svc
+    - kafka-headless.kafka.svc
+    - *.kafka-headless.kafka
+    - kafka-headless.kafka
+    - kafka-headless
+
+- **For internal listeners which are exposed by a normal service** (kafka-all-broker), CNAME must be "kafka-all-broker.kafka.svc.cluster.local"
+- **For external listeners**, you need to use the advertised load balancer hostname as CNAME. The hostname need to be specified in the **KafkaCluster** custom resource with **hostnameOverride**, and the **accessMethod** has to be "LoadBalancer". For details about this override, see Step 5 in {{% xref "/docs/supertubes/kafka-operator/external-listener/index.md#loadbalancer" %}}.
 
 ## Using Kafka ACLs with SSL
 
 > Note: {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product.
-> {{< include-headless "kafka-operator-supertubes-intro.md" >}}
+> {{< include-headless "doc/kafka-operator-supertubes-intro.md" >}}
 
 If you choose not to enable ACLs for your Apache Kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.
 You can leave the `topicGrants` out as they will not have any effect.
