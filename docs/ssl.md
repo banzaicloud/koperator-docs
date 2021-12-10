@@ -8,9 +8,9 @@ The {{< kafka-operator >}} makes securing your Apache Kafka cluster with SSL sim
 
 ## Enable SSL encryption in Apache Kafka {#enable-ssl}
 
-To create an Apache Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own CA cert and CA key, or instruct the operator to create them for you from your cluster configuration. Using **sslSecrets**, {{< kafka-operator >}} generates client and server certificates signed by the provided or generated CA. Listeners will share the same server certificate. The client certificate will be used by the {{< kafka-operator >}}, Cruise Control, and Cruise Control Metrics Reporter to communicate with the listener on SSL, which is used for internal broker communication.
+To create an Apache Kafka cluster which has listener(s) with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can either provide your own CA certificate and the corresponding private key, or let the operator to create them for you from your cluster configuration. Using **sslSecrets**, {{< kafka-operator >}} generates client and server certificates signed using CA. The server certificate is shared across listeners. The client certificate is used by the {{< kafka-operator >}}, Cruise Control, and Cruise Control Metrics Reporter to communicate Kafka brokers using listener with SSL enabled.
 
-From {{< kafka-operator >}} 0.21.0+ you can also add your own certificates per listener. You can use hybrid solutions, like adding your own certificate for one external listener and using the auto-generated one for other listeners. See details below.
+Providing custom certificates per listener is supported from {{< kafka-operator >}} version 0.21.0+. Having configurations where certain external listeners use user provided certificates while others rely on the auto-generated ones provided by {{< kafka-operator >}} are also supported. See details below.
 
 ## Using auto-generated certificates (**ssLSecrets**)
 
