@@ -26,6 +26,7 @@ The {{< kafka-operator >}} (formerly called Banzai Cloud Kafka Operator) is a Ku
 
 ![{{< kafka-operator >}} architecture](./img/kafka-operator-arch.png)
 
+
 >We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](features/) and some of the [scenarios](scenarios/) which drove us to create the {{< kafka-operator >}}.
 
 {{% include-headless "doc/kafka-operator-supertubes-intro.md" %}}
@@ -37,7 +38,8 @@ Apache Kafka predates Kubernetes and was designed mostly for `static` on-premise
 There are already several approaches to operating Apache Kafka on Kubernetes, however, we did not find them appropriate for use in a highly dynamic environment, nor capable of meeting our customers' needs. At the same time, there is substantial interest within the Kafka community for a solution which enables Kafka on Kubernetes, both in the open source and closed source space.
 >We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](features/) and some of the [scenarios](scenarios/) which were driving us to create the {{< kafka-operator >}}.
 
+>We took a different approach to what's out there - we believe for a good reason - read on to understand more about our [design motivations](features/) and some of the [scenarios](scenarios/) which were driving us to create the Banzai Cloud Kafka operator.
+
 Finally, our motivation is to build an open source solution and a community which drives the innovation and features of this operator. We are long term contributors and active community members of both Apache Kafka and Kubernetes, and we hope to recreate a similar community around this operator.
 
----
 Apache Kafka, Kafka, and the Kafka logo are either registered trademarks or trademarks of The Apache Software Foundation in the United States and other countries.
