@@ -4,7 +4,7 @@ shorttitle: External listeners
 weight: 700
 ---
 
-There are two methods to expose your Kafka cluster so that external client applications that run outside the Kubernetes cluster can access it:
+There are two methods to expose your Apache Kafka cluster so that external client applications that run outside the Kubernetes cluster can access it:
 
 - using [LoadBalancer](#loadbalancer) type services
 - using [NodePort](#nodeport) type services
@@ -91,10 +91,10 @@ To configure an external listener that uses the LoadBalancer access method, comp
 
 Using the *NodePort* access method, external listeners make Kafka brokers accessible through either the external IP of a Kubernetes cluster's node, or on an external IP that routes into the cluster.
 
-To configure an external listener that uses the LoadBalancer access method, complete the following steps.
+To configure an external listener that uses the NodePort access method, complete the following steps.
 
 1. Edit the `KafkaCluster` custom resource.
-1. Add an `externalListeners` section under `listenersConfig`. The following example creates a [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport) type service will be created separately for each broker. Brokers can be reached from outside the Kubernetes cluster at `<any node public ip>:<broker port number>` where the `<broker port number>` is computed as *externalStartingPort + broker id*. The *externalStartingPort* must fall into the range allocated for nodeports on the Kubernetes cluster, which is specified via *--service-node-port-range* (see [the Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)).
+1. Add an `externalListeners` section under `listenersConfig`. The following example creates a [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport) type service separately for each broker. Brokers can be reached from outside the Kubernetes cluster at `<any node public ip>:<broker port number>` where the `<broker port number>` is computed as *externalStartingPort + broker id*. The *externalStartingPort* must fall into the range allocated for nodeports on the Kubernetes cluster, which is specified via *--service-node-port-range* (see [the Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)).
 
     ```yaml
     listenersConfig:
@@ -119,7 +119,7 @@ To configure an external listener that uses the LoadBalancer access method, comp
           hostnameOverride: .dev.example.com
     ```
 
-    The `hostnameOverride` behaves differently here than with LoadBalancer access method. In this case, each broker will be advertized as `advertized.listeners=EXTERNAL1://<kafka-cluster-name>-<broker-id>.<namespace><value-specified-in-hostnameOverride-field>:<broker port number>`. If a three-broker Kafka cluster named *kafka* is running in the *kafka* namespace, the `advertized.listeners` for the brokers will look like this:
+    The `hostnameOverride` behaves differently here than with LoadBalancer access method. In this case, each broker will be advertized as `advertized.listeners=EXTERNAL1://<kafka-cluster-name>-<broker-id>.<external listener name>.<namespace><value-specified-in-hostnameOverride-field>:<broker port number>`. If a three-broker Kafka cluster named *kafka* is running in the *kafka* namespace, the `advertized.listeners` for the brokers will look like this:
 
     - broker 0:
       - advertized.listeners=EXTERNAL1://kafka-0.external1.kafka.dev.my.domain:32000
@@ -169,3 +169,65 @@ If both *hostnameOverride* and *nodePortExternalIP* fields are set:
   - advertized.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:9094
 
 > Note: If *nodePortExternalIP* is set, then the *containerPort* from the external listener config is used as a broker port, and is the same for each broker.
+
+## SASL authentication on external listeners {#sasl}
+
+To enable sasl_plaintext authentication on the external listener, modify the **externalListeners** section of the KafkaCluster CR according to the following example. This will enable an external listener on port 19090.
+
+```yaml
+  listenersConfig:
+    externalListeners:
+    - config:
+        defaultIngressConfig: ingress-sasl
+        ingressConfig:
+          ingress-sasl:
+            istioIngressConfig:
+              gatewayConfig:
+                credentialName: istio://sds
+                mode: SIMPLE
+      containerPort: 9094
+      externalStartingPort: 19090
+      name: external
+      type: sasl_plaintext
+```
+
+To connect to this listener using the Kafka console producer, complete the following steps:
+
+1. Set the producer properties like this:
+
+    ```ini
+    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="producer";
+    sasl.mechanism=OAUTHBEARER
+    security.protocol=SASL_SSL
+    ssl.truststore.location=/ssl/trustore.jks
+    ssl.truststore.password=truststorepass
+    ssl.endpoint.identification.algorithm=
+    ```
+
+1. Run the following command:
+
+    ```bash
+    kafka-console-producer.sh --bootstrap-server <your-loadbalancer-ip>:19090 --topic <your-topic-name> --producer.config producer.properties
+    ```
+
+To consume messages from this listener using the Kafka console consumer, complete the following steps:
+
+1. Set the producer properties like this:
+
+    ```ini
+    group.id=consumer-1
+    group.instance.id=consumer-1-instance-1
+    client.id=consumer-1-instance-1
+    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="consumer";
+    sasl.mechanism=OAUTHBEARER
+    security.protocol=SASL_SSL
+    ssl.endpoint.identification.algorithm=
+    ssl.truststore.location=/ssl/trustore.jks
+    ssl.truststore.password=trustorepass
+    ```
+
+1. Run the following command:
+
+    ```bash
+    kafka-console-consumer.sh --bootstrap-server <your-loadbalancer-ip>:19090 --topic <your-topic-name> --consumer.config /opt/kafka/config/consumer.properties --from-beginning
+    ```

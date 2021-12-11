@@ -20,12 +20,12 @@ banzai login
     1. Save the used route table id on the generated subnet
     1. Create two additional subnet in the VPC (choose different Availability Zones)
 
-      - Modify your newly created subnet Auto Assign IP setting
-      - Enable auto-assign public IPV4 address
+        - Modify your newly created subnet Auto Assign IP setting
+        - Enable auto-assign public IPV4 address
 
     1. Assign the saved route table id to the two additional subnets
 
-      - On Route Table page click Actions and Edit subnet associations
+        - On Route Table page click Actions and Edit subnet associations
 
 1. Create the cluster itself.
 
@@ -33,7 +33,7 @@ banzai login
     banzai cluster create
     ```
 
-    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/cluster_pke.json)
+    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/cluster_pke.json)
 
     > Please don't forget to fill out the template with the created ids.
 
@@ -63,7 +63,7 @@ banzai login
     banzai cluster create
     ```
 
-    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/cluster_gke.json)
+    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/cluster_gke.json)
 
     > Please don't forget to fill out the template with the created ids.
 
@@ -90,7 +90,7 @@ banzai login
     banzai cluster create
     ```
 
-    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/cluster_eks.json)
+    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/cluster_eks.json)
 
     > Please don't forget to fill out the template with the created ids.
 
@@ -131,13 +131,13 @@ banzai login
     EOF
     ```
 
-1. Install the latest version of Banzai Cloud Kafka Operator.
+1. Install the latest version of {{< kafka-operator >}}, the Operator for managing Apache Kafka on Kubernetes.
 
     ```bash
     helm install --name=kafka-operator banzaicloud-stable/kafka-operator
     ```
 
-1. Create a 3 broker Kafka Cluster using the [provided](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/infrastructure/kafka.yaml) yaml.
+1. Create a 3 broker Kafka Cluster using the [provided](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/kafka.yaml) yaml.
 
     This will install 3 brokers partitioned to three different zone with fast ssd.
 1. Create a client container inside the cluster
@@ -169,16 +169,16 @@ banzai login
     ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest3 --create --replication-factor 3 --partitions 3
     ```
 
-Monitoring environment automatically installed, find your cluster and Grafanas UI/credentials on our [UI](https://try.pipeline.banzai.cloud). To monitor the infrastructure we used the official Node Exporter dashboard available with id `1860`.
+Monitoring environment is automatically installed. To monitor the infrastructure we used the official Node Exporter dashboard available with id `1860`.
 
 ## Run the tests
 
-1. Run perf test against the cluster, by building the provided Docker [image](https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/docs/benchmarks/loadgens/Dockerfile)
+1. Run perf test against the cluster, by building the provided Docker [image](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/loadgens/Dockerfile)
 
-```bash
-docker build -t yourname/perfload:0.1.0 /loadgens
-docker push yourname/perfload:0.1.0
-```
+    ```bash
+    docker build -t yourname/perfload:0.1.0 /loadgens
+    docker push yourname/perfload:0.1.0
+    ```
 
 1. Submit the perf test application:
 
