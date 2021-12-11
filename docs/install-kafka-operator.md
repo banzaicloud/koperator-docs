@@ -47,7 +47,7 @@ Install cert-manager and the CustomResourceDefinitions using one of the followin
 
     ```bash
     # Install the CustomResourceDefinitions and cert-manager itself
-    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
+    kubectl create -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
     ```
 
 - Using Helm:
