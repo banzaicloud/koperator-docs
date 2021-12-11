@@ -1,14 +1,14 @@
 ---
-title: Kafka operator troubleshooting
+title: Troubleshooting the operator
 shorttitle: Troubleshooting
 weight: 400
 ---
 
-The following tips and commands can help you to troubleshoot your Kafka operator installation.
+The following tips and commands can help you to troubleshoot your {{< kafka-operator >}} installation.
 
 ## First things to do
 
-1. Verify that the Kafka operator pod is running. Issue the following command: `kubectl get pods -n kafka|grep kafka-operator`
+1. Verify that the {{< kafka-operator >}} pod is running. Issue the following command: `kubectl get pods -n kafka|grep kafka-operator`
     The output should include a running pod, for example:
 
     ```bash
@@ -130,11 +130,6 @@ cruise.control.metrics.topic.replication.factor=2
 
   Rolling Upgrade Config:
     Failure Threshold:  1
-  Vault Config:
-    Auth Role:   
-    Issue Path:  
-    Pki Path:    
-    User Store:  
   Zk Addresses:
     zookeeper-client.zookeeper:2181
 Status:
@@ -168,18 +163,18 @@ Events:            <none>
 
 ## Getting Support
 
-If you encounter any problems that the documentation does not address, [file an issue](https://github.com/banzaicloud/kafka-operator/issues) or talk to us on the Banzai Cloud Slack channel [#kafka-operator](https://slack.banzaicloud.io/).
+If you encounter any problems that the documentation does not address, [file an issue](https://github.com/banzaicloud/koperator/issues) or talk to us on the Banzai Cloud Slack channel [#kafka-operator](https://slack.banzaicloud.io/).
 
-[Commercial support]({{< relref "/docs/supertubes/kafka-operator/support.md">}}) is also available for the Kafka operator.
+[Commercial support]({{< relref "/docs/supertubes/kafka-operator/support.md">}}) is also available for the {{< kafka-operator >}}.
 
 Before asking for help, prepare the following information to make troubleshooting faster:
 
-- Kafka operator version
+- {{< kafka-operator >}} version
 - Kubernetes version (**kubectl version**)
-- Helm/chart version (if you installed the Kafka operator with Helm)
-- Kafka operator logs, for example **kubectl logs kafka-operator-operator-6968c67c7b-9d2xq manager -n kafka** and **kubectl logs kafka-operator-operator-6968c67c7b-9d2xq kube-rbac-proxy -n kafka**
+- Helm/chart version (if you installed the {{< kafka-operator >}} with Helm)
+- {{< kafka-operator >}} logs, for example **kubectl logs kafka-operator-operator-6968c67c7b-9d2xq manager -n kafka** and **kubectl logs kafka-operator-operator-6968c67c7b-9d2xq kube-rbac-proxy -n kafka**
 - Kafka broker logs
-- Kafka operator configuration
+- {{< kafka-operator >}} configuration
 - Kafka cluster configuration (**kubectl describe KafkaCluster kafka -n kafka**)
 - Zookeeper configuration (**kubectl describe ZookeeperCluster zookeeper -n zookeeper**)
 - Zookeeper logs (**kubectl logs zookeeper-operator-5c9b597bcc-vkdz9 -n zookeeper**)

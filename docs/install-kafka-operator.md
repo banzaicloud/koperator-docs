@@ -1,24 +1,24 @@
 ---
-title: Install the Kafka operator
+title: Install the operator
 shorttitle: Install
 weight: 10
 ---
 
 
 
-The operator installs the 2.7.0 version of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.18.0+.
+The operator installs version 2.8.1 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.19.0+.
 
-> The operator supports Kafka 2.0+
+> The operator supports Kafka 2.6.2-2.8.x.
 
 ## Prerequisites
 
 - A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). You can create one using the [Banzai Cloud Pipeline platform](/products/pipeline/), or any other tool of your choice.
 
-> We believe in the `separation of concerns` principle, thus the Kafka operator does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Banzai Cloud Supertubes](/products/supertubes/).
+> We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Banzai Cloud Supertubes](/products/supertubes/).
 
-## Install Kafka operator and all requirements using Supertubes
+## Install {{< kafka-operator >}} and all requirements using Supertubes
 
-This method uses a command-line tool of the commercial [Banzai Cloud Supertubes](/products/supertubes/) product to install the Kafka operator and its prerequisites. If you'd prefer to install these components manually, see [Install Kafka operator and the requirements independently](#manual-install).
+This method uses a command-line tool of the commercial [Banzai Cloud Supertubes](/products/supertubes/) product to install the {{< kafka-operator >}} and its prerequisites. If you'd prefer to install these components manually, see [Install {{< kafka-operator >}} and the requirements independently](#manual-install).
 
 1. [Register for an evaluation version of Supertubes](/products/try-supertubes/).
 
@@ -32,16 +32,15 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     supertubes install -a
     ```
 
-## Install Kafka operator and the requirements independently {#manual-install}
+## Install {{< kafka-operator >}} and the requirements independently {#manual-install}
 
 ### Install cert-manager {#install-cert-manager}
 
-The Kafka operator uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers. Deploy and configure cert-manager if you haven't already done so.
+{{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers. Deploy and configure cert-manager if you haven't already done so.
 
 > Note:
->
-> - Kafka operator 0.8.x and newer supports cert-manager 1.3.x
-> - Kafka operator 0.7.x supports cert-manager 0.10.x
+> - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3
+> - {{< kafka-operator >}} 0.8.x-0.17.0 supports cert-manager 1.3.x
 
 Install cert-manager and the CustomResourceDefinitions using one of the following methods:
 
@@ -49,7 +48,7 @@ Install cert-manager and the CustomResourceDefinitions using one of the followin
 
     ```bash
     # Install the CustomResourceDefinitions and cert-manager itself
-    kubectl create -f https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.yaml
+    kubectl create -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
     ```
 
 - Using Helm:
@@ -60,12 +59,12 @@ Install cert-manager and the CustomResourceDefinitions using one of the followin
     helm repo add jetstack https://charts.jetstack.io
     helm repo update
 
+    # Install the CustomResourceDefinitions
+    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.crds.yaml
+
     # Install cert-manager into the cluster
     # Using helm3
-    helm install cert-manager --namespace cert-manager --create-namespace --version v1.5.1 jetstack/cert-manager
-
-    # Install the CustomResourceDefinitions
-    kubectl create --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
+    helm install cert-manager --namespace cert-manager --create-namespace --version v1.5.3 jetstack/cert-manager
 
 Verify that the cert-manager pods have been created:
 
@@ -100,7 +99,7 @@ Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper clu
 
     {{< include-code "create-zookeeper.sample" "bash" >}}
 
-1. Verify that Zookeeper has beeb deployed.
+1. Verify that Zookeeper has been deployed.
 
     ```bash
     kubectl get pods -n zookeeper
@@ -154,14 +153,14 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
     --set prometheus.enabled=false
     ```
 
-### Install the Kafka operator with Helm {#kafka-operator-helm}
+### Install {{< kafka-operator >}} with Helm {#kafka-operator-helm}
 
-You can deploy the Kafka operator using a [Helm chart](https://github.com/banzaicloud/kafka-operator/tree/master/charts). Complete the following steps.
+You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/banzaicloud/koperator/tree/master/charts). Complete the following steps.
 
-1. Install the kafka-operator CustomResourceDefinition resources (adjust the version number to the Kafka operator release you want to install). This is performed in a separate step to allow you to easily uninstall and reinstall kafka-operator without deleting your installed custom resources.
+1. Install the {{< kafka-operator >}} CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install). This is performed in a separate step to allow you to uninstall and reinstall {{< kafka-operator >}} without deleting your installed custom resources.
 
     ```bash
-    kubectl create --validate=false -f https://github.com/banzaicloud/kafka-operator/releases/download/v0.15.1/kafka-operator.crds.yaml
+    kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v0.15.1/kafka-operator.crds.yaml
     ```
 
 1. Add the Banzai Cloud repository to Helm.
@@ -171,32 +170,32 @@ You can deploy the Kafka operator using a [Helm chart](https://github.com/banzai
     helm repo update
     ```
 
-1. Install the Kafka operator into the *kafka* namespace:
+1. Install {{< kafka-operator >}} into the *kafka* namespace:
 
     ```bash
     helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
     ```
 
-1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [Kafka operator repository](https://github.com/banzaicloud/kafka-operator/tree/master/config/samples).
+1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/master/config/samples).
 
     {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
 
     - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
 
         ```bash
-        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster.yaml
+        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster.yaml
         ```
 
     - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" %}}.
 
         ```bash
-        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/simplekafkacluster_ssl.yaml
+        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster_ssl.yaml
         ```
 
-1. If you have installed the Prometheus operator, create the ServiceMonitors. Prometheus will be installed and configured properly for the Kafka operator.
+1. If you have installed the Prometheus operator, create the ServiceMonitors. Prometheus will be installed and configured properly for {{< kafka-operator >}}.
 
     ```bash
-    kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/kafka-operator/master/config/samples/kafkacluster-prometheus.yaml
+    kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/kafkacluster-prometheus.yaml
     ```
 
 1. Verify that the Kafka cluster has been created.

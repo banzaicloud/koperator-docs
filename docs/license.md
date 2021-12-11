@@ -1,5 +1,5 @@
 ---
-title: License of Kafka operator
+title: License of Koperator
 weight: 10000
 ---
 
