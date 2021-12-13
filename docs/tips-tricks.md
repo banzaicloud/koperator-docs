@@ -1,12 +1,12 @@
 ---
-title: Tips and tricks for the Kafka operator
+title: Tips and tricks for the Koperator
 shorttitle: Tips and tricks
 weight: 970
 ---
 
 ## Rebalancing
 
-The Kafka operator installs Cruise Control (CC) to oversee your Kafka cluster. When you change the cluster (for example, add new nodes), the  Kafka operator engages CC to perform a rebalancing if needed. How and when CC performs rebalancing depends on its settings (see goal settings in the official CC documentation) and on how long CC was trained with Kafka’s behavior (this may take weeks).
+The {{< kafka-operator >}} installs Cruise Control (CC) to oversee your Kafka cluster. When you change the cluster (for example, add new nodes), the {{< kafka-operator >}} engages CC to perform a rebalancing if needed. How and when CC performs rebalancing depends on its settings (see goal settings in the official CC documentation) and on how long CC was trained with Kafka’s behavior (this may take weeks).
 
 You can also trigger rebalancing manually from the CC UI:
 
