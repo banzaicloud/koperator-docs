@@ -26,6 +26,7 @@ The {{< kafka-operator >}} (formerly called Banzai Cloud Kafka Operator) is a Ku
 
 ![{{< kafka-operator >}} architecture](./img/kafka-operator-arch.png)
 
+
 >We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](features/) and some of the [scenarios](scenarios/) which drove us to create the {{< kafka-operator >}}.
 
 {{% include-headless "kafka-operator-supertubes-intro.md" %}}
