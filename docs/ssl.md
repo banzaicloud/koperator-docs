@@ -8,7 +8,11 @@ The {{< kafka-operator >}} makes securing your Apache Kafka cluster with SSL sim
 
 ## Enable SSL encryption in Apache Kafka {#enable-ssl}
 
-To create an Apache Kafka cluster with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can provide your own certificates, or instruct the operator to create them for you from your cluster configuration.
+To create an Apache Kafka cluster which has listener(s) with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can either provide your own CA certificate and the corresponding private key, or let the operator to create them for you from your cluster configuration. Using **sslSecrets**, {{< kafka-operator >}} generates client and server certificates signed using CA. The server certificate is shared across listeners. The client certificate is used by the {{< kafka-operator >}}, Cruise Control, and Cruise Control Metrics Reporter to communicate Kafka brokers using listener with SSL enabled.
+
+Providing custom certificates per listener is supported from {{< kafka-operator >}} version 0.21.0+. Having configurations where certain external listeners use user provided certificates while others rely on the auto-generated ones provided by {{< kafka-operator >}} are also supported. See details below.
+
+## Using auto-generated certificates (**ssLSecrets**)
 
 {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
 
@@ -23,9 +27,49 @@ If `sslSecrets.create` is `false`, the operator will look for the secret at `ssl
 | `caCert`     | The CA certificate |
 | `caKey`      | The CA private key |
 
+## Using own certificates
+
+### Listeners not used for internal broker communication
+
+In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_hybrid_customcert.yaml), SSL is enabled for all listeners, and certificates are automatically generated for "internal" and "controller" listeners. The "external" and "internal" listeners will use the user-provided certificates. The **serverSSLCertSecret** key is a reference to the Kubernetes secret that contains the server certificate for the listener to be used for SSL communication.
+
+In the server secret the following keys must be set:
+
+| Key              | Value                                     |
+|:----------------:|:------------------------------------------|
+| `keystore.jks`   | Certificate and private key in JKS format |
+| `truststore.jks` | Trusted CA certificate in JKS format     |
+| `password`       | Password for the key and trust store      |
+
+{{< kafka-operator >}} using JKS format based certificate for listener config.
+
+### Listeners used for internal broker communication
+
+In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml), SSL is enabled for all listeners, and user-provided certificates are used. In that case, when a custom certificate is used for a listener which is used for internal broker communication, you must also specify the client certificate. The client certificate will be used by {{< kafka-operator >}}, Cruise Control, Cruise Control Metrics Reporter to communicate on SSL. The **clientSSLCertSecret** key is a reference to the Kubernetes secret where the custom client SSL certificate can be provided. Client secret data keys must be the same as the server secret. The client certificate must be signed by the same CA authority as the server certificate for the corresponding listener. The **clientSSLCertSecret** has to be in the **KafkaCluster** custom resource spec field.
+
+### Generate JKS certificate
+
+Certificates in JKS format can be generated using OpenSSL and keystore applications. You can also use [this script](https://github.com/confluentinc/confluent-platform-security-tools/blob/master/kafka-generate-ssl.sh).
+
+Kafka listeners use 2-way-SSL mutual authentication, so you must properly set the CNAME (Common Name) fields and if needed the SAN (Subject Alternative Name) fields in the certificates. In the following description we assume that the Kafka cluster is in the `kafka` namespace.
+
+- **For the client certificate**, CNAME must be "kafka-controller.kafka.mgt.cluster.local" (where .kafka. is the namespace of the kafka cluster).
+- **For internal listeners which are exposed by a headless service** (kafka-headless), CNAME must be "kafka-headless.kafka.svc.cluster.local", and the SAN field must contain the following:
+
+    - *.kafka-headless.kafka.svc.cluster.local
+    - kafka-headless.kafka.svc.cluster.local
+    - *.kafka-headless.kafka.svc
+    - kafka-headless.kafka.svc
+    - *.kafka-headless.kafka
+    - kafka-headless.kafka
+    - kafka-headless
+
+- **For internal listeners which are exposed by a normal service** (kafka-all-broker), CNAME must be "kafka-all-broker.kafka.svc.cluster.local"
+- **For external listeners**, you need to use the advertised load balancer hostname as CNAME. The hostname need to be specified in the **KafkaCluster** custom resource with **hostnameOverride**, and the **accessMethod** has to be "LoadBalancer". For details about this override, see Step 5 in {{% xref "/docs/supertubes/kafka-operator/external-listener/index.md#loadbalancer" %}}.
+
 ## Using Kafka ACLs with SSL
 
-> Note: {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Supertubes](/products/supertubes/) product.
+> Note: {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product.
 > {{< include-headless "doc/kafka-operator-supertubes-intro.md" >}}
 
 If you choose not to enable ACLs for your Apache Kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.
