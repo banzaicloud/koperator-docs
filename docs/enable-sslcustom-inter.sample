@@ -1,0 +1,25 @@
+spec:
+  ...
+  clientSSLCertSecret:
+    name: kafka-custom-client-cert
+  listenersConfig:
+    internalListeners:
+      - type: "ssl"
+        name: "customssl"
+        serverSSLCertSecret:
+          name: kafka-custom-server-cert-1
+        containerPort: 29094
+        usedForInnerBrokerCommunication: false
+      - type: "ssl"
+        name: "internal"
+        serverSSLCertSecret:
+          name: kafka-custom-server-cert-2
+        containerPort: 29092
+        usedForInnerBrokerCommunication: true
+      - type: "ssl"
+        name: "controller"
+        serverSSLCertSecret:
+          name: kafka-custom-server-cert-3
+        containerPort: 29093
+        usedForInnerBrokerCommunication: false
+        usedForControllerCommunication: true
