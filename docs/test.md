@@ -47,15 +47,15 @@ You can use the following commands to send and receive messages within a Kuberne
 
 ## Send and receive messages with SSL within a cluster {#internal-ssl}
 
-You can use the following procedure to send and receive messages within a Kubernetes cluster [when SSL encryption is enabled for Kafka]({{< relref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" >}}). To test a Kafka instance secured by SSL we recommend using [Kafkacat](https://github.com/edenhill/kafkacat).
+You can use the following procedure to send and receive messages within a Kubernetes cluster [when SSL encryption is enabled for Kafka]({{< relref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" >}}). To test a Kafka instance secured by SSL we recommend using [kcat](https://github.com/edenhill/kcat).
 
-> To use the java client instead of Kafkacat, generate the proper truststore and keystore using the [official docs](https://kafka.apache.org/documentation/#security_ssl).
+> To use the java client instead of kcat, generate the proper truststore and keystore using the [official docs](https://kafka.apache.org/documentation/#security_ssl).
 
 1. Create a Kafka user. The client will use this user account to access Kafka. You can use the KafkaUser custom resource to customize the access rights as needed. For example:
 
     {{< include-code "create-kafkauser.sample" "bash" >}}
 
-1. To use Kafka inside the cluster, create a Pod which contains `Kafkacat`. Create a `kafka-test` pod in the `kafka` namespace. Note that the value of the **secretName** parameter must be the same as you used when creating the KafkaUser resource, for example, example-kafkauser-secret.
+1. To use Kafka inside the cluster, create a Pod which contains `kcat`. Create a `kafka-test` pod in the `kafka` namespace. Note that the value of the **secretName** parameter must be the same as you used when creating the KafkaUser resource, for example, example-kafkauser-secret.
 
     {{< include-code "kafkacat-ssl.sample" "bash" >}}
 
@@ -68,7 +68,7 @@ You can use the following procedure to send and receive messages within a Kubern
 1. Run the following command to check that you can connect to the brokers.
 
     ```bash
-    kafkacat -L -b kafka-headless:29092 -X security.protocol=SSL -X ssl.key.location=/ssl/certs/tls.key -X ssl.certificate.location=/ssl/certs/tls.crt -X ssl.ca.location=/ssl/certs/ca.crt
+    kcat -L -b kafka-headless:29092 -X security.protocol=SSL -X ssl.key.location=/ssl/certs/tls.key -X ssl.certificate.location=/ssl/certs/tls.crt -X ssl.ca.location=/ssl/certs/ca.crt
     ```
 
     The first line of the output should indicate that the communication is encrypted, for example:
@@ -80,7 +80,7 @@ You can use the following procedure to send and receive messages within a Kubern
 1. Produce some test messages. Run:
 
     ```bash
-    kafkacat -P -b kafka-headless:29092 -t my-topic \
+    kcat -P -b kafka-headless:29092 -t my-topic \
     -X security.protocol=SSL \
     -X ssl.key.location=/ssl/certs/tls.key \
     -X ssl.certificate.location=/ssl/certs/tls.crt \
@@ -93,7 +93,7 @@ You can use the following procedure to send and receive messages within a Kubern
     The following command will use the certificate provisioned with the cluster to connect to Kafka. If you'd like to create and use a different user, create a `KafkaUser` CR, for details, see the [SSL documentation](../ssl/).
 
     ```bash
-    kafkacat -C -b kafka-headless:29092 -t my-topic \
+    kcat -C -b kafka-headless:29092 -t my-topic \
     -X security.protocol=SSL \
     -X ssl.key.location=/ssl/certs/tls.key \
     -X ssl.certificate.location=/ssl/certs/tls.crt \
@@ -127,10 +127,10 @@ You can use the following procedure to send and receive messages within a Kubern
 
 1. Produce some test messages on the the external client.
 
-    - If you have [Kafkacat](https://github.com/edenhill/kafkacat) installed, run:
+    - If you have [kcat](https://github.com/edenhill/kcat) installed, run:
 
         ```bash
-        kafkacat -P -b $SERVICE_IP:$SERVICE_PORT -t my-topic
+        kcat -P -b $SERVICE_IP:$SERVICE_PORT -t my-topic
         ```
 
     - If you have the Java Kafka client installed, run:
@@ -143,10 +143,10 @@ You can use the following procedure to send and receive messages within a Kubern
 
 1. Consume some messages.
 
-    - If you have [Kafkacat](https://github.com/edenhill/kafkacat) installed, run:
+    - If you have [kcat](https://github.com/edenhill/kcat) installed, run:
 
         ```bash
-        kafkacat -C -b $SERVICE_IP:$SERVICE_PORT -t my-topic
+        kcat -C -b $SERVICE_IP:$SERVICE_PORT -t my-topic
         ```
 
     - If you have the Java Kafka client installed, run:
@@ -159,23 +159,23 @@ You can use the following procedure to send and receive messages within a Kubern
 
 ### SSL enabled {#external-ssl}
 
-You can use the following procedure to send and receive messages from an external host that is outside a Kubernetes cluster when SSL encryption is enabled for Kafka. To test a Kafka instance secured by SSL we recommend using [Kafkacat](https://github.com/edenhill/kafkacat).
+You can use the following procedure to send and receive messages from an external host that is outside a Kubernetes cluster when SSL encryption is enabled for Kafka. To test a Kafka instance secured by SSL we recommend using [kcat](https://github.com/edenhill/kcat).
 
-> To use the java client instead of Kafkacat, generate the proper truststore and keystore using the [official docs](https://kafka.apache.org/documentation/#security_ssl).
+> To use the java client instead of kcat, generate the proper truststore and keystore using the [official docs](https://kafka.apache.org/documentation/#security_ssl).
 
-1. Install Kafkacat.
+1. Install kcat.
 
     - __MacOS__:
 
         ```bash
-        brew install kafkacat
+        brew install kcat
         ```
 
     - __Ubuntu__:
 
         ```bash
         apt-get update
-        apt-get install kafkacat
+        apt-get install kcat
         ```
 
 1. Connect to the Kubernetes cluster that runs your Kafka deployment.
@@ -199,7 +199,7 @@ You can use the following procedure to send and receive messages from an externa
 1. Produce some test messages on the host that is outside your cluster.
 
     ```bash
-    kafkacat -b $SERVICE_IP:$SERVICE_PORT -P -X security.protocol=SSL \
+    kcat -b $SERVICE_IP:$SERVICE_PORT -P -X security.protocol=SSL \
     -X ssl.key.location=client.key.pem \
     -X ssl.certificate.location=client.crt.pem \
     -X ssl.ca.location=ca.crt.pem \
@@ -211,7 +211,7 @@ You can use the following procedure to send and receive messages from an externa
 1. Consume some messages.
 
     ```bash
-    kafkacat -b $SERVICE_IP:$SERVICE_PORT -C -X security.protocol=SSL \
+    kcat -b $SERVICE_IP:$SERVICE_PORT -C -X security.protocol=SSL \
     -X ssl.key.location=client.key.pem \
     -X ssl.certificate.location=client.crt.pem \
     -X ssl.ca.location=ca.crt.pem \
