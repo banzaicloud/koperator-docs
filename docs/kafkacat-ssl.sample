@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
   - name: kafka-test
-    image: solsson/kafkacat
+    image: edenhill/kcat
     # Just spin & wait forever
     command: [ "/bin/sh", "-c", "--" ]
     args: [ "while true; do sleep 3000; done;" ]
