@@ -79,8 +79,8 @@ To configure an external listener that uses the LoadBalancer access method, comp
       spec:
         ingressController: "istioingress"
         istioControlPlane:
-          name: <name of the IstioControlPlane resource>
-          namespace: <namespace of the IstioControlPlane resource>
+          name: <name of the IstioControlPlane custom resource>
+          namespace: <namespace of the IstioControlPlane custom resource>
       ```
 
 1. Configure additional parameters for the ingress controller as needed for your environment, for example, number of replicas, resource requirements and resource limits. You can be configure such parameters using the *envoyConfig* and *istioIngressConfig* fields, respectively.
