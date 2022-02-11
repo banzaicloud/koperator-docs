@@ -40,6 +40,7 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 |-|-|
 |ghcr.io/banzaicloud/jmx-javaagent:0.14.0|11|
 |ghcr.io/banzaicloud/jmx-javaagent:0.15.0|11|
+|ghcr.io/banzaicloud/jmx-javaagent:0.16.1|11|
 
 ## Available Cruise Control images
 
