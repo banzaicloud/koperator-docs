@@ -39,7 +39,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 {{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers. Deploy and configure cert-manager if you haven't already done so.
 
 > Note:
-> - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3+
+> - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3-1.6.x
 > - {{< kafka-operator >}} 0.8.x-0.17.0 supports cert-manager 1.3.x
 
 Install cert-manager and the CustomResourceDefinitions using one of the following methods:
