@@ -16,6 +16,7 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 |v0.20.2|2.6.2+|0.16.1|2.5.80|1.10|[link](https://github.com/banzaicloud/koperator/blob/v0.20.2/config/samples/simplekafkacluster.yaml)|+|
 |v0.21.0|2.6.2+|0.16.1|2.5.86|2.11|[link](https://github.com/banzaicloud/koperator/blob/v0.21.0/config/samples/simplekafkacluster.yaml)|+|
 |v0.21.1|2.6.2+|0.16.1|2.5.86|2.11|[link](https://github.com/banzaicloud/koperator/blob/v0.21.1/config/samples/simplekafkacluster.yaml)|+|
+|v0.21.2|2.6.2+|0.16.1|2.5.86|2.11|[link](https://github.com/banzaicloud/koperator/blob/v0.21.2/config/samples/simplekafkacluster.yaml)|+|
 
 ## Available {{< kafka-operator >}} images
 
@@ -27,6 +28,7 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 |ghcr.io/banzaicloud/kafka-operator:v0.20.2 |1.17|
 |ghcr.io/banzaicloud/kafka-operator:v0.21.0 |1.17|
 |ghcr.io/banzaicloud/kafka-operator:v0.21.1 |1.17|
+|ghcr.io/banzaicloud/kafka-operator:v0.21.2 |1.17|
 
 ## Available Apache Kafka images
 
