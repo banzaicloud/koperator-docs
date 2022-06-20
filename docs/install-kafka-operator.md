@@ -119,7 +119,7 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
 - Directly:
 
     ```bash
-    kubectl apply -n default -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/bundle.yaml
+    kubectl create -n default -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/bundle.yaml
     ```
 
 - Using Helm:
