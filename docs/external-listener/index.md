@@ -208,9 +208,14 @@ To connect to this listener using the Kafka console producer, complete the follo
 1. Set the producer properties like this:
 
     ```ini
-    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="producer";
     sasl.mechanism=OAUTHBEARER
     security.protocol=SASL_SSL
+    sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+    sasl.oauthbearer.token.endpoint.url=<https://myidp.example.com/oauth2/default/v1/token>
+    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+      clientId="<oauth-client-id>" \
+      clientSecret="<client-secret>" \
+      scope="kafka:write";
     ssl.truststore.location=/ssl/trustore.jks
     ssl.truststore.password=truststorepass
     ssl.endpoint.identification.algorithm=
@@ -230,9 +235,14 @@ To consume messages from this listener using the Kafka console consumer, complet
     group.id=consumer-1
     group.instance.id=consumer-1-instance-1
     client.id=consumer-1-instance-1
-    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="consumer";
     sasl.mechanism=OAUTHBEARER
-    security.protocol=SASL_SSL
+    security.protocol=SASL_SASL
+    sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+    sasl.oauthbearer.token.endpoint.url=<https://myidp.example.com/oauth2/default/v1/token>
+    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+      clientId="<oauth-client-id>" \
+      clientSecret="<client-secret>" \
+      scope="kafka:read" ;
     ssl.endpoint.identification.algorithm=
     ssl.truststore.location=/ssl/trustore.jks
     ssl.truststore.password=trustorepass
