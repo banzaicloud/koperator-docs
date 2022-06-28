@@ -203,14 +203,19 @@ To enable sasl_plaintext authentication on the external listener, modify the **e
       type: sasl_plaintext
 ```
 
-To connect to this listener using the Kafka console producer, complete the following steps:
+To connect to this listener using the Kafka 3.1.0 (and above) console producer, complete the following steps:
 
-1. Set the producer properties like this:
+1. Set the producer properties like this. Replace the parameters between brackets as needed for your environment:
 
     ```ini
-    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="producer";
     sasl.mechanism=OAUTHBEARER
     security.protocol=SASL_SSL
+    sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+    sasl.oauthbearer.token.endpoint.url=<https://myidp.example.com/oauth2/default/v1/token>
+    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+      clientId="<oauth-client-id>" \
+      clientSecret="<client-secret>" \
+      scope="kafka:write";
     ssl.truststore.location=/ssl/trustore.jks
     ssl.truststore.password=truststorepass
     ssl.endpoint.identification.algorithm=
@@ -222,17 +227,22 @@ To connect to this listener using the Kafka console producer, complete the follo
     kafka-console-producer.sh --bootstrap-server <your-loadbalancer-ip>:19090 --topic <your-topic-name> --producer.config producer.properties
     ```
 
-To consume messages from this listener using the Kafka console consumer, complete the following steps:
+To consume messages from this listener using the Kafka 3.1.0 (and above) console consumer, complete the following steps:
 
-1. Set the producer properties like this:
+1. Set the producer properties like this. Replace the parameters between brackets as needed for your environment:
 
     ```ini
     group.id=consumer-1
     group.instance.id=consumer-1-instance-1
     client.id=consumer-1-instance-1
-    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required unsecuredLoginStringClaim_sub="consumer";
     sasl.mechanism=OAUTHBEARER
-    security.protocol=SASL_SSL
+    security.protocol=SASL_SASL
+    sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler
+    sasl.oauthbearer.token.endpoint.url=<https://myidp.example.com/oauth2/default/v1/token>
+    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+      clientId="<oauth-client-id>" \
+      clientSecret="<client-secret>" \
+      scope="kafka:read" ;
     ssl.endpoint.identification.algorithm=
     ssl.truststore.location=/ssl/trustore.jks
     ssl.truststore.password=trustorepass
