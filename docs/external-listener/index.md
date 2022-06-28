@@ -191,7 +191,7 @@ To enable sasl_plaintext authentication on the external listener, modify the **e
       type: sasl_plaintext
 ```
 
-To connect to this listener using the Kafka console producer, complete the following steps:
+To connect to this listener using the Kafka 3.1.0 (and above) console producer, complete the following steps:
 
 1. Set the producer properties like this:
 
@@ -215,7 +215,7 @@ To connect to this listener using the Kafka console producer, complete the follo
     kafka-console-producer.sh --bootstrap-server <your-loadbalancer-ip>:19090 --topic <your-topic-name> --producer.config producer.properties
     ```
 
-To consume messages from this listener using the Kafka console consumer, complete the following steps:
+To consume messages from this listener using the Kafka 3.1.0 (and above) console consumer, complete the following steps:
 
 1. Set the producer properties like this:
 
