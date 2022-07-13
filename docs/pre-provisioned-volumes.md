@@ -5,12 +5,16 @@ weight: 300
 ---
 
 
-This guide describes the `KafkaCluster` configuration to deploy Kafka clusters which use pre-provisioned volumes instead of dynamically provisioned ones. {{< kafka-operator >}} uses [persistent volume claim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) Kubernetes resources to dynamically provision volumes for the Kafka broker log dirs.
+This guide describes how to configure `KafkaCluster` to deploy Apache Kafka clusters which use pre-provisioned volumes instead of dynamically provisioned ones. Using static volumes is useful in environments where dynamic volume provisioning is not supported. {{< kafka-operator >}} uses [persistent volume claim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) Kubernetes resources to dynamically provision volumes for the Kafka broker log directories.
 
-{{< kafka-operator >}} can use [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes) pre-created by an admin as Kafka broker log dirs instead of dynamically provisioning persistent volumes by leveraging the Kubernetes provided a feature which allows binding persistent volume claims to existing persistent volumes either through the `volumeName` or the `selector` field. For this binding to work the configuration fields specified under `storageConfigs.pvcSpec` such as `accessModes`, `storageClassName` must match the specification of the pre-created persistent volume also, and the `resources.requests.storage` must fit onto the capacity of the persistent volume. For further details on how the persistent volume claim binding works consult Kubernetes documentation.
-This is useful in environments where dynamic volume provisioning is not supported.
+ Kubernetes provides a feature which allows binding persistent volume claims to existing persistent volumes either through the `volumeName` or the `selector` field. This allows {{< kafka-operator >}} to use pre-created [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes) as Kafka broker log directories instead of dynamically provisioning persistent volumes. For this binding to work:
 
-In the following example, it is assumed that there are four persistent volumes created by an admin. We'll create a Kafka cluster with two brokers each broker configured with two log dirs to use the four pre-provisioned volumes:
+- the configuration fields specified under `storageConfigs.pvcSpec` (such as `accessModes`, `storageClassName`) must match the specification of the pre-created persistent volume, and
+- the `resources.requests.storage` must fit onto the capacity of the persistent volume.
+
+For further details on how the persistent volume claim binding works, consult the Kubernetes documentation.
+
+In the following example, it is assumed that you (or your administrator) have already created four persistent volumes. The example shows you how to create a Kafka cluster with two brokers, each broker configured with two log directories to use the four pre-provisioned volumes:
 
 ```yaml
 apiVersion: v1
@@ -86,7 +90,7 @@ spec:
   ...
 ```
 
-## Broker level storage config to use pre-provisioned volumes
+## Broker-level storage configuration to use pre-provisioned volumes
 
 The `storageConfigs` specified at the broker level to use the above described pre-created persistent volumes as broker log dirs:
 
@@ -244,4 +248,4 @@ The following data fields are supported in the storage config:
 - `.BrokerID` - resolves to the current broker's Id
 - `.MountPath` - resolves to the value of the `mountPath` field of the current storage config
 
-Under the hood `go-templates` enhanced with [Spring functions](http://masterminds.github.io/sprig/) are used to resolve these fields to values that allow alterations to the resulting value (e.g. see above the use of `trimPrefix` and `sha1sum` template functions).
+Under the hood, `go-templates` enhanced with [Sprig functions](http://masterminds.github.io/sprig/) are used to resolve these fields to values that allow alterations to the resulting value (for examples, see above the use of `trimPrefix` and `sha1sum` template functions).
