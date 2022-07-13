@@ -22,9 +22,9 @@ When the **headlessServiceEnabled** option is enabled (true) in your KafkaCluste
 
 When the **headlessServiceEnabled** option is disabled (false), it creates a ClusterIP service. When using a ClusterIP service, your client application doesn’t need to be aware of every Kafka broker endpoint, it simply connects to *kafka-all-broker:29092* which covers dynamically all the available brokers. That way if the Kafka cluster is scaled dynamically, there is no need to reconfigure the client applications.
 
-## Retrieving broker configuration during downscale running
+## Retrieving broker configuration during downscale operation
 
-When a broker is downscaling thus the broker configuration is missing from the kafkaCluster/spec/brokers field, the last broker configuration can be retrieved with the following command.
+When a broker is downscaling, the broker configuration is missing from the kafkaCluster/spec/brokers field. You can retrieve the last broker configuration with the following command.
 
 ```bash
 echo <value of the kafkaCluster/status/brokerState/brokerID/configurationBackup> | base64 -d | gzip -d
