@@ -19,7 +19,7 @@ brokerConfigGroups:
       prometheus.io/scrape: "true"
       prometheus.io/port: "9020"
 
-...
+# ...
 
 cruiseControlConfig:
   cruiseControlAnnotations:
