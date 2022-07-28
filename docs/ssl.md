@@ -47,7 +47,7 @@ In the server secret the following keys must be set:
 
 In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml), SSL is enabled for all listeners, and user-provided certificates are used. In that case, when a custom certificate is used for a listener which is used for internal broker or controller communication, you must also specify the client certificate. The client certificate will be used by {{< kafka-operator >}}, Cruise Control, Cruise Control Metrics Reporter to communicate on SSL. The **clientSSLCertSecret** key is a reference to the Kubernetes secret where the custom client SSL certificate can be provided. The client certificate must be signed by the same CA authority as the server certificate for the corresponding listener. The **clientSSLCertSecret** has to be in the **KafkaCluster** custom resource spec field.
 The client secret must contain the keystore, truststore jks files and the password for them in base64 encoded format and
-the tls certificate, tls private key, CA certificate in PEM and base64 encoded format. The server certificate also needs to contain the tls.crt in PEM and base64 encoded format in this case.
+the tls certificate, tls private key, CA certificate in PEM format with base64 encoded. The server certificate also needs to contain the tls.crt in PEM format with base64 encoded in this case.
 
 In the server secret the following keys must be set:
 
