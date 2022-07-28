@@ -29,7 +29,7 @@ If `sslSecrets.create` is `false`, the operator will look for the secret at `ssl
 
 ## Using own certificates
 
-### Listeners not used for internal broker communication
+### Listeners not used for internal broker and controller communication
 
 In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_hybrid_customcert.yaml), SSL is enabled for all listeners, and certificates are automatically generated for "internal" and "controller" listeners. The "external" and "internal" listeners will use the user-provided certificates. The **serverSSLCertSecret** key is a reference to the Kubernetes secret that contains the server certificate for the listener to be used for SSL communication.
 
@@ -38,14 +38,37 @@ In the server secret the following keys must be set:
 | Key              | Value                                     |
 |:----------------:|:------------------------------------------|
 | `keystore.jks`   | Certificate and private key in JKS format |
-| `truststore.jks` | Trusted CA certificate in JKS format     |
+| `truststore.jks` | Trusted CA certificate in JKS format      |
 | `password`       | Password for the key and trust store      |
 
 {{< kafka-operator >}} using JKS format based certificate for listener config.
 
-### Listeners used for internal broker communication
+### Listeners used for internal broker or controller communication
 
-In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml), SSL is enabled for all listeners, and user-provided certificates are used. In that case, when a custom certificate is used for a listener which is used for internal broker communication, you must also specify the client certificate. The client certificate will be used by {{< kafka-operator >}}, Cruise Control, Cruise Control Metrics Reporter to communicate on SSL. The **clientSSLCertSecret** key is a reference to the Kubernetes secret where the custom client SSL certificate can be provided. Client secret data keys must be the same as the server secret. The client certificate must be signed by the same CA authority as the server certificate for the corresponding listener. The **clientSSLCertSecret** has to be in the **KafkaCluster** custom resource spec field.
+In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml), SSL is enabled for all listeners, and user-provided certificates are used. In that case, when a custom certificate is used for a listener which is used for internal broker or controller communication, you must also specify the client certificate. The client certificate will be used by {{< kafka-operator >}}, Cruise Control, Cruise Control Metrics Reporter to communicate on SSL. The **clientSSLCertSecret** key is a reference to the Kubernetes secret where the custom client SSL certificate can be provided. The client certificate must be signed by the same CA authority as the server certificate for the corresponding listener. The **clientSSLCertSecret** has to be in the **KafkaCluster** custom resource spec field.
+The client secret must contain the keystore, truststore jks files and the password for them in base64 encoded format and
+the tls certificate, tls private key, CA certificate in PEM and base64 encoded format. The server certificate also needs to contain the tls.crt in PEM and base64 encoded format in this case.
+
+In the server secret the following keys must be set:
+
+| Key              | Value                                     |
+|:----------------:|:------------------------------------------|
+| `keystore.jks`   | Certificate and private key in JKS format |
+| `truststore.jks` | Trusted CA certificate in JKS format      |
+| `password`       | Password for the key and trust store      |
+| `tls.crt`        | TLS certificate in PEM format             |
+
+In the client secret the following keys must be set:
+
+| Key              | Value                                     |
+|:----------------:|:------------------------------------------|
+| `keystore.jks`   | Certificate and private key in JKS format |
+| `truststore.jks` | Trusted CA certificate in JKS format      |
+| `password`       | Password for the key and trust store      |
+| `tls.crt`        | TLS certificate in PEM format             |
+| `tls.key`        | TLS private key in PEM format             |
+| `ca.crt`         | CA certificate  in PEM format             |
+
 
 ### Generate JKS certificate
 
