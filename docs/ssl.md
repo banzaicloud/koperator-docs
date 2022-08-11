@@ -66,7 +66,7 @@ In the client secret the following keys must be set:
 
 ### Generate JKS certificate
 
-Certificates in JKS format can be generated using OpenSSL and keystore applications. You can also use [this script](https://github.com/confluentinc/confluent-platform-security-tools/blob/master/kafka-generate-ssl.sh). The truststore.jks must contains only one **trustedCertEntry** and the keystore.jks must contains only one **PrivateKeyEntry**
+Certificates in JKS format can be generated using OpenSSL and keystore applications. You can also use [this script](https://github.com/confluentinc/confluent-platform-security-tools/blob/master/kafka-generate-ssl.sh). The keystore.jks must contains only one **PrivateKeyEntry**
 
 Kafka listeners use 2-way-SSL mutual authentication, so you must properly set the CNAME (Common Name) fields and if needed the SAN (Subject Alternative Name) fields in the certificates. In the following description we assume that the Kafka cluster is in the `kafka` namespace.
 
