@@ -47,8 +47,6 @@ The following tips and commands can help you to troubleshoot your {{< kafka-oper
     kubectl get pods -n zookeeper
     ```
 
-{{< toc >}}
-
 ## Check the KafkaCluster configuration
 
 You can display the current configuration of your Kafka cluster using the following command:
