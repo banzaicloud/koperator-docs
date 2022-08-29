@@ -5,7 +5,7 @@ weight: 800
 
 ## Support
 
-{{% include-headless "kafka-operator-supertubes-intro.md" %}}
+{{% include-headless "kafka-operator-supertubes-intro.md" "sdm" %}}
 
 ### Community support
 

@@ -47,7 +47,7 @@ You can use the following commands to send and receive messages within a Kuberne
 
 ## Send and receive messages with SSL within a cluster {#internal-ssl}
 
-You can use the following procedure to send and receive messages within a Kubernetes cluster [when SSL encryption is enabled for Kafka]({{< relref "/docs/kafka-operator/ssl.md#enable-ssl" >}}). To test a Kafka instance secured by SSL we recommend using [kcat](https://github.com/edenhill/kcat).
+You can use the following procedure to send and receive messages within a Kubernetes cluster [when SSL encryption is enabled for Kafka]({{< relref "/docs/sdm/koperator/ssl.md#enable-ssl" >}}). To test a Kafka instance secured by SSL we recommend using [kcat](https://github.com/edenhill/kcat).
 
 > To use the java client instead of kcat, generate the proper truststore and keystore using the [official docs](https://kafka.apache.org/documentation/#security_ssl).
 
@@ -106,7 +106,7 @@ You can use the following procedure to send and receive messages within a Kubern
 
 ### Prerequisites {#external-prerequisites}
 
-1. Producers and consumers that are not in the same Kubernetes cluster can access the Kafka cluster only if an [external listener]({{< relref "/docs/kafka-operator/external-listener/index.md" >}}) is configured in your KafkaCluster CR. Check that the **listenersConfig.externalListeners** section exists in the KafkaCluster CR.
+1. Producers and consumers that are not in the same Kubernetes cluster can access the Kafka cluster only if an [external listener]({{< relref "/docs/sdm/koperator/external-listener/index.md" >}}) is configured in your KafkaCluster CR. Check that the **listenersConfig.externalListeners** section exists in the KafkaCluster CR.
 1. Obtain the external address and port number of the cluster by running the following commands.
 
     <!-- FIXME How is this different if we use nodeport for the external listener? -->

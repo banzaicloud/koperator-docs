@@ -23,7 +23,7 @@ This method uses a command-line tool of the commercial [Cisco Streaming Data Man
 
 1. Install the [Streaming Data Manager](/docs/overview/) CLI tool for your environment by running the following command:
 
-    {{< include-headless "download-supertubes.md" >}}
+    {{< include-headless "download-supertubes.md" "sdm" >}}
 
 1. Run the following command:
 
@@ -177,7 +177,7 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
 
 1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/master/config/samples).
 
-    {{< include-headless "warning-listener-protocol.md" "kafka-operator" >}}
+    {{< include-headless "warning-listener-protocol.md" "sdm/koperator" >}}
 
     - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
 
@@ -185,7 +185,7 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster.yaml
         ```
 
-    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/kafka-operator/ssl.md#enable-ssl" %}}.
+    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/sdm/koperator/ssl.md#enable-ssl" %}}.
 
         ```bash
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster_ssl.yaml
