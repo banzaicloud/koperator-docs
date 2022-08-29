@@ -1,6 +1,6 @@
 ---
 title: Configure rack awareness
-shorttitle: Rack awareness
+linktitle: Rack awareness
 weight: 750
 ---
 

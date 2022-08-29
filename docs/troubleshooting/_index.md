@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting the operator
-shorttitle: Troubleshooting
+linktitle: Troubleshooting
 weight: 400
 ---
 

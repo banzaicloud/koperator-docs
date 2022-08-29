@@ -1,6 +1,6 @@
 ---
 title: Delete the operator
-shorttitle: Delete operator
+linktitle: Delete operator
 weight: 950
 ---
 

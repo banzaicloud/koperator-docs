@@ -1,6 +1,6 @@
 ---
 title: Install the operator
-shorttitle: Install
+linktitle: Install
 weight: 10
 ---
 

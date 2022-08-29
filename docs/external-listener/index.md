@@ -1,6 +1,6 @@
 ---
 title: Expose the Kafka cluster to external applications
-shorttitle: External listeners
+linktitle: External listeners
 weight: 700
 ---
 

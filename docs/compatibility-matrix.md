@@ -1,6 +1,6 @@
 ---
 title: Supported versions and compatibility matrix
-shorttitle: Supported versions
+linktitle: Supported versions
 weight: 770
 ---
 

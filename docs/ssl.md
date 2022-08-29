@@ -1,6 +1,6 @@
 ---
 title: Securing Kafka With SSL
-shorttitle: SSL
+linktitle: SSL
 weight: 300
 ---
 

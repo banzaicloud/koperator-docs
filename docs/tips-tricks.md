@@ -1,6 +1,6 @@
 ---
 title: Tips and tricks for the Koperator
-shorttitle: Tips and tricks
+linktitle: Tips and tricks
 weight: 970
 ---
 

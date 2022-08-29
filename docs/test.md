@@ -1,6 +1,6 @@
 ---
 title: Test provisioned Kafka Cluster
-shorttitle: Test your cluster
+linktitle: Test your cluster
 weight: 100
 ---
 
