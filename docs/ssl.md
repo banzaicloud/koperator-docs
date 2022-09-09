@@ -65,7 +65,7 @@ Kafka listeners use 2-way-SSL mutual authentication, so you must properly set th
     - kafka-headless
 
 - **For internal listeners which are exposed by a normal service** (kafka-all-broker), CNAME must be "kafka-all-broker.kafka.svc.cluster.local"
-- **For external listeners**, you need to use the advertised load balancer hostname as CNAME. The hostname need to be specified in the **KafkaCluster** custom resource with **hostnameOverride**, and the **accessMethod** has to be "LoadBalancer". For details about this override, see Step 5 in {{% xref "/docs/sdm/koperator/external-listener/index.md#loadbalancer" %}}.
+- **For external listeners**, you need to use the advertised load balancer hostname as CNAME. The hostname need to be specified in the **KafkaCluster** custom resource with **hostnameOverride**, and the **accessMethod** has to be "LoadBalancer". For details about this override, see Step 5 in {{% xref "/sdm/koperator/external-listener/index.md#loadbalancer" %}}.
 
 ## Using Kafka ACLs with SSL
 

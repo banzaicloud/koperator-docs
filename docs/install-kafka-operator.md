@@ -185,7 +185,7 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster.yaml
         ```
 
-    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/sdm/koperator/ssl.md#enable-ssl" %}}.
+    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/sdm/koperator/ssl.md#enable-ssl" %}}.
 
         ```bash
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster_ssl.yaml
