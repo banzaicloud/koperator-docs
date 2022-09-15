@@ -6,7 +6,7 @@ weight: 10
 
 
 
-The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.19.0+.
+The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.20.0+.
 
 > The operator supports Kafka 2.6.2-3.1.x.
 
