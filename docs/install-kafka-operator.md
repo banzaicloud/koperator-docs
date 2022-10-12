@@ -15,22 +15,6 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.
 - A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM).
 > We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/).
 
-## Install {{< kafka-operator >}} and all requirements using Streaming Data Manager
-
-This method uses a command-line tool of the commercial [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product to install the Koperator and its prerequisites. If you'd prefer to install these components manually, see [Install {{< kafka-operator >}} and the requirements independently](#manual-install).
-
-1. [Register for an evaluation version of Streaming Data Manager](https://banzaicloud.com/products/try-supertubes/).
-
-1. Install the [Streaming Data Manager](/docs/overview/) CLI tool for your environment by running the following command:
-
-    {{< include-headless "download-supertubes.md" "sdm" >}}
-
-1. Run the following command:
-
-    ```bash
-    supertubes install -a
-    ```
-
 ## Install {{< kafka-operator >}} and the requirements independently {#manual-install}
 
 ### Install cert-manager {#install-cert-manager}
