@@ -69,7 +69,7 @@ Kafka listeners use 2-way-SSL mutual authentication, so you must properly set th
 
 ## Using Kafka ACLs with SSL
 
-> Note: {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product.
+> Note: {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://calisti.app) product.
 > {{< include-headless "kafka-operator-supertubes-intro.md" "sdm" >}}
 
 If you choose not to enable ACLs for your Apache Kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.

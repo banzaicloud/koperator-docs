@@ -13,7 +13,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.
 ## Prerequisites
 
 - A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM).
-> We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/).
+> We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://calisti.app).
 
 ## Install {{< kafka-operator >}} and the requirements independently {#manual-install}
 
