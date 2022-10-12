@@ -9,7 +9,7 @@ weight: 800
 
 ### Community support
 
-If you encounter problems while using {{< kafka-operator >}} the documentation does not address, [open an issue](https://github.com/banzaicloud/kafka-operator/issues) or talk to us in our Slack channel [#kafka-operator](https://pages.banzaicloud.com/invite-slack).
+If you encounter problems while using {{< kafka-operator >}} the documentation does not address, [open an issue](https://github.com/banzaicloud/kafka-operator/issues) or talk to us in our Slack channel [#kafka-operator](https://banzaicloud.com/invite-slack).
 
 ### Commercial support
 
