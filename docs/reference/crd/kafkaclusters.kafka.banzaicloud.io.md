@@ -16518,6 +16518,42 @@ KafkaCluster is the Schema for the kafkaclusters API
 
 <div class="property depth-2">
 <div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.cruiseControlOperationSpec">.spec.cruiseControlConfig.cruiseControlOperationSpec</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>CruiseControlOperationSpec specifies the configuration of the CruiseControlOperation handling</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.cruiseControlOperationSpec.ttlSecondsAfterFinished">.spec.cruiseControlConfig.cruiseControlOperationSpec.ttlSecondsAfterFinished</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">integer</span>
+
+</div>
+
+<div class="property-description">
+<p>When TTLSecondsAfterFinished is specified, the created and finished (completed successfully or completedWithError and errorPolicy: ignore) cruiseControlOperation custom resource will be deleted after the given time elapsed. When it is 0 then the resource is going to be deleted instantly after the operation is finished. When it is not specified the resource is not going to be removed. Value can be only zero and positive integers.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-2">
+<div class="property-header">
 <h3 id="v1beta1-.spec.cruiseControlConfig.cruiseControlTaskSpec">.spec.cruiseControlConfig.cruiseControlTaskSpec</h3>
 </div>
 <div class="property-body">
@@ -28191,7 +28227,7 @@ KafkaCluster is the Schema for the kafkaclusters API
 </div>
 
 <div class="property-description">
-<p>EnableHealthCheckHttp10 is a toggle for adding HTTP1.0 support to Envoy health-check</p>
+<p>EnableHealthCheckHttp10 is a toggle for adding HTTP1.0 support to Envoy health-check, default false</p>
 
 </div>
 
@@ -30883,7 +30919,7 @@ KafkaCluster is the Schema for the kafkaclusters API
 <div class="property-body">
 <div class="property-meta">
 <span class="property-type">string</span>
-<span class="property-required">Required</span>
+
 </div>
 
 </div>
