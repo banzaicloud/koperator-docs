@@ -229,7 +229,7 @@ To connect to this listener using the Kafka 3.1.0 (and above) console producer, 
 
 To consume messages from this listener using the Kafka 3.1.0 (and above) console consumer, complete the following steps:
 
-1. Set the producer properties like this. Replace the parameters between brackets as needed for your environment:
+1. Set the consumer properties like this. Replace the parameters between brackets as needed for your environment:
 
     ```ini
     group.id=consumer-1
