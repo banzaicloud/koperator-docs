@@ -4,7 +4,7 @@ shorttitle: Cruise Control Operations
 weight: 200
 ---
 
-## What is it and why?
+## What is it and why we implemented this?
 
 From the `Koperator` v1.22+ we have introduced the `CruiseControlOperation` custom resource. The Koperator executes the Cruise Control related task based on our `CruiseControlOperation` custom resource state. This way we could get better control over Cruise Control. This better control gives us more reliability, configurability, observability and it also gives us bigger room for future improvements.
 
@@ -166,7 +166,7 @@ spec:
 ...
 ```
 
-# Example for the ignore and pause usecase:
+### Example for the ignore and pause usecase:
 
 1. In the first example we extended the Kafka cluster with one broker. Now we will remove 2 brokers at the same time by editing the `KafkaCluster` custom resource.
 
