@@ -47,14 +47,14 @@ Here at Banzai Cloud, we know how to operate Apache Kafka at scale (we are contr
 
 The {{< kafka-operator >}} externalizes access to Apache Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
 
-![Kafka External Access](../img/kafka-external.png)
+![Kafka External Access](/sdm/koperator/img/kafka-external.png)
 
 ### Communication via SSL
 
 The operator fully automates Kafka's SSL support.
 The operator can provision the required secrets and certificates for you, or you can provide your own.
 
-![SSL support for Kafka](../img/kafka-ssl.png)
+![SSL support for Kafka](/sdm/koperator/img/kafka-ssl.png)
 
 ### Monitoring via Prometheus
 
