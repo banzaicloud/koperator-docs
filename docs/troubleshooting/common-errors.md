@@ -11,4 +11,4 @@ If you get the following error in the logs of {{< kafka-operator >}}, update you
 Error: UPGRADE FAILED: cannot patch "kafka" with kind KafkaCluster: KafkaCluster.kafka.banzaicloud.io "kafka" is invalid
 ```
 
-The recommended way to upgrade {{< kafka-operator >}} is to upgrade the KafkaCluster CRD, then update {{< kafka-operator >}}. For details, see {{% xref "/docs/kafka-operator/upgrade-kafka-operator.md" %}}.
+The recommended way to upgrade {{< kafka-operator >}} is to upgrade the KafkaCluster CRD, then update {{< kafka-operator >}}. For details, see {{% xref "/sdm/koperator/upgrade-kafka-operator.md" %}}.

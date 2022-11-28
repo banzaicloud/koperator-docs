@@ -1,6 +1,6 @@
 ---
 title: Upgrade the operator
-shorttitle: Upgrade
+linktitle: Upgrade
 weight: 15
 ---
 

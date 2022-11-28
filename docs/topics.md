@@ -1,6 +1,6 @@
 ---
 title: Provisioning Kafka Topics
-shorttitle: Kafka topics
+linktitle: Kafka topics
 weight: 200
 ---
 

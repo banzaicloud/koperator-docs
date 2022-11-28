@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting the operator
-shorttitle: Troubleshooting
+linktitle: Troubleshooting
 weight: 400
 ---
 
@@ -46,8 +46,6 @@ The following tips and commands can help you to troubleshoot your {{< kafka-oper
     ```bash
     kubectl get pods -n zookeeper
     ```
-
-{{< toc >}}
 
 ## Check the KafkaCluster configuration
 
@@ -163,9 +161,9 @@ Events:            <none>
 
 ## Getting Support
 
-If you encounter any problems that the documentation does not address, [file an issue](https://github.com/banzaicloud/koperator/issues) or talk to us on the Banzai Cloud Slack channel [#kafka-operator](https://slack.banzaicloud.io/).
+If you encounter any problems that the documentation does not address, [file an issue](https://github.com/banzaicloud/koperator/issues) or talk to us on the Banzai Cloud Slack channel [#kafka-operator](https://banzaicloud.com/invite-slack).
 
-[Commercial support]({{< relref "/docs/kafka-operator/support.md">}}) is also available for {{< kafka-operator >}}.
+[Commercial support]({{< relref "/sdm/koperator/support.md">}}) is also available for {{< kafka-operator >}}.
 
 Before asking for help, prepare the following information to make troubleshooting faster:
 

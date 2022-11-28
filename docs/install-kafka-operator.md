@@ -1,6 +1,6 @@
 ---
 title: Install the operator
-shorttitle: Install
+linktitle: Install
 weight: 10
 ---
 
@@ -13,23 +13,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.
 ## Prerequisites
 
 - A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM).
-> We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/).
-
-## Install {{< kafka-operator >}} and all requirements using Streaming Data Manager
-
-This method uses a command-line tool of the commercial [Cisco Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product to install the Koperator and its prerequisites. If you'd prefer to install these components manually, see [Install {{< kafka-operator >}} and the requirements independently](#manual-install).
-
-1. [Register for an evaluation version of Streaming Data Manager](https://banzaicloud.com/products/try-supertubes/).
-
-1. Install the [Streaming Data Manager](/docs/overview/) CLI tool for your environment by running the following command:
-
-    {{< include-headless "download-supertubes.md" >}}
-
-1. Run the following command:
-
-    ```bash
-    supertubes install -a
-    ```
+> We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://calisti.app).
 
 ## Install {{< kafka-operator >}} and the requirements independently {#manual-install}
 
@@ -177,7 +161,7 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
 
 1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/master/config/samples).
 
-    {{< include-headless "warning-listener-protocol.md" "kafka-operator" >}}
+    {{< include-headless "warning-listener-protocol.md" "sdm/koperator" >}}
 
     - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
 
@@ -185,7 +169,7 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster.yaml
         ```
 
-    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/kafka-operator/ssl.md#enable-ssl" %}}.
+    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/sdm/koperator/ssl.md#enable-ssl" %}}.
 
         ```bash
         kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster_ssl.yaml

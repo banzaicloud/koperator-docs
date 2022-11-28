@@ -1,6 +1,6 @@
 ---
 title: Securing Kafka With SSL
-shorttitle: SSL
+linktitle: SSL
 weight: 300
 ---
 
@@ -14,7 +14,7 @@ Providing custom certificates per listener is supported from {{< kafka-operator 
 
 ## Using auto-generated certificates (**ssLSecrets**)
 
-{{< include-headless "warning-listener-protocol.md" "kafka-operator" >}}
+{{< include-headless "warning-listener-protocol.md" "sdm/koperator" >}}
 
 The following example enables SSL and automatically generates the certificates:
 
@@ -65,12 +65,12 @@ Kafka listeners use 2-way-SSL mutual authentication, so you must properly set th
     - kafka-headless
 
 - **For internal listeners which are exposed by a normal service** (kafka-all-broker), CNAME must be "kafka-all-broker.kafka.svc.cluster.local"
-- **For external listeners**, you need to use the advertised load balancer hostname as CNAME. The hostname need to be specified in the **KafkaCluster** custom resource with **hostnameOverride**, and the **accessMethod** has to be "LoadBalancer". For details about this override, see Step 5 in {{% xref "/docs/kafka-operator/external-listener/index.md#loadbalancer" %}}.
+- **For external listeners**, you need to use the advertised load balancer hostname as CNAME. The hostname need to be specified in the **KafkaCluster** custom resource with **hostnameOverride**, and the **accessMethod** has to be "LoadBalancer". For details about this override, see Step 5 in {{% xref "/sdm/koperator/external-listener/index.md#loadbalancer" %}}.
 
 ## Using Kafka ACLs with SSL
 
-> Note: {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product.
-> {{< include-headless "kafka-operator-supertubes-intro.md" >}}
+> Note: {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://calisti.app) product.
+> {{< include-headless "kafka-operator-supertubes-intro.md" "sdm" >}}
 
 If you choose not to enable ACLs for your Apache Kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.
 You can leave the `topicGrants` out as they will not have any effect.
