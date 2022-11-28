@@ -146,7 +146,7 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
     kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v0.21.2/kafka-operator.crds.yaml
     ```
 
-1. Add the Banzai Cloud repository to Helm.
+1. Add the following repository to Helm.
 
     ```bash
     helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/

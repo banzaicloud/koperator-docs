@@ -161,7 +161,7 @@ Events:            <none>
 
 ## Getting Support
 
-If you encounter any problems that the documentation does not address, [file an issue](https://github.com/banzaicloud/koperator/issues) or talk to us on the Banzai Cloud Slack channel [#kafka-operator](https://banzaicloud.com/invite-slack).
+If you encounter any problems that the documentation does not address, [file an issue](https://github.com/banzaicloud/koperator/issues) or talk to us on our Slack channel [#kafka-operator](https://banzaicloud.com/invite-slack).
 
 [Commercial support]({{< relref "/sdm/koperator/support.md">}}) is also available for {{< kafka-operator >}}.
 
