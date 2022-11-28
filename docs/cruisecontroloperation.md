@@ -237,7 +237,7 @@ status:
 
 4. At this point we can decide to let this problematic operation to be retried which is the default behavior or **ignore** the error or use the **pause** label to pause the retry execution and let the `Koperator` to execute the next operation.
 
-- Ignore use-case:  This time the ignore has chosen by setting of the `cruiseControlOperation.spec.errorPolicy` to **ignore**. This operation will be considered as a succeeded operation thus the broker pod and the persistent volume will be removed from the Kubernetes cluster and from the `KafkaCluster` status. The `Koperator` will execute the next `remove_broker` (kafka-removebroker-4plfq) `CruiseControlOperation`.
+- Ignore use-case:  This time the ignore has been chosen by setting of the `cruiseControlOperation.spec.errorPolicy` to **ignore**. This operation will be considered as a succeeded operation thus the broker pod and the persistent volume will be removed from the Kubernetes cluster and from the `KafkaCluster` status. The `Koperator` will execute the next `remove_broker` (kafka-removebroker-4plfq) `CruiseControlOperation`.
 
 ```yaml
 status:
@@ -255,7 +255,7 @@ status:
         }
 ```
 
-- Pause use-case: This time the pause has chosen by the set of a **pause: true** label for the kafka-removebroker-lg7qm `CruiseControlOperation`. The re-execution is paused and the Koperator will execute the next `remove_broker` operation.
+- Pause use-case: This time the pause has been chosen by the set of a **pause: true** label for the kafka-removebroker-lg7qm `CruiseControlOperation`. The re-execution is paused and the Koperator will execute the next `remove_broker` operation.
 
 ```yaml
 status:
@@ -283,7 +283,7 @@ status:
         }
 ```
 
-When the second `remove_broker` operation has finished:
+When the second `remove_broker` operation has been finished:
 
 ```yaml
 status:
