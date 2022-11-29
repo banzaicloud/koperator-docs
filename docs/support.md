@@ -13,4 +13,4 @@ If you encounter problems while using {{< kafka-operator >}} the documentation d
 
 ### Commercial support
 
-If you are using {{< kafka-operator >}} in a production environment and [require commercial support, contact Cisco](mailto:cnan-feedback@cisco.com), the company backing the development of {{< kafka-operator >}}.
+If you are using {{< kafka-operator >}} in a production environment and [require commercial support, contact Cisco](mailto:calisti-support@cisco.com), the company backing the development of {{< kafka-operator >}}.

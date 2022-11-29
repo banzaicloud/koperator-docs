@@ -7,7 +7,7 @@ weight: 400
 
 As highlighted in the [features section](../features/), we removed the reliance on StatefulSet, we support several different scenarios.
 
-> Note: this is not a complete list, if you have a specific requirement or question, [contact us](mailto:cnan-feedback@cisco.com).
+> Note: this is not a complete list, if you have a specific requirement or question, [contact us](mailto:calisti-support@cisco.com).
 
 ## Vertical capacity scaling
 
