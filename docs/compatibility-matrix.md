@@ -17,6 +17,7 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 |v0.21.0|2.6.2+|0.16.1|2.5.86|2.11|[link](https://github.com/banzaicloud/koperator/blob/v0.21.0/config/samples/simplekafkacluster.yaml)|+|
 |v0.21.1|2.6.2+|0.16.1|2.5.86|2.11|[link](https://github.com/banzaicloud/koperator/blob/v0.21.1/config/samples/simplekafkacluster.yaml)|+|
 |v0.21.2|2.6.2+|0.16.1|2.5.86|2.11|[link](https://github.com/banzaicloud/koperator/blob/v0.21.2/config/samples/simplekafkacluster.yaml)|+|
+|v0.22.0|2.6.2+|0.16.1|2.5.101|2.15.3|[link](https://github.com/banzaicloud/koperator/blob/v0.22.0/config/samples/simplekafkacluster.yaml)|+|
 
 ## Available {{< kafka-operator >}} images
 
@@ -29,6 +30,7 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 |ghcr.io/banzaicloud/kafka-operator:v0.21.0 |1.17|
 |ghcr.io/banzaicloud/kafka-operator:v0.21.1 |1.17|
 |ghcr.io/banzaicloud/kafka-operator:v0.21.2 |1.17|
+|ghcr.io/banzaicloud/kafka-operator:v0.22.0 |1.19|
 
 ## Available Apache Kafka images
 
@@ -62,3 +64,4 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 |ghcr.io/banzaicloud/cruise-control:2.5.68|11|
 |ghcr.io/banzaicloud/cruise-control:2.5.80|11|
 |ghcr.io/banzaicloud/cruise-control:2.5.86|11|
+|ghcr.io/banzaicloud/cruise-control:2.5.101|11|
