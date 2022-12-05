@@ -35,9 +35,9 @@ With the {{< kafka-operator >}} you can:
 
 ## Features
 
-### Fine Grained Broker Config Support
+### Fine Grained Broker Configuration Support
 
-We needed to be able to react to events in a fine-grained way for each Broker - and not in the limited way StatefulSet does (which, for example, removes the most recently created Brokers). Some of the available solutions try to overcome these deficits by placing scripts inside the container to generate configs at runtime, whereas the {{< kafka-operator >}}'s configurations are deterministically placed in specific Configmaps.
+We needed to be able to react to events in a fine-grained way for each Broker - and not in the limited way StatefulSet does (which, for example, removes the most recently created Brokers). Some of the available solutions try to overcome these deficits by placing scripts inside the container to generate configurations at runtime, whereas the {{< kafka-operator >}}'s configurations are deterministically placed in specific Configmaps.
 
 ### Graceful Kafka Cluster Scaling
 
@@ -81,7 +81,7 @@ increasing the error rate.
 
 ### Dynamic Configuration Support
 
-Kafka operates with three type of configs:
+Kafka operates with three type of configurations:
 
 - Read-only
 - ClusterWide
