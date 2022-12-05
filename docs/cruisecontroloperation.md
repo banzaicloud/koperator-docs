@@ -5,18 +5,21 @@ weight: 200
 ---
 
 
-From `Koperator` v1.21+ we have introduced the `CruiseControlOperation` custom resource. Koperator executes the Cruise Control related task based on our `CruiseControlOperation` custom resource state. This way we could get better control over Cruise Control. This better control gives us more reliability, configurability, observability and it also gives us more room for future improvements.
+From `Koperator` v0.22+ we have introduced the `CruiseControlOperation` custom resource. Koperator executes the Cruise Control related task based on our `CruiseControlOperation` custom resource state. This way we could get better control over Cruise Control. This better control gives us more reliability, configurability, observability and it also gives us more room for future improvements.
 
 ## How it works?
 
-When a broker is added or removed from the  Kafka cluster or when a new storage is added for a broker the Koperator creates a `CruiseControlOperation` custom resource.
-This created custom resource describes a task what will be executed by CruseControl to do the partitions movements.
-Koperator watches the created `CruiseControlOperation` custom resource and updates their state based on the result of the CruiseControl task.  
+When a broker is added or removed from the  Kafka cluster or when new storage is added for a broker Koperator creates a `CruiseControlOperation` custom resource.
+This created custom resource describes a task what will be executed by CruiseControl to do the partitions movements.
+Koperator watches the created `CruiseControlOperation` custom resource and updates its state based on the result of the CruiseControl task.  
 Koperator can re-execute the task when it has failed.  
-When there are multiple `CruiseControlOperation` at the same time CruiseControl is not able to execute more then one task thus we added a priority between the tasks depending their operation type.  
-Upscale operations will be executed first then downscale operations and after rebalance operations.  
+When there are multiple `CruiseControlOperation` custom resources at the same time CruiseControl is not able to execute more then one task, thus we added a priority between the tasks depending their operation type.  
+Upscale operations will be executed first then downscale operations, then rebalance operations.  
 Currently three CruiseControl tasks are supported.  
-The [add_broker](https://github.com/linkedin/cruise-control/wiki/REST-APIs#add-a-list-of-new-brokers-to-kafka-cluster), [remove_broker](https://github.com/linkedin/cruise-control/wiki/REST-APIs#decommission-a-list-of-brokers-from-the-kafka-cluster) and the [rebalance](https://github.com/linkedin/cruise-control/wiki/REST-APIs#trigger-a-workload-balance).  
+- [add_broker](https://github.com/linkedin/cruise-control/wiki/REST-APIs#add-a-list-of-new-brokers-to-kafka-cluster) - `GracefulUpscale`
+- [remove_broker](https://github.com/linkedin/cruise-control/wiki/REST-APIs#decommission-a-list-of-brokers-from-the-kafka-cluster) - `GracefulDownscale`
+- [rebalance](https://github.com/linkedin/cruise-control/wiki/REST-APIs#trigger-a-workload-balance) - `GracefulDiskRebalance`
+
 The process of the operation can be followed up through the `KafkaCluster` custom resource's status and through the created `CruiseControlOperation` custom resource's status.  
 In the section below you can see an example for the `add_broker` (`GracefulUpscale*`) operation but the same applies for the Kafka cluster `remove_broker` (`GracefulDownScale*`) and `rebalance` (when the `volumeState` is `GracefulDiskRebalance*`) operations.
 
@@ -98,8 +101,8 @@ status:
 There are two other `cruiseControlState`s which has not been covered by the above example.  
 The `GracefulUpscaleCompletedWithError` and the `GracefulUpscalePaused`.  
 The `GracefulUpscalePaused` is a special state and there are more details about it in the next section.  
-The `GracefulUpscaleCompletedWithError` happens  when the Cruise Control task is failed somehow.
-In this case when the `cruiseControlOperation.spec.errorPolicy` is set to `retry`, (`retry` is the default value) the failed task will be re-executed by Koperator in every `30s` until it is succeeded.  
+The `GracefulUpscaleCompletedWithError` happens when the Cruise Control task fails.  
+In this case when the `cruiseControlOperation.spec.errorPolicy` is set to `retry` (which is the default value), the failed task will be re-executed by Koperator every `30s` until it is succeeded.  
 When it is re-executed the `cruiseControlState` will be GracefulUpscaleRunning again.
 
 ```yaml
@@ -157,7 +160,7 @@ The `state` shows the progress of the add_broker request.
 The `summary` is Cruise Control's optimization proposal.  
 It shows the scope of the changes that Cruise Control will apply through the operation.  
 When a task execution is completed with error and there are re-executions the `retryCount` shows the number of retries.  
-In this case the history of the failed tasks are visible with the error message in the `status.failedTask` field.  
+In this case the history of the failed tasks are visible with their error messages in the `status.failedTask` field.  
 You can also find information on the fields [here](https://github.com/banzaicloud/koperator/blob/master/api/v1alpha1/cruisecontroloperation_types.go)
 
 ## How can we have control over the created CruiseControlOperation?
@@ -182,7 +185,7 @@ metadata:
 ```
 
 - You can set automatic cleanup time for the created `CruiseControlOperations` in the `KafkaCluster` custom resource.  
-   In the above example the finished (completed successfully or `completedWithError` and `errorPolicy: ignore`) `CruiseControlOperation` custom resources will be deleted after the `300s` elapsed after finishing the particular operation.
+   In the example below the finished (completed successfully or `completedWithError` and `errorPolicy: ignore`) `CruiseControlOperation` custom resources will be deleted after the `300s` elapsed after finishing the particular operation.
 
 ```yaml
 apiVersion: kafka.banzaicloud.io/v1beta1
