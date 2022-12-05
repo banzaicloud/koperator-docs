@@ -5,120 +5,126 @@ weight: 200
 ---
 
 
-From `Koperator` v0.22+ we have introduced the `CruiseControlOperation` custom resource. Koperator executes the Cruise Control related task based on our `CruiseControlOperation` custom resource state. This way we could get better control over Cruise Control. This better control gives us more reliability, configurability, observability and it also gives us more room for future improvements.
+Koperator version 0.22 introduces the `CruiseControlOperation` custom resource. Koperator executes the Cruise Control related task based on the state of the `CruiseControlOperation` custom resource. This gives you better control over Cruise Control, improving reliability, configurability, and observability.
 
-## How it works?
+## Overview
 
-When a broker is added or removed from the  Kafka cluster or when new storage is added for a broker Koperator creates a `CruiseControlOperation` custom resource.
-This created custom resource describes a task what will be executed by CruiseControl to do the partitions movements.
-Koperator watches the created `CruiseControlOperation` custom resource and updates its state based on the result of the CruiseControl task.  
-Koperator can re-execute the task when it has failed.  
-When there are multiple `CruiseControlOperation` custom resources at the same time CruiseControl is not able to execute more then one task, thus we added a priority between the tasks depending their operation type.  
-Upscale operations will be executed first then downscale operations, then rebalance operations.  
-Currently three CruiseControl tasks are supported.  
-- [add_broker](https://github.com/linkedin/cruise-control/wiki/REST-APIs#add-a-list-of-new-brokers-to-kafka-cluster) - `GracefulUpscale`
-- [remove_broker](https://github.com/linkedin/cruise-control/wiki/REST-APIs#decommission-a-list-of-brokers-from-the-kafka-cluster) - `GracefulDownscale`
-- [rebalance](https://github.com/linkedin/cruise-control/wiki/REST-APIs#trigger-a-workload-balance) - `GracefulDiskRebalance`
+When a broker is added or removed from the Kafka cluster or when new storage is added for a broker, Koperator creates a `CruiseControlOperation` custom resource.
+This custom resource describes a task that Cruise Control executes to move the partitions.
+Koperator watches the created `CruiseControlOperation` custom resource and updates its state based on the result of the Cruise Control task.
+Koperator can re-execute the task if it fails.
 
-The process of the operation can be followed up through the `KafkaCluster` custom resource's status and through the created `CruiseControlOperation` custom resource's status.  
-In the section below you can see an example for the `add_broker` (`GracefulUpscale*`) operation but the same applies for the Kafka cluster `remove_broker` (`GracefulDownScale*`) and `rebalance` (when the `volumeState` is `GracefulDiskRebalance*`) operations.
+Cruise Control can execute only one task at a time, so the priority of the tasks depends on the type of the operation:
+
+- Upscale operations are executed first, then
+- downscale operations, then
+- rebalance operations.
+
+The following Cruise Control tasks are supported:
+
+- [add_broker](https://github.com/linkedin/cruise-control/wiki/REST-APIs#add-a-list-of-new-brokers-to-kafka-cluster) (`GracefulUpscale`)
+- [remove_broker](https://github.com/linkedin/cruise-control/wiki/REST-APIs#decommission-a-list-of-brokers-from-the-kafka-cluster) (`GracefulDownscale`)
+- [rebalance](https://github.com/linkedin/cruise-control/wiki/REST-APIs#trigger-a-workload-balance) (`GracefulDiskRebalance`)
+
+You can follow the progress of the operation through the `KafkaCluster` custom resource's status and through the `CruiseControlOperation` custom resource's status.  
+The following example shows the steps of an `add_broker` (`GracefulUpscale*`) operation, but the same applies for the Kafka cluster `remove_broker` (`GracefulDownScale*`) and `rebalance` (when the `volumeState` is `GracefulDiskRebalance*`) operations.
 
 1. Upscale the Kafka cluster by adding a new broker with id "3" into the `KafkaCluster` CR:
 
-```yaml
- Spec:
- ...  
-   brokers:
-    - id: 0
-      brokerConfigGroup: "default"
-    - id: 1
-      brokerConfigGroup: "default"
-    - id: 2
-      brokerConfigGroup: "default"
-    - id: 3
-      brokerConfigGroup: "default"
-...
-```
+    ```yaml
+    spec:
+    ...  
+    ...  
+    ...  
+      brokers:
+        - id: 0
+          brokerConfigGroup: "default"
+        - id: 1
+          brokerConfigGroup: "default"
+        - id: 2
+          brokerConfigGroup: "default"
+        - id: 3
+          brokerConfigGroup: "default"
+    ...
+    ```
 
-2. A new broker pod will be created and in the `KafkaCluster` status there will be the `cruiseControlOperationReference`.  
+1. A new broker pod is created and the `cruiseControlOperationReference` is added to the `KafkaCluster` status.  
    This is the reference of the created `CruiseControlOperation` custom resource.  
-   The `cruiseControlState` shows the `CruiseControlOperation` state.  
-   At first there will be `GracefulUpscaleScheduled`.  
-   This means `CruiseControlOperation` is created and it is waiting for `add_broker` task execution.
+   The `cruiseControlState` shows the `CruiseControlOperation` state: `GracefulUpscaleScheduled`, meaning that `CruiseControlOperation` has been created and is waiting for the `add_broker` task to be finished.
 
-```yaml
-status:
-...
-  brokersState:
-    "3":
-     ...
-      gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-addbroker-mhh72
-        cruiseControlState: GracefulUpscaleScheduled
-        volumeStates:
-          /kafka-logs:
+    ```yaml
+    status:
+    ...
+      brokersState:
+        "3":
+         ...
+          gracefulActionState:
             cruiseControlOperationReference:
-              name: kafka-rebalance-h6ntt
-            cruiseControlVolumeState: GracefulDiskRebalanceScheduled
-          /kafka-logs2:
+              name: kafka-addbroker-mhh72
+            cruiseControlState: GracefulUpscaleScheduled
+            volumeStates:
+              /kafka-logs:
+                cruiseControlOperationReference:
+                  name: kafka-rebalance-h6ntt
+                cruiseControlVolumeState: GracefulDiskRebalanceScheduled
+              /kafka-logs2:
+                cruiseControlOperationReference:
+                  name: kafka-rebalance-h6ntt
+                cruiseControlVolumeState: GracefulDiskRebalanceScheduled
+        ...
+    ```
+
+1. The `add_broker` Cruise Control task is in progress:
+
+    ```yaml
+    status:
+    ...
+      brokersState:
+        "3":
+         ...
+          gracefulActionState:
             cruiseControlOperationReference:
-              name: kafka-rebalance-h6ntt
-            cruiseControlVolumeState: GracefulDiskRebalanceScheduled
+              name: kafka-addbroker-mhh72
+            cruiseControlState: GracefulUpscaleRunning
+        ...
+    ```
+
+1. When the `add_broker` Cruise Control task is completed:
+
+    ```yaml
+    status:
     ...
-```
+      brokersState:
+        "3":
+         ...
+          gracefulActionState:
+            cruiseControlOperationReference:
+              name: kafka-addbroker-mhh72
+            cruiseControlState: GracefulUpscaleSucceeded
+        ...
+    ```
 
-3. When the `add_broker` Cruise Control task is under execution:
+There are two other possible states of `cruiseControlState`, `GracefulUpscaleCompletedWithError` and `GracefulUpscalePaused`.  
 
-```yaml
-status:
-...
-  brokersState:
-    "3":
-     ...
-      gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-addbroker-mhh72
-        cruiseControlState: GracefulUpscaleRunning
+- `GracefulUpscalePaused` is a special state. For details, see [Control the created CruiseControlOperation](#control-cruisecontroloperation).
+- The `GracefulUpscaleCompletedWithError` occurs when the Cruise Control task fails. If the `cruiseControlOperation.spec.errorPolicy` is set to `retry` (which is the default value), Koperator re-executes the failed task every `30s` until it succeeds. During the re-execution the `cruiseControlState` returns to `GracefulUpscaleRunning`.
+
+    ```yaml
+    status:
     ...
-```
+      brokersState:
+        "3":
+         ...
+          gracefulActionState:
+            cruiseControlOperationReference:
+              name: kafka-addbroker-mhh72
+            cruiseControlState: GracefulUpscaleCompletedWithError
+        ...
+    ```
 
-4. When the `add_broker` Cruise Control task is completed:
+## CruiseControlOperation CR overview
 
-```yaml
-status:
-...
-  brokersState:
-    "3":
-     ...
-      gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-addbroker-mhh72
-        cruiseControlState: GracefulUpscaleSucceeded
-    ...
-```
-
-There are two other `cruiseControlState`s which has not been covered by the above example.  
-The `GracefulUpscaleCompletedWithError` and the `GracefulUpscalePaused`.  
-The `GracefulUpscalePaused` is a special state and there are more details about it in the next section.  
-The `GracefulUpscaleCompletedWithError` happens when the Cruise Control task fails.  
-In this case when the `cruiseControlOperation.spec.errorPolicy` is set to `retry` (which is the default value), the failed task will be re-executed by Koperator every `30s` until it is succeeded.  
-When it is re-executed the `cruiseControlState` will be GracefulUpscaleRunning again.
-
-```yaml
-status:
-...
-  brokersState:
-    "3":
-     ...
-      gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-addbroker-mhh72
-        cruiseControlState: GracefulUpscaleCompletedWithError
-    ...
-```
-
-The kafka-addbroker-mhh72 `CruiseControlOperation` from the above example:
+The kafka-addbroker-mhh72 `CruiseControlOperation` custom resource from the previous example looks like:
 
 ```yaml
 kind: CruiseControlOperation
@@ -153,26 +159,31 @@ status:
   retryCount: 0
 ```
 
-The `status.currentTask` describes the Cruise Control task.  
-The `httpRequest` field contains the whole POST HTTP request that has been executed.  
-The `id` is the Cruise Control task identifier number.  
-The `state` shows the progress of the add_broker request.  
-The `summary` is Cruise Control's optimization proposal.  
-It shows the scope of the changes that Cruise Control will apply through the operation.  
-When a task execution is completed with error and there are re-executions the `retryCount` shows the number of retries.  
-In this case the history of the failed tasks are visible with their error messages in the `status.failedTask` field.  
-You can also find information on the fields [here](https://github.com/banzaicloud/koperator/blob/master/api/v1alpha1/cruisecontroloperation_types.go)
+- The `status.currentTask` describes the Cruise Control task.  
+- The `httpRequest` field contains the whole POST HTTP request that has been executed.  
+- The `id` is the Cruise Control task identifier number.  
+- The `state` shows the progress of the request.  
+- The `summary` is Cruise Control's optimization proposal. It shows the scope of the changes that Cruise Control will apply through the operation.  
+- The `retryCount` field shows the number of retries when a task has failed and `cruiseControlOperation.spec.errorPolicy` is set to `retry`. In this case, the `status.failedTask` field shows the history of the failed tasks (including their error messages).  
+For further information on the fields, see the [source code](https://github.com/banzaicloud/koperator/blob/master/api/v1alpha1/cruisecontroloperation_types.go).
 
-## How can we have control over the created CruiseControlOperation?
+## Control the created CruiseControlOperation {#control-cruisecontroloperation}
 
-- The task execution can be stopped gracefully when the `CruiseControlOperation` is deleted. In this case the corresponding `cruiseControlState` or the `cruiseControlVolumeState` will transition to `Graceful*Succeeded`.
-- `cruiseControlOperation.spec.errorPolicy` defines how the failed Cruise Control task should be handled. When the `errorPolicy` is `retry`, Koperator re-executes the failed task every `30s`. When it is `ignore`, Koperator handles the failed task as completed thus the `cruiseControlState` or the `cruiseControlVolumeState` will transition to `Graceful*Succeeded`.
-- When there is a Cruise Control task which can not be completed without an error and the `cruiseControlOperation.spec.errorPolicy` is `retry`, Koperator will re-execute the task until it is succeeded.  
-This automatic re-execution can be paused with a label on the corresponding `CruiseControlOperation` custom resource (check the example below setting the label `pause` to the value `true`).  
-When the `pause` label is not set to `true` or the label is removed, the re-execution will be continued.  
-Pausing can be useful when the reason of the error cannot be fixed any time soon but you want to retry the operation later when the problem is resolved.  
-A paused `CruiseControlOperation` will not be considered as a choice when selecting operation for execution.  
-It means when a new `CruiseControlOperation` with same operation (`status.currentTask.operation`) type is created the new one will be executed and the paused one will be skipped.
+### Stop a task
+
+The task execution can be stopped gracefully when the `CruiseControlOperation` is deleted. In this case the corresponding `cruiseControlState` or the `cruiseControlVolumeState` will transition to `Graceful*Succeeded`.
+
+### Handle failed tasks
+
+`cruiseControlOperation.spec.errorPolicy` defines how the failed Cruise Control task should be handled. When the `errorPolicy` is set to `retry`, Koperator re-executes the failed task every 30 seconds. When it is set to `ignore`, Koperator treats the failed task as completed, thus the `cruiseControlState` or the `cruiseControlVolumeState` transitions to `Graceful*Succeeded`.
+
+### Pause a task
+
+When there is a Cruise Control task which can not be completed without an error and the `cruiseControlOperation.spec.errorPolicy` is set to `retry`, Koperator will re-execute the task until it succeeds. You can pause automatic re-execution by adding the following label on the corresponding `CruiseControlOperation` custom resource. For details see [this example](#example-pause). To continue the task, remove the label (or set to any other value than `true`).
+
+Pausing is useful when the reason of the error can not be fixed any time soon but you want to retry the operation later when the problem is resolved.
+
+A paused `CruiseControlOperation` tasks are ignored when selecting operations for execution: when a new `CruiseControlOperation` with the same operation type (`status.currentTask.operation`) is created, the new one is executed and the paused one is skipped.
 
 ```yaml
 kind: CruiseControlOperation
@@ -184,8 +195,10 @@ metadata:
 ...
 ```
 
-- You can set automatic cleanup time for the created `CruiseControlOperations` in the `KafkaCluster` custom resource.  
-   In the example below the finished (completed successfully or `completedWithError` and `errorPolicy: ignore`) `CruiseControlOperation` custom resources will be deleted after the `300s` elapsed after finishing the particular operation.
+### Automatic cleanup
+
+You can set automatic cleanup time for the created `CruiseControlOperations` in the `KafkaCluster` custom resource.  
+In the following example, the finished (completed successfully or `completedWithError` and `errorPolicy: ignore`) `CruiseControlOperation` custom resources are automatically deleted after 300 seconds.
 
 ```yaml
 apiVersion: kafka.banzaicloud.io/v1beta1
@@ -199,131 +212,130 @@ spec:
 ...
 ```
 
-### Example for the ignore and pause use-cases
+### Example for the ignore and pause use-cases {#example-pause}
 
-1. In the first example we extended the Kafka cluster with one broker. Now we will remove 2 brokers at the same time by editing the `KafkaCluster` custom resource.
+This example shows how to ignore and pause an operation.
 
-```yaml
- Spec:
- ...  
-   brokers:
-    - id: 0
-      brokerConfigGroup: "default"
-    - id: 1
-      brokerConfigGroup: "default"
-```
+1. Using the [original example with four Kafka brokers from the Overview](#overview) as the starting point, this example removes two brokers at the same time by editing the `KafkaCluster` custom resource and deleting broker 2 and broker 3.
 
-2. There will be `remove_broker` operations for both brokers (`kafka-removebroker-lg7qm`, `kafka-removebroker-4plfq`). The first one is already in running state in the example below.
+    ```yaml
+     Spec:
+     ...  
+       brokers:
+        - id: 0
+          brokerConfigGroup: "default"
+        - id: 1
+          brokerConfigGroup: "default"
+    ```
 
-```yaml
-status:
-...
-  brokersState:
-    "2":
-     ...
-      gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-removebroker-lg7qm
-        cruiseControlState: GracefulDownscaleRunning
-     ...
-     "3":
-     gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-removebroker-4plfq
-        cruiseControlState: GracefulDownscaleScheduled
+1. The brokers (`kafka-removebroker-lg7qm`, `kafka-removebroker-4plfq`) will have separate `remove_broker` operations. The example shows that the first one is already in running state.
+
+    ```yaml
+    status:
     ...
-```
+      brokersState:
+        "2":
+         ...
+          gracefulActionState:
+            cruiseControlOperationReference:
+              name: kafka-removebroker-lg7qm
+            cruiseControlState: GracefulDownscaleRunning
+         ...
+         "3":
+         gracefulActionState:
+            cruiseControlOperationReference:
+              name: kafka-removebroker-4plfq
+            cruiseControlState: GracefulDownscaleScheduled
+        ...
+    ```
 
-3. We assume that something unexpected happened this time so the remove_broker operation will get `GracefulDownscaleCompletedWithError` state.
+1. Assume that something unexpected happened, so the `remove_broker` operation enters the `GracefulDownscaleCompletedWithError` state.
 
-```yaml
-status:
-...
-  brokersState:
-    "2":
-     ...
-      gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-removebroker-lg7qm
-        cruiseControlState: GracefulDownscaleCompletedWithError
-     ...
-     "3":
-     gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-removebroker-4plfq
-        cruiseControlState: GracefulDownscaleScheduled
+    ```yaml
+    status:
     ...
-```
+      brokersState:
+        "2":
+         ...
+          gracefulActionState:
+            cruiseControlOperationReference:
+              name: kafka-removebroker-lg7qm
+            cruiseControlState: GracefulDownscaleCompletedWithError
+         ...
+         "3":
+         gracefulActionState:
+            cruiseControlOperationReference:
+              name: kafka-removebroker-4plfq
+            cruiseControlState: GracefulDownscaleScheduled
+        ...
+    ```
 
-4. At this point we can decide to let this problematic operation to be retried which is the default behavior or `ignore` the error or use the `pause` label to pause the retry execution and let Koperator execute the next operation.
+1. At this point, you can decide how to handle this problem using one of the three possible options: retry it (which is the default behavior), ignore the error, or use the `pause` label to pause the operation and let Koperator execute the next operation.
 
-- Ignore use-case:  This time the ignore has been chosen by setting of the `cruiseControlOperation.spec.errorPolicy` to `ignore`.  
-   This operation will be considered as a succeeded operation thus the broker pod and the persistent volume will be removed from the Kubernetes cluster and from the `KafkaCluster` status.  
-   The `Koperator` will execute the next `remove_broker` `kafka-removebroker-4plfq` `CruiseControlOperation`.
+    - Ignore use-case: To ignore the error, set the `cruiseControlOperation.spec.errorPolicy` field to `ignore`. The operation will be considered as a successful operation, and the broker pod and the persistent volume will be removed from the Kubernetes cluster and from the `KafkaCluster` status. Koperator will continue to execute the next task: `remove_broker` for  `kafka-removebroker-4plfq`.
 
-```yaml
-status:
-...
-  brokersState:
-    ...
-     "3":
-     gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-removebroker-4plfq
-        cruiseControlState: GracefulDownscaleRunning
-    ...
-```
+        ```yaml
+        status:
+        ...
+          brokersState:
+            ...
+             "3":
+             gracefulActionState:
+                cruiseControlOperationReference:
+                  name: kafka-removebroker-4plfq
+                cruiseControlState: GracefulDownscaleRunning
+            ...
+        ```
 
-- Pause use-case: This time the pause has been chosen by the set of a `pause: true` label for the `kafka-removebroker-lg7qm` `CruiseControlOperation`.  
-  The re-execution is paused and Koperator will execute the next `remove_broker` operation.
+    - Pause use-case: To pause this task, add the `pause: true` label to the `kafka-removebroker-lg7qm` `CruiseControlOperation`. Koperator won't try to re-execute this task, and moves on to the next `remove_broker` operation.
 
-```yaml
-status:
-...
-  brokersState:
-    "2":
-     ...
-      gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-removebroker-lg7qm
-        cruiseControlState: GracefulDownscalePaused
-     ...
-     "3":
-     gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-removebroker-4plfq
-        cruiseControlState: GracefulDownscaleRunning
-    ...
-```
+        ```yaml
+        status:
+        ...
+          brokersState:
+            "2":
+             ...
+              gracefulActionState:
+                cruiseControlOperationReference:
+                  name: kafka-removebroker-lg7qm
+                cruiseControlState: GracefulDownscalePaused
+             ...
+             "3":
+             gracefulActionState:
+                cruiseControlOperationReference:
+                  name: kafka-removebroker-4plfq
+                cruiseControlState: GracefulDownscaleRunning
+            ...
+        ```
 
-When the second `remove_broker` operation is finished:
+        When the second `remove_broker` operation is finished, only the paused task remains:
 
-```yaml
-status:
-...
-  brokersState:
-    "2":
-     ...
-      gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-removebroker-lg7qm
-        cruiseControlState: GracefulDownscalePaused
-     ...
-```
+        ```yaml
+        status:
+        ...
+          brokersState:
+            "2":
+             ...
+              gracefulActionState:
+                cruiseControlOperationReference:
+                  name: kafka-removebroker-lg7qm
+                cruiseControlState: GracefulDownscalePaused
+             ...
+        ```
 
-We assume that the problematic situation has been resolved thus we can let the `remove_broker` operation be retired by removing the `pause` label thus the operation will be re-executed.
+        When the problem has been resolved, you can retry removing broker 2 by removing the `pause` label.
 
-```yaml
-status:
-...
-  brokersState:
-    "2":
-     ...
-      gracefulActionState:
-        cruiseControlOperationReference:
-          name: kafka-removebroker-lg7qm
-        cruiseControlState: GracefulDownscaleRunning
-     ...
-```
+        ```yaml
+        status:
+        ...
+          brokersState:
+            "2":
+             ...
+              gracefulActionState:
+                cruiseControlOperationReference:
+                  name: kafka-removebroker-lg7qm
+                cruiseControlState: GracefulDownscaleRunning
+             ...
+        ```
 
-This time everything went well so the broker has been removed.
+        If everything goes well, the broker is removed.
