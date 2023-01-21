@@ -55,108 +55,132 @@ You can display the current configuration of your Kafka cluster using the follow
 The output looks like the following:
 
 ```yaml
-Name:         kafka
-Namespace:    kafka
-Labels:       controller-tools.k8s.io=1.0
-Annotations:  <none>
-API Version:  kafka.banzaicloud.io/v1beta1
-Kind:         KafkaCluster
-Metadata:
-  Creation Timestamp:  2021-02-15T09:46:02Z
-  Finalizers:
-    finalizer.kafkaclusters.kafka.banzaicloud.io
-    topics.kafkaclusters.kafka.banzaicloud.io
-    users.kafkaclusters.kafka.banzaicloud.io
-  Generation:  2
-Spec:
-  Broker Config Groups:
-    Default:
-      Broker Annotations:
-        prometheus.io/port:    9020
-        prometheus.io/scrape:  true
-      Storage Configs:
-        Mount Path:  /kafka-logs
-        Pvc Spec:
-          Access Modes:
-            ReadWriteOnce
-          Resources:
-            Requests:
-              Storage:  10Gi
-  Brokers:
-    Broker Config Group:  default
-    Id:                   0
-    Broker Config Group:  default
-    Id:                   1
-    Broker Config Group:  default
-    Id:                   2
-  Cluster Image:          ghcr.io/banzaicloud/kafka:2.13-2.6.0-bzc.1
-  Cruise Control Config:
-    Cluster Config:  {
-  "min.insync.replicas": 3
-}
-
+apiVersion: kafka.banzaicloud.io/v1beta1
+kind: KafkaCluster
+metadata:
+  creationTimestamp: "2022-11-21T16:02:55Z"
+  finalizers:
+  - finalizer.kafkaclusters.kafka.banzaicloud.io
+  - topics.kafkaclusters.kafka.banzaicloud.io
+  - users.kafkaclusters.kafka.banzaicloud.io
+  generation: 4
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: kafka
+  namespace: kafka
+  resourceVersion: "3474369"
+  uid: f8744017-1264-47d4-8b9c-9ee982728ecc
+spec:
+  brokerConfigGroups:
+    default:
+      storageConfigs:
+      - mountPath: /kafka-logs
+        pvcSpec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
+      terminationGracePeriodSeconds: 120
+  brokers:
+  - brokerConfigGroup: default
+    id: 0
+  - brokerConfigGroup: default
+    id: 1
+  clusterImage: ghcr.io/banzaicloud/kafka:2.13-3.1.0
+  cruiseControlConfig:
+    clusterConfig: |
+      {
+        "min.insync.replicas": 3
+      }
+    config: |
     ...
-
-    Cruise Control Task Spec:
-      Retry Duration Minutes:  5
-    Topic Config:
-      Partitions:          12
-      Replication Factor:  3
-  Disruption Budget:
-  Envoy Config:
-  Headless Service Enabled:  true
-  Istio Ingress Config:
-  Listeners Config:
-    Internal Listeners:
-      Container Port:                       29092
-      Name:                                 internal
-      Type:                                 plaintext
-      Used For Inner Broker Communication:  true
-      Container Port:                       29093
-      Name:                                 controller
-      Type:                                 plaintext
-      Used For Controller Communication:    true
-      Used For Inner Broker Communication:  false
-  Monitoring Config:
-    Jmx Image:          
-    Path To Jar:        
-  One Broker Per Node:  false
-  Read Only Config:     auto.create.topics.enable=false
-cruise.control.metrics.topic.auto.create=true
-cruise.control.metrics.topic.num.partitions=1
-cruise.control.metrics.topic.replication.factor=2
-
-  Rolling Upgrade Config:
-    Failure Threshold:  1
-  Zk Addresses:
-    zookeeper-client.zookeeper:2181
-Status:
-  Alert Count:  0
-  Brokers State:
-    0:
-      Configuration State:  ConfigInSync
-      Graceful Action State:
-        Cruise Control State:  GracefulUpscaleSucceeded
-        Error Message:         CruiseControl not yet ready
-      Rack Awareness State:    
-    1:
-      Configuration State:  ConfigInSync
-      Graceful Action State:
-        Cruise Control State:  GracefulUpscaleSucceeded
-        Error Message:         CruiseControl not yet ready
-      Rack Awareness State:    
-    2:
-      Configuration State:  ConfigInSync
-      Graceful Action State:
-        Cruise Control State:   GracefulUpscaleSucceeded
-        Error Message:          CruiseControl not yet ready
-      Rack Awareness State:     
-  Cruise Control Topic Status:  CruiseControlTopicReady
-  Rolling Upgrade Status:
-    Error Count:   0
-    Last Success:  
-  State:           ClusterRunning
-Events:            <none>
+    cruiseControlTaskSpec:
+      RetryDurationMinutes: 0
+  disruptionBudget: {}
+  envoyConfig: {}
+  headlessServiceEnabled: true
+  istioIngressConfig: {}
+  listenersConfig:
+    externalListeners:
+    - containerPort: 9094
+      externalStartingPort: 19090
+      name: external
+      type: plaintext
+    internalListeners:
+    - containerPort: 29092
+      name: plaintext
+      type: plaintext
+      usedForInnerBrokerCommunication: true
+    - containerPort: 29093
+      name: controller
+      type: plaintext
+      usedForControllerCommunication: true
+      usedForInnerBrokerCommunication: false
+  monitoringConfig: {}
+  oneBrokerPerNode: false
+  readOnlyConfig: |
+    auto.create.topics.enable=false
+    cruise.control.metrics.topic.auto.create=true
+    cruise.control.metrics.topic.num.partitions=1
+    cruise.control.metrics.topic.replication.factor=2
+  rollingUpgradeConfig:
+    failureThreshold: 1
+  zkAddresses:
+  - zookeeper-client.zookeeper:2181
+status:
+  alertCount: 0
+  brokersState:
+    "0":
+      configurationBackup: H4sIAAAAAAAA/6pWykxRsjLQUUoqys9OLXLOz0vLTHcvyi8tULJSSklNSyzNKVGqBQQAAP//D49kqiYAAAA=
+      configurationState: ConfigInSync
+      gracefulActionState:
+        cruiseControlState: GracefulUpscaleSucceeded
+        volumeStates:
+          /kafka-logs:
+            cruiseControlOperationReference:
+              name: kafka-rebalance-bhs7n
+            cruiseControlVolumeState: GracefulDiskRebalanceSucceeded
+      image: ghcr.io/banzaicloud/kafka:2.13-3.1.0
+      perBrokerConfigurationState: PerBrokerConfigInSync
+      rackAwarenessState: ""
+      version: 3.1.0
+    "1":
+      configurationBackup: H4sIAAAAAAAA/6pWykxRsjLUUUoqys9OLXLOz0vLTHcvyi8tULJSSklNSyzNKVGqBQQAAP//pYq+WyYAAAA=
+      configurationState: ConfigInSync
+      gracefulActionState:
+        cruiseControlState: GracefulUpscaleSucceeded
+        volumeStates:
+          /kafka-logs:
+            cruiseControlOperationReference:
+              name: kafka-rebalance-bhs7n
+            cruiseControlVolumeState: GracefulDiskRebalanceSucceeded
+      image: ghcr.io/banzaicloud/kafka:2.13-3.1.0
+      perBrokerConfigurationState: PerBrokerConfigInSync
+      rackAwarenessState: ""
+      version: 3.1.0
+  cruiseControlTopicStatus: CruiseControlTopicReady
+  listenerStatuses:
+    externalListeners:
+      external:
+      - address: a0abb7ab2e4a142d793f0ec0cb9b58ae-1185784192.eu-north-1.elb.amazonaws.com:29092
+        name: any-broker
+      - address: a0abb7ab2e4a142d793f0ec0cb9b58ae-1185784192.eu-north-1.elb.amazonaws.com:19090
+        name: broker-0
+      - address: a0abb7ab2e4a142d793f0ec0cb9b58ae-1185784192.eu-north-1.elb.amazonaws.com:19091
+        name: broker-1
+    internalListeners:
+      plaintext:
+      - address: kafka-headless.kafka.svc.cluster.local:29092
+        name: headless
+      - address: kafka-0.kafka-headless.kafka.svc.cluster.local:29092
+        name: broker-0
+      - address: kafka-1.kafka-headless.kafka.svc.cluster.local:29092
+        name: broker-1
+  rollingUpgradeStatus:
+    errorCount: 0
+    lastSuccess: ""
+  state: ClusterRunning
 ```
 
 ## Getting Support
