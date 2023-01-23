@@ -41,12 +41,12 @@ In the server secret the following keys must be set:
 | `truststore.jks` | Trusted CA certificate in JKS format     |
 | `password`       | Password for the key and trust store      |
 
-{{< kafka-operator >}} using JKS format based certificate for listener config.
+The certificates in the listener configuration must be in JKS format.
 
 ### Listeners used for internal broker or controller communication
 
 In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml), SSL is enabled for all listeners, and user-provided certificates are used. In that case, when a custom certificate is used for a listener which is used for internal broker or controller communication, you must also specify the client certificate. The client certificate will be used by {{< kafka-operator >}}, Cruise Control, Cruise Control Metrics Reporter to communicate on SSL. The **clientSSLCertSecret** key is a reference to the Kubernetes secret where the custom client SSL certificate can be provided. The client certificate must be signed by the same CA authority as the server certificate for the corresponding listener. The **clientSSLCertSecret** has to be in the **KafkaCluster** custom resource spec field.
-The client secret must contain the keystore and truststore jks files and the password for them in base64 encoded format.
+The client secret must contain the keystore and truststore JKS files and the password for them in base64 encoded format.
 
 In the server secret the following keys must be set:
 
@@ -66,7 +66,7 @@ In the client secret the following keys must be set:
 
 ### Generate JKS certificate
 
-Certificates in JKS format can be generated using OpenSSL and keystore applications. You can also use [this script](https://github.com/confluentinc/confluent-platform-security-tools/blob/master/kafka-generate-ssl.sh). The keystore.jks must contain only one **PrivateKeyEntry**
+Certificates in JKS format can be generated using OpenSSL and keystore applications. You can also use [this script](https://github.com/confluentinc/confluent-platform-security-tools/blob/master/kafka-generate-ssl.sh). The `keystore.jks` file must contain only one **PrivateKeyEntry**.
 
 Kafka listeners use 2-way-SSL mutual authentication, so you must properly set the CNAME (Common Name) fields and if needed the SAN (Subject Alternative Name) fields in the certificates. In the following description we assume that the Kafka cluster is in the `kafka` namespace.
 
