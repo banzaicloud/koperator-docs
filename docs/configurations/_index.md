@@ -1,7 +1,7 @@
 ---
-title: Configurations
-shorttitle: Configurations
-weight: 11
+title: Configure Koperator
+shorttitle: Configure
+weight: 250
 ---
 
 Koperator can be configured through [Kubernetes custom resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).  
