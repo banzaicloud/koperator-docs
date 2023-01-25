@@ -8,7 +8,7 @@ Koperator can be configured through [Kubernetes custom resources](https://kubern
 
 List of our custom resources:
 
-- [KafkaCluster](/docs/configurations/kafkacluster/)
-- [KafkaTopic](/docs/topics.md)
+- [KafkaCluster]({{< relref "kafkacluster/_index.md" >}})
+- [KafkaTopic]({{< relref "../topics.md" >}})
 - KafkaUser
 - CruiseControlOperation

@@ -19,4 +19,4 @@ It means when something has changed in your KafkaCluster custom resource, Kopera
 
 ### 1. Schema reference {#schema-ref}
 
-The schema reference for the **KafkaCluster** custom resource is available [here](https://smm-docs.eticloud.io/sdm/koperator/reference/crd/kafkaclusters.kafka.banzaicloud.io/).
+The schema reference for the **KafkaCluster** custom resource is available [here](https://docs.calisti.app/sdm/koperator/reference/crd/kafkaclusters.kafka.banzaicloud.io/).
