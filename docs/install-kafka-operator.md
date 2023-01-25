@@ -10,6 +10,9 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.
 
 > The operator supports Kafka 2.6.2-3.1.x.
 
+{{< include "warning-ebs-csi-driver.md" "supertubes/kafka-operator" >}}
+
+
 ## Prerequisites
 
 - A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). You can create one using the [Banzai Cloud Pipeline platform](/products/pipeline/), or any other tool of your choice.
