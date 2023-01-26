@@ -41,7 +41,7 @@ The following tips and commands can help you to troubleshoot your {{< kafka-oper
     kubectl get KafkaCluster kafka -n kafka -o jsonpath="{.status}" |jq
     ```
 
-1. Check the status of your Zookeeper deployment, and the logs of the zookeeper-operator and zookeeper pods.
+1. Check the status of your ZooKeeper deployment, and the logs of the zookeeper-operator and zookeeper pods.
 
     ```bash
     kubectl get pods -n zookeeper
@@ -198,6 +198,6 @@ Before asking for help, prepare the following information to make troubleshootin
 - Kafka broker logs
 - {{< kafka-operator >}} configuration
 - Kafka cluster configuration (**kubectl describe KafkaCluster kafka -n kafka**)
-- Zookeeper configuration (**kubectl describe ZookeeperCluster zookeeper -n zookeeper**)
-- Zookeeper logs (**kubectl logs zookeeper-operator-5c9b597bcc-vkdz9 -n zookeeper**)
+- ZooKeeper configuration (**kubectl describe ZookeeperCluster zookeeper -n zookeeper**)
+- ZooKeeper logs (**kubectl logs zookeeper-operator-5c9b597bcc-vkdz9 -n zookeeper**)
 Do not forget to remove any sensitive information (for example, passwords and private keys) before sharing.

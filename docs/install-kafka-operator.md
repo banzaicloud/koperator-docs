@@ -16,7 +16,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.
 ## Prerequisites
 
 - A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM).
-> We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://calisti.app).
+> We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Apache ZooKeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://calisti.app).
 
 ## Install {{< kafka-operator >}} and the requirements independently {#manual-install}
 
@@ -67,13 +67,13 @@ cert-manager-cainjector-87c85c6ff-q945h   1/1     Running   1          29m
 cert-manager-webhook-64dc9fff44-2p6tx     1/1     Running   0          29m
 ```
 
-### Install Zookeeper {#install-zookeeper}
+### Install ZooKeeper {#install-zookeeper}
 
-Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper cluster if you don't already have one.
+Kafka requires [Apache ZooKeeper](https://zookeeper.apache.org). Deploy a ZooKeeper cluster if you don't already have one.
 
-> Note: You are recommended to create a separate Zookeeper deployment for each Kafka cluster. If you want to share the same Zookeeper cluster across multiple Kafka cluster instances, use a unique zk path in the KafkaCluster CR to avoid conflicts (even with previous defunct KafkaCluster instances).
+> Note: You are recommended to create a separate ZooKeeper deployment for each Kafka cluster. If you want to share the same ZooKeeper cluster across multiple Kafka cluster instances, use a unique zk path in the KafkaCluster CR to avoid conflicts (even with previous defunct KafkaCluster instances).
 
-1. Install Zookeeper using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
+1. Install ZooKeeper using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
 
     ```bash
     helm repo add pravega https://charts.pravega.io
@@ -81,11 +81,11 @@ Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper clu
     helm install zookeeper-operator --namespace=zookeeper --create-namespace pravega/zookeeper-operator
     ```
 
-1. Create a Zookeeper cluster.
+1. Create a ZooKeeper cluster.
 
     {{< include-code "create-zookeeper.sample" "bash" >}}
 
-1. Verify that Zookeeper has been deployed.
+1. Verify that ZooKeeper has been deployed.
 
     ```bash
     kubectl get pods -n zookeeper
