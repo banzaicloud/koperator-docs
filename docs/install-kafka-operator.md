@@ -10,6 +10,9 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.
 
 > The operator supports Kafka 2.6.2-3.1.x.
 
+{{< include-headless "warning-ebs-csi-driver.md" "supertubes/kafka-operator" >}}
+
+
 ## Prerequisites
 
 - A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). You can create one using the [Banzai Cloud Pipeline platform](/products/pipeline/), or any other tool of your choice.
@@ -160,7 +163,7 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
 1. Install the {{< kafka-operator >}} CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install). This is performed in a separate step to allow you to uninstall and reinstall {{< kafka-operator >}} without deleting your installed custom resources.
 
     ```bash
-    kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v0.21.2/kafka-operator.crds.yaml
+    kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v0.22.0/kafka-operator.crds.yaml
     ```
 
 1. Add the Banzai Cloud repository to Helm.
