@@ -148,15 +148,6 @@ spec:
       labels:
         app: loadtest
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: nodepool.banzaicloud.io/name
-                operator: In
-                values:
-                - pool3
       containers:
       - args:
         - -brokers=kafka-0:29092,kafka-1:29092,kafka-2:29092
