@@ -55,22 +55,25 @@ How to setup the environment for the Kafka Performance Test.
 
     ```bash
     helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
-    helm install --name zookeeper-operator --namespace zookeeper banzaicloud-stable/zookeeper-operator
+    helm install zookeeper-operator --namespace=zookeeper --create-namespace pravega/zookeeper-operator
     kubectl create -f - <<EOF
     apiVersion: zookeeper.pravega.io/v1beta1
     kind: ZookeeperCluster
     metadata:
-      name: example-zookeepercluster
+      name: zookeeper
       namespace: zookeeper
     spec:
       replicas: 1
     EOF
     ```
 
-1. Install the latest version of {{< kafka-operator >}}, the Operator for managing Apache Kafka on Kubernetes.
+1. Install the {{< kafka-operator >}} CustomResourceDefinition resources (adjust the version number to the Koperator release you want to install) and the corresponding version of {{< kafka-operator >}}, the Operator for managing Apache Kafka on Kubernetes.
+    ```bash
+    kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v0.22.0/kafka-operator.crds.yaml
+    ```
 
     ```bash
-    helm install --name=kafka-operator banzaicloud-stable/kafka-operator
+    helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
     ```
 
 1. Create a 3-broker Kafka Cluster using the [this YAML file](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/kafka.yaml).
@@ -83,8 +86,6 @@ How to setup the environment for the Kafka Performance Test.
     apiVersion: v1
     kind: Pod
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       name: kafka-test
     spec:
       containers:
@@ -120,7 +121,7 @@ Monitoring environment is automatically installed. To monitor the infrastructure
 
 ```yaml
 kubectl create -f - <<EOF
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -163,114 +164,7 @@ spec:
         - -required-acks=all
         - -message-size=512
         - -workers=20
-        image: yourorg/yourimage:yourtag
-        imagePullPolicy: Always
-        name: sangrenel
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
----
-
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  labels:
-    app: loadtest
-  name: perf-load
-  namespace: default
-spec:
-  progressDeadlineSeconds: 600
-  replicas: 4
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      app: loadtest
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: loadtest
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: nodepool.banzaicloud.io/name
-                operator: In
-                values:
-                - clients
-      containers:
-      - args:
-        - -brokers=kafka-0,kafka-1,kafka-2:29092
-        - -topic=perftest2
-        - -required-acks=all
-        - -message-size=512
-        - -workers=20
-        image: yourorg/yourimage:yourtag
-        imagePullPolicy: Always
-        name: sangrenel
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
----
-
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  labels:
-    app: loadtest
-  name: perf-load
-  namespace: default
-spec:
-  progressDeadlineSeconds: 600
-  replicas: 4
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      app: loadtest
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: loadtest
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: nodepool.banzaicloud.io/name
-                operator: In
-                values:
-                - clients
-      containers:
-      - args:
-        - -brokers=kafka-0,kafka-1,kafka-2:29092
-        - -topic=perftest
-        - -required-acks=all
-        - -message-size=512
-        - -workers=20
+        - -api-version=3.1.0
         image: yourorg/yourimage:yourtag
         imagePullPolicy: Always
         name: sangrenel
@@ -283,4 +177,3 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
 EOF
-```
