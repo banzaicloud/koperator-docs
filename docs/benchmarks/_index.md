@@ -28,6 +28,8 @@ How to setup the environment for the Kafka Performance Test.
 
 ## EKS
 
+{{< include-headless "warning-ebs-csi-driver.md" "sdm/koperator" >}}
+
 1. Create a test cluster with 3 nodes for ZooKeeper, 3 for Kafka, 1 Master node and 2 node for clients.
 
     Once your cluster is up and running you can set up the Kubernetes infrastructure.
@@ -78,7 +80,28 @@ How to setup the environment for the Kafka Performance Test.
 
 1. Create a 3-broker Kafka Cluster using the [this YAML file](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/kafka.yaml).
 
-    This will install 3 brokers partitioned to three different zones with fast ssd.
+    This will install 3 brokers with fast ssd. If you would like the brokers in different zones, modify the following configurations to match your environment and use them in the broker configurations:
+    ```yaml
+    apiVersion: kafka.banzaicloud.io/v1beta1
+    kind: KafkaCluster
+    ...
+    spec:
+      ...
+      brokerConfigGroups:
+        default:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: <node-label-key>
+                    operator: In
+                    values:
+                    - <node-label-value-zone-1>
+                    - <node-label-value-zone-2>
+                    - <node-label-value-zone-3>
+      ...
+    ```
 1. Create a client container inside the cluster
 
     ```bash
@@ -100,7 +123,7 @@ How to setup the environment for the Kafka Performance Test.
 1. Exec into this client and create the `perftest, perftest2, perftes3` topics.
 
     ```bash
-    kubectl exec -it kafka-test bash
+    kubectl exec -it kafka-test -n kafka bash
     ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest --create --replication-factor 3 --partitions 3
     ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest2 --create --replication-factor 3 --partitions 3
     ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest3 --create --replication-factor 3 --partitions 3
@@ -126,10 +149,8 @@ kind: Deployment
 metadata:
   labels:
     app: loadtest
-  annotations:
-    linkerd.io/inject: enabled
   name: perf-load
-  namespace: default
+  namespace: kafka
 spec:
   progressDeadlineSeconds: 600
   replicas: 4
@@ -156,7 +177,7 @@ spec:
         - -message-size=512
         - -workers=20
         - -api-version=3.1.0
-        image: yourorg/yourimage:yourtag
+        image: docker.io/darrenlau1227/perload:0.1.0
         imagePullPolicy: Always
         name: sangrenel
         resources: {}
@@ -168,3 +189,4 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
 EOF
+```
