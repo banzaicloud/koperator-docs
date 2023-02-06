@@ -177,7 +177,7 @@ spec:
         - -message-size=512
         - -workers=20
         - -api-version=3.1.0
-        image: docker.io/darrenlau1227/perload:0.1.0
+        image: yourorg/yourimage:yourtag
         imagePullPolicy: Always
         name: sangrenel
         resources: {}
