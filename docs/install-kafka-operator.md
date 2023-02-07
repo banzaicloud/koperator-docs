@@ -15,7 +15,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.
 
 ## Prerequisites
 
-- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). Red Hat OpenShift is supported in {{< kafka-operator >}} version 0.23 and newer, but note that it needs some permissions for certain components to function.
+- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). Red Hat OpenShift is also supported in {{< kafka-operator >}} version 0.23 and newer, but note that it needs some permissions for certain components to function.
 
 > We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Banzai Cloud Supertubes](/products/supertubes/).
 
