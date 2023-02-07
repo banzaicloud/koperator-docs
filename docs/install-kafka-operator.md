@@ -15,7 +15,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.
 
 ## Prerequisites
 
-- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). You can create one using the [Banzai Cloud Pipeline platform](/products/pipeline/), or any other tool of your choice.
+- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). Red Hat OpenShift is supported in {{< kafka-operator >}} version 0.23 and newer, but note that it needs some permissions for certain components to function.
 
 > We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Banzai Cloud Supertubes](/products/supertubes/).
 
@@ -219,26 +219,22 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
     prometheus-kafka-prometheus-0             2/2     Running   1          16m
     ```
 
+1. If you are installing {{< kafka-operator >}} on Red Hat OpenShift, set the following permissions.
+
+    - Allow {{< kafka-operator >}} components to run as any uid:
+
+        ```bash
+        oc adm policy add-scc-to-group anyuid system:serviceaccounts:kafka
+        ```
+
+    - Set this permission also to the `ServiceAccountName` you use for your Kafka cluster brokers provided in the KafkaCluster custom resource.
+
+        ```bash
+        oc adm policy add-scc-to-group anyuid system:serviceaccounts:{KAKFA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
+        ```
+
 ## Test your deployment
 
 - For a simple test, see [Test provisioned Kafka Cluster](../test/).
 - For a more in-depth view at using SSL and the `KafkaUser` CRD, see [Securing Kafka With SSL](../ssl/).
 - To create topics via with the `KafkaTopic` CRD, see [Provisioning Kafka Topics](../topics/).
-
-
-## Openshift support
-
-koperator supports OpenShift clusters with full functionality. There are some permissions that are needed for certain components to function.
-
-- Allow koperator components to run as any uid
-
-```bash
-oc adm policy add-scc-to-group anyuid system:serviceaccounts:kafka
-```
-
-- This also needs to be ran for whichever `ServiceAccountName` you use for your kafka cluster brokers provided in the KafkaCluster custom resource.
-
-```bash 
-oc adm policy add-scc-to-group anyuid system:serviceaccounts:{KAKFA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
-```
-
