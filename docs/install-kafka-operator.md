@@ -224,3 +224,21 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
 - For a simple test, see [Test provisioned Kafka Cluster](../test/).
 - For a more in-depth view at using SSL and the `KafkaUser` CRD, see [Securing Kafka With SSL](../ssl/).
 - To create topics via with the `KafkaTopic` CRD, see [Provisioning Kafka Topics](../topics/).
+
+
+## Openshift support
+
+koperator supports OpenShift clusters with full functionality. There are some permissions that are needed for certain components to function.
+
+- Allow koperator components to run as any uid
+
+```bash
+oc adm policy add-scc-to-group anyuid system:serviceaccounts:kafka
+```
+
+- This also needs to be ran for whichever `ServiceAccountName` you use for your kafka cluster brokers provided in the KafkaCluster custom resource.
+
+```bash 
+oc adm policy add-scc-to-group anyuid system:serviceaccounts:{KAKFA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
+```
+
