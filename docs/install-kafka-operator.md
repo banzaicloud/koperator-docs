@@ -227,7 +227,7 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
         oc adm policy add-scc-to-group anyuid system:serviceaccounts:kafka
         ```
 
-    - Set this permission also to the `ServiceAccountName` you use for your Kafka cluster brokers provided in the KafkaCluster custom resource.
+    - If the Kafka cluster runs in a different namespace than {{< kafka-operator >}}, set this permission also to the `ServiceAccountName` you use for your Kafka cluster brokers provided in the KafkaCluster custom resource.
 
         ```bash
         oc adm policy add-scc-to-user anyuid system:serviceaccount:{NAMESPACE_FOR_SERVICE_ACCOUNT}:{KAKFA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
