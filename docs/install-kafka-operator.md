@@ -179,6 +179,20 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
     helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
     ```
 
+1. If you are installing {{< kafka-operator >}} on Red Hat OpenShift, set the following permissions.
+
+    - Allow {{< kafka-operator >}} components to run as any uid:
+
+        ```bash
+        oc adm policy add-scc-to-group anyuid system:serviceaccounts:kafka
+        ```
+
+    - If the Kafka cluster runs in a different namespace than {{< kafka-operator >}}, set this permission also to the `ServiceAccountName` you use for your Kafka cluster brokers provided in the KafkaCluster custom resource.
+
+        ```bash
+        oc adm policy add-scc-to-user anyuid system:serviceaccount:{NAMESPACE_FOR_SERVICE_ACCOUNT}:{KAKFA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
+        ```
+
 1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/master/config/samples).
 
     {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
@@ -218,20 +232,6 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
     kafka-operator-operator-8bb75c7fb-7w4lh   2/2     Running   0          17m
     prometheus-kafka-prometheus-0             2/2     Running   1          16m
     ```
-
-1. If you are installing {{< kafka-operator >}} on Red Hat OpenShift, set the following permissions.
-
-    - Allow {{< kafka-operator >}} components to run as any uid:
-
-        ```bash
-        oc adm policy add-scc-to-group anyuid system:serviceaccounts:kafka
-        ```
-
-    - If the Kafka cluster runs in a different namespace than {{< kafka-operator >}}, set this permission also to the `ServiceAccountName` you use for your Kafka cluster brokers provided in the KafkaCluster custom resource.
-
-        ```bash
-        oc adm policy add-scc-to-user anyuid system:serviceaccount:{NAMESPACE_FOR_SERVICE_ACCOUNT}:{KAKFA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
-        ```
 
 ## Test your deployment
 
