@@ -25,7 +25,7 @@ This is a very simple KafkaCluster CR with Prometheus monitoring enabled.
 
 You can read more details about rack awareness [here]({{< relref "../../../rackawareness/index.md" >}}).
 
-- [Broker groups with SSL and rack awareness](https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/kafkacluster_with_ssl_groups.yaml)
+- [Use SSL and rack awareness](https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/kafkacluster_with_ssl_groups.yaml)
 
 ## Kafka cluster with broker configuration in different ways
 
