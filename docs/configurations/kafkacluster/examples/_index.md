@@ -60,7 +60,7 @@ You can use Istio as the ingress controller for your external listeners. It requ
 
 - [Kafka cluster with Istio as ingress controller](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster-with-istio.yaml)
 
-## Kafka cluster with custom advertise address for external listeners and brokers
+## Kafka cluster with custom advertised address for external listeners and brokers
 
 You can set custom advertised IP address for brokers.  
 This is useful when you're advertising the brokers on an IP address different from the Kubernetes node IP address.  
