@@ -25,7 +25,7 @@ This `NodePort` method is a good fit when:
 
 ## External listeners
 
-You can expose the Kafka cluster outside the Kubernetes cluster by declaring one or more _externalListeners_ in the `KafkaCluster` custom resource. The following *externalListeners* configuration snippet creates two external access points through which the Kafka cluster's brokers can be reached. These *external listeners* are registered in the `advertized.listeners` Kafka broker configuration as `EXTERNAL1://...,EXTERNAL2://...`.
+You can expose the Kafka cluster outside the Kubernetes cluster by declaring one or more _externalListeners_ in the `KafkaCluster` custom resource. The following *externalListeners* configuration snippet creates two external access points through which the Kafka cluster's brokers can be reached. These *external listeners* are registered in the `advertised.listeners` Kafka broker configuration as `EXTERNAL1://...,EXTERNAL2://...`.
 
 By default, external listeners use the [LoadBalancer](#loadbalancer) access method.
 
@@ -47,7 +47,7 @@ listenersConfig:
 To configure an external listener that uses the LoadBalancer access method, complete the following steps.
 
 1. Edit the `KafkaCluster` custom resource.
-1. Add an `externalListeners` section under `listenersConfig`. The following example creates a Load Balancer for the external listener, `external1`. Each broker in the cluster receives a dedicated port number on the Load Balancer which is computed as *broker port number = externalStartingPort + broker id*. This will be registered in each broker's config as `advertized.listeners=EXTERNAL1://<loadbalancer-public-ip>:<broker port number>`.
+1. Add an `externalListeners` section under `listenersConfig`. The following example creates a Load Balancer for the external listener, `external1`. Each broker in the cluster receives a dedicated port number on the Load Balancer which is computed as *broker port number = externalStartingPort + broker id*. This will be registered in each broker's config as `advertised.listeners=EXTERNAL1://<loadbalancer-public-ip>:<broker port number>`.
 
     ```yaml
     listenersConfig:
@@ -72,7 +72,7 @@ To configure an external listener that uses the LoadBalancer access method, comp
     -  istioingress: uses Istio Gateway as an ingress controller. This is the default controller for Kafka clusters provisioned with [Streaming Data Manager](/docs/overview/), since those clusters run inside an Istio mesh.
 
 1. Configure additional parameters for the ingress controller as needed for your environment, for example, number of replicas, resource requirements and resource limits. You can be configure such parameters using the *envoyConfig* and *istioIngressConfig* fields, respectively.
-1. (Optional) For external access through a static URL instead of the load balancer's public IP, specify the URL in the `hostnameOverride` field of the external listener that resolves to the public IP of the load balancer. The broker address will be advertized as, `advertized.listeners=EXTERNAL1://kafka-1.dev.my.domain:<broker port number>`.
+1. (Optional) For external access through a static URL instead of the load balancer's public IP, specify the URL in the `hostnameOverride` field of the external listener that resolves to the public IP of the load balancer. The broker address will be advertised as, `advertised.listeners=EXTERNAL1://kafka-1.dev.my.domain:<broker port number>`.
 
     ```yaml
     listenersConfig:
@@ -119,14 +119,14 @@ To configure an external listener that uses the NodePort access method, complete
           hostnameOverride: .dev.example.com
     ```
 
-    The `hostnameOverride` behaves differently here than with LoadBalancer access method. In this case, each broker will be advertized as `advertized.listeners=EXTERNAL1://<kafka-cluster-name>-<broker-id>.<external listener name>.<namespace><value-specified-in-hostnameOverride-field>:<broker port number>`. If a three-broker Kafka cluster named *kafka* is running in the *kafka* namespace, the `advertized.listeners` for the brokers will look like this:
+    The `hostnameOverride` behaves differently here than with LoadBalancer access method. In this case, each broker will be advertised as `advertised.listeners=EXTERNAL1://<kafka-cluster-name>-<broker-id>.<external listener name>.<namespace><value-specified-in-hostnameOverride-field>:<broker port number>`. If a three-broker Kafka cluster named *kafka* is running in the *kafka* namespace, the `advertised.listeners` for the brokers will look like this:
 
     - broker 0:
-      - advertized.listeners=EXTERNAL1://kafka-0.external1.kafka.dev.my.domain:32000
+      - advertised.listeners=EXTERNAL1://kafka-0.external1.kafka.dev.my.domain:32000
     - broker 1:
-      - advertized.listeners=EXTERNAL1://kafka-1.external1.kafka.dev.my.domain:32001
+      - advertised.listeners=EXTERNAL1://kafka-1.external1.kafka.dev.my.domain:32001
     - broker 2:
-      - advertized.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:32002
+      - advertised.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:32002
 
 1. Apply the `KafkaCluster` custom resource to the cluster.
 
@@ -150,23 +150,23 @@ brokers:
         external1: 13.49.70.146 # if "hostnameOverride" is not set for "external1" external listener, then broker is advertised on this IP
 ```
 
-If *hostnameOverride* field is not set, then broker address is advertized as follows:
+If *hostnameOverride* field is not set, then broker address is advertised as follows:
 
 - broker 0:
-  - advertized.listeners=EXTERNAL1://13.53.214.23:9094
+  - advertised.listeners=EXTERNAL1://13.53.214.23:9094
 - broker 1:
-  - advertized.listeners=EXTERNAL1://13.48.71.170:9094
+  - advertised.listeners=EXTERNAL1://13.48.71.170:9094
 - broker 2:
-  - advertized.listeners=EXTERNAL1://13.49.70.146:9094
+  - advertised.listeners=EXTERNAL1://13.49.70.146:9094
 
 If both *hostnameOverride* and *nodePortExternalIP* fields are set:
 
 - broker 0:
-  - advertized.listeners=EXTERNAL1://kafka-0.external1.kafka.dev.my.domain:9094
+  - advertised.listeners=EXTERNAL1://kafka-0.external1.kafka.dev.my.domain:9094
 - broker 1:
-  - advertized.listeners=EXTERNAL1://kafka-1.external1.kafka.dev.my.domain:9094
+  - advertised.listeners=EXTERNAL1://kafka-1.external1.kafka.dev.my.domain:9094
 - broker 2:
-  - advertized.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:9094
+  - advertised.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:9094
 
 > Note: If *nodePortExternalIP* is set, then the *containerPort* from the external listener config is used as a broker port, and is the same for each broker.
 
