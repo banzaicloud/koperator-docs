@@ -5,9 +5,7 @@ weight: 7000
 ---
 
 The following KafkaCluster custom resource examples show you some basic use cases.
-You can use these examples as a base to your own Kafka cluster.
-
-> Note: These examples can be used if you are using Koperator directly. If you are using Calisti Streaming Data Manager, you must adjust the examples to match the requirements of Calisti. For details, see the [Calisti Streaming Data Manager documentation](https://docs.calisti.app/docs/sdm/create-kafka-cluster/).
+You can use these examples as a base for your own Kafka cluster.
 
 ## KafkaCluster CR with detailed explanation
 
@@ -37,9 +35,9 @@ You can read more details about rack awareness [here]({{< relref "../../../racka
 You can specify custom SSL certificates for listeners.  
 For details about SSL configuration, see {{% xref "../../../ssl.md" %}}.
 
-- [Use custom SSL certificate for an external listener]()
-- [Use custom SSL certificate for controller and inter-broker communication](). In this case you also need to provide the client SSL certificate for Koperator.  
-- [Hybrid solution](): some listeners have custom SSL certificates and some use certificates Koperator has generated automatically using cert-manager.
+- [Use custom SSL certificate for an external listener](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_external_ssl_customcert.yaml)
+- [Use custom SSL certificate for controller and inter-broker communication](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml). In this case you also need to provide the client SSL certificate for Koperator.  
+- [Hybrid solution](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_hybrid_customcert.yaml): some listeners have custom SSL certificates and some use certificates Koperator has generated automatically using cert-manager.
 
 ## Kafka cluster with SASL
 
