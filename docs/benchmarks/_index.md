@@ -93,7 +93,7 @@ banzai login
     The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/cluster_eks.json)
 
     > Please don't forget to fill out the template with the created ids.
-{{< include-headless "warning-ebs-csi-driver.md" "sdm/koperator" >}}
+{{< include-headless "warning-ebs-csi-driver.md" "supertubes/kafka-operator" >}}
 
     Once your cluster is up and running we can move on to set up the Kubernetes infrastructure.
 
