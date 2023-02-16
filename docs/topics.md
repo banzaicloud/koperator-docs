@@ -1,7 +1,7 @@
 ---
 title: Provisioning Kafka Topics
-linktitle: Kafka topics
-weight: 200
+shorttitle: Kafka topics
+weight: 280
 ---
 
 ## Create topic
