@@ -25,7 +25,7 @@ You can read more details about rack awareness [here]({{< relref "../../../racka
 
 - [Use SSL and rack awareness](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups.yaml)
 
-## Kafka cluster with broker configuration in different ways
+## Kafka cluster with broker configuration
 
 - [Use broker configuration groups](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_without_ssl_groups.yaml)
 - [Use independent broker configurations](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_without_ssl.yaml)
