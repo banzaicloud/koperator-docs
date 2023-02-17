@@ -30,6 +30,8 @@ How to setup the environment for the Kafka Performance Test.
 
 1. Create a test cluster with 3 nodes for Zookeeper, 3 for Kafka, 1 Master node and 2 node for clients.
 
+    {{< include-headless "warning-ebs-csi-driver.md" "supertubes/koperator" >}}
+
     Once your cluster is up and running you can set up the Kubernetes infrastructure.
 
 1. Create a StorageClass which enables high performance disk requests.
@@ -55,7 +57,7 @@ How to setup the environment for the Kafka Performance Test.
 
     ```bash
     helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
-    helm install --name zookeeper-operator --namespace zookeeper banzaicloud-stable/zookeeper-operator
+    helm install zookeeper-operator --namespace=zookeeper --create-namespace pravega/zookeeper-operator
     kubectl create -f - <<EOF
     apiVersion: zookeeper.pravega.io/v1beta1
     kind: ZookeeperCluster
@@ -67,15 +69,42 @@ How to setup the environment for the Kafka Performance Test.
     EOF
     ```
 
-1. Install the latest version of {{< kafka-operator >}}, the Operator for managing Apache Kafka on Kubernetes.
+1. Install the {{< kafka-operator >}} CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install) and the corresponding version of {{< kafka-operator >}}, the Operator for managing Apache Kafka on Kubernetes.
 
     ```bash
-    helm install --name=kafka-operator banzaicloud-stable/kafka-operator
+    kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/kafka-operator.crds.yaml
     ```
 
-1. Create a 3-broker Kafka Cluster using the [this YAML file](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/kafka.yaml).
+    ```bash
+    helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
+    ```
 
-    This will install 3 brokers partitioned to three different zones with fast ssd.
+1. Create a 3-broker Kafka Cluster using [this YAML file](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/kafka.yaml).
+
+    This will install 3 brokers with fast SSD. If you would like the brokers in different zones, modify the following configurations to match your environment and use them in the broker configurations:
+
+    ```yaml
+    apiVersion: kafka.banzaicloud.io/v1beta1
+    kind: KafkaCluster
+    ...
+    spec:
+      ...
+      brokerConfigGroups:
+        default:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: <node-label-key>
+                    operator: In
+                    values:
+                    - <node-label-value-zone-1>
+                    - <node-label-value-zone-2>
+                    - <node-label-value-zone-3>
+      ...
+    ```
+
 1. Create a client container inside the cluster
 
     ```bash
@@ -83,8 +112,6 @@ How to setup the environment for the Kafka Performance Test.
     apiVersion: v1
     kind: Pod
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       name: kafka-test
     spec:
       containers:
@@ -99,7 +126,7 @@ How to setup the environment for the Kafka Performance Test.
 1. Exec into this client and create the `perftest, perftest2, perftes3` topics.
 
     ```bash
-    kubectl exec -it kafka-test bash
+    kubectl exec -it kafka-test -n kafka bash
     ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest --create --replication-factor 3 --partitions 3
     ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest2 --create --replication-factor 3 --partitions 3
     ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest3 --create --replication-factor 3 --partitions 3
@@ -120,15 +147,13 @@ Monitoring environment is automatically installed. To monitor the infrastructure
 
 ```yaml
 kubectl create -f - <<EOF
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: loadtest
-  annotations:
-    linkerd.io/inject: enabled
   name: perf-load
-  namespace: default
+  namespace: kafka
 spec:
   progressDeadlineSeconds: 600
   replicas: 4
@@ -147,15 +172,6 @@ spec:
       labels:
         app: loadtest
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: nodepool.banzaicloud.io/name
-                operator: In
-                values:
-                - pool3
       containers:
       - args:
         - -brokers=kafka-0:29092,kafka-1:29092,kafka-2:29092
@@ -163,114 +179,7 @@ spec:
         - -required-acks=all
         - -message-size=512
         - -workers=20
-        image: yourorg/yourimage:yourtag
-        imagePullPolicy: Always
-        name: sangrenel
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
----
-
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  labels:
-    app: loadtest
-  name: perf-load
-  namespace: default
-spec:
-  progressDeadlineSeconds: 600
-  replicas: 4
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      app: loadtest
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: loadtest
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: nodepool.banzaicloud.io/name
-                operator: In
-                values:
-                - clients
-      containers:
-      - args:
-        - -brokers=kafka-0,kafka-1,kafka-2:29092
-        - -topic=perftest2
-        - -required-acks=all
-        - -message-size=512
-        - -workers=20
-        image: yourorg/yourimage:yourtag
-        imagePullPolicy: Always
-        name: sangrenel
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
----
-
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  labels:
-    app: loadtest
-  name: perf-load
-  namespace: default
-spec:
-  progressDeadlineSeconds: 600
-  replicas: 4
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      app: loadtest
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: loadtest
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: nodepool.banzaicloud.io/name
-                operator: In
-                values:
-                - clients
-      containers:
-      - args:
-        - -brokers=kafka-0,kafka-1,kafka-2:29092
-        - -topic=perftest
-        - -required-acks=all
-        - -message-size=512
-        - -workers=20
+        - -api-version=3.1.0
         image: yourorg/yourimage:yourtag
         imagePullPolicy: Always
         name: sangrenel
