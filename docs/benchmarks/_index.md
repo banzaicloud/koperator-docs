@@ -145,51 +145,51 @@ Monitoring environment is automatically installed. To monitor the infrastructure
 
 1. Submit the performance testing application:
 
-```yaml
-kubectl create -f - <<EOF
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: loadtest
-  name: perf-load
-  namespace: kafka
-spec:
-  progressDeadlineSeconds: 600
-  replicas: 4
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      app: loadtest
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
-  template:
+    ```yaml
+    kubectl create -f - <<EOF
+    apiVersion: apps/v1
+    kind: Deployment
     metadata:
-      creationTimestamp: null
       labels:
         app: loadtest
+      name: perf-load
+      namespace: kafka
     spec:
-      containers:
-      - args:
-        - -brokers=kafka-0:29092,kafka-1:29092,kafka-2:29092
-        - -topic=perftest
-        - -required-acks=all
-        - -message-size=512
-        - -workers=20
-        - -api-version=3.1.0
-        image: yourorg/yourimage:yourtag
-        imagePullPolicy: Always
-        name: sangrenel
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
-EOF
-```
+      progressDeadlineSeconds: 600
+      replicas: 4
+      revisionHistoryLimit: 10
+      selector:
+        matchLabels:
+          app: loadtest
+      strategy:
+        rollingUpdate:
+          maxSurge: 25%
+          maxUnavailable: 25%
+        type: RollingUpdate
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            app: loadtest
+        spec:
+          containers:
+          - args:
+            - -brokers=kafka-0:29092,kafka-1:29092,kafka-2:29092
+            - -topic=perftest
+            - -required-acks=all
+            - -message-size=512
+            - -workers=20
+            - -api-version=3.1.0
+            image: yourorg/yourimage:yourtag
+            imagePullPolicy: Always
+            name: sangrenel
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+    EOF
+    ```
