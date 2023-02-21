@@ -65,7 +65,7 @@ How to setup the environment for the Kafka Performance Test.
       name: zookeeper
       namespace: zookeeper
     spec:
-      replicas: 1
+      replicas: 3
     EOF
     ```
 
