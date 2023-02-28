@@ -160,9 +160,9 @@ To configure an external listener that uses the NodePort access method, complete
 
 ### NodePort external IP
 
-The node IP of the node where the broker pod is scheduled will be used in the advertized.listeners broker configuration when the `nodePortNodeAddressType` is specified.  
-Its value determine which IP or domain name of the Kubernetes node will be used. It can be: Hostname, ExternalIP, InternalIP, InternalDNS and ExternalDNS.  
-The hostNameOverride and nodePortExternalIP must be not specified in this case.
+The node IP of the node where the broker pod is scheduled will be used in the advertise.listeners broker configuration when the `nodePortNodeAddressType` is specified.  
+Its value determines which IP or domain name of the Kubernetes node will be used, the possible values are: Hostname, ExternalIP, InternalIP, InternalDNS and ExternalDNS.  
+The hostNameOverride and nodePortExternalIP must not be specified in this case.
 
 ```yaml
 brokers:
