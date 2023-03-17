@@ -6,7 +6,7 @@ weight: 750
 
 Kafka automatically replicates partitions across brokers, so if a broker fails, the data is safely preserved on another. Kafka's rack awareness feature spreads replicas of the same partition across different **failure groups** (racks or availability zones). This extends the guarantees Kafka provides for broker-failure to cover rack and availability zone (AZ) failures, limiting the risk of data loss should all the brokers in the same rack or AZ fail at once.
 
-> Note: All brokers deployed by {{< kafka-operator >}} must belong to the same Kubernetes cluster. If you want to spread your brokers across multiple Kubernetes clusters, as in a hybrid-cloud or multi-clouds environment (or just to add geo-redundancy to your setup), consider using our commercial [Cisco Streaming Data Manager](https://calisti.app) solution.
+> Note: All brokers deployed by {{< kafka-operator >}} must belong to the same Kubernetes cluster.
 
 Since rack awareness is so vitally important, especially in multi-region and hybrid-cloud environments, [{{< kafka-operator >}}](https://github.com/banzaicloud/koperator) provides an automated solution for it, and allows fine-grained broker rack configuration based on pod affinities and anti-affinities. (To learn more about affinities and anti-affinities, see [Taints and tolerations, pod and node affinities demystified]({{< blogref "k8s-taints-tolerations-affinities.md" >}}).)
 
