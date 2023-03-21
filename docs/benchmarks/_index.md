@@ -30,7 +30,7 @@ How to setup the environment for the Kafka Performance Test.
 
 1. Create a test cluster with 3 nodes for Zookeeper, 3 for Kafka, 1 Master node and 2 node for clients.
 
-    {{< include-headless "warning-ebs-csi-driver.md" "supertubes/koperator" >}}
+    {{< include-headless "warning-ebs-csi-driver.md" "supertubes/kafka-operator" >}}
 
     Once your cluster is up and running you can set up the Kubernetes infrastructure.
 
