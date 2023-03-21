@@ -3,69 +3,13 @@ title: Benchmarking Kafka
 weight: 900
 ---
 
-How to setup the environment for the Kafka Performance Test using Amazon PKE, GKE, EKS.
-
-We are going to use [Banzai Cloud CLI](https://github.com/banzaicloud/banzai-cli) to create the cluster:
-
-```bash
-brew install banzaicloud/tap/banzai-cli
-banzai login
-```
-
-## PKE
-
-1. Create your own VPC and subnets on Amazon Management Console.
-
-    1. Use the provided wizard and select VPC with Single Public Subnet. (Please remember the Availability Zone you chose.)
-    1. Save the used route table id on the generated subnet
-    1. Create two additional subnet in the VPC (choose different Availability Zones)
-
-        - Modify your newly created subnet Auto Assign IP setting
-        - Enable auto-assign public IPV4 address
-
-    1. Assign the saved route table id to the two additional subnets
-
-        - On Route Table page click Actions and Edit subnet associations
-
-1. Create the cluster itself.
-
-    ```bash
-    banzai cluster create
-    ```
-
-    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/cluster_pke.json)
-
-    > Please don't forget to fill out the template with the created ids.
-
-    This will create a cluster with 3 nodes for ZK 3 for Kafka 1 Master node and 2 node for clients.
-1. Create a StorageClass which enables high performance disk requests.
-
-    ```bash
-    kubectl create -f - <<EOF
-    apiVersion: storage.k8s.io/v1
-    kind: StorageClass
-    metadata:
-      name: fast-ssd
-    provisioner: kubernetes.io/aws-ebs
-    parameters:
-      type: io1
-      iopsPerGB: "50"
-      fsType: ext4
-    volumeBindingMode: WaitForFirstConsumer
-    EOF
-    ```
+How to setup the environment for the Kafka Performance Test.
 
 ## GKE
 
-1. Create the cluster itself:
+1. Create a test cluster with 3 nodes for Zookeeper, 3 for Kafka, 1 Master node and 2 node for clients.
 
-    ```bash
-    banzai cluster create
-    ```
-
-    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/cluster_gke.json)
-
-    > Please don't forget to fill out the template with the created ids.
+    Once your cluster is up and running you can set up the Kubernetes infrastructure.
 
 1. Create a StorageClass which enables high performance disk requests.
 
@@ -84,18 +28,11 @@ banzai login
 
 ## EKS
 
-1. Create the cluster itself:
+1. Create a test cluster with 3 nodes for Zookeeper, 3 for Kafka, 1 Master node and 2 node for clients.
 
-    ```bash
-    banzai cluster create
-    ```
+    {{< include-headless "warning-ebs-csi-driver.md" "supertubes/kafka-operator" >}}
 
-    The required cluster template file can be found [here](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/cluster_eks.json)
-
-    > Please don't forget to fill out the template with the created ids.
-{{< include-headless "warning-ebs-csi-driver.md" "supertubes/kafka-operator" >}}
-
-    Once your cluster is up and running we can move on to set up the Kubernetes infrastructure.
+    Once your cluster is up and running you can set up the Kubernetes infrastructure.
 
 1. Create a StorageClass which enables high performance disk requests.
 
@@ -128,7 +65,7 @@ banzai login
       name: zookeeper
       namespace: zookeeper
     spec:
-      replicas: 1
+      replicas: 3
     EOF
     ```
 
@@ -142,7 +79,7 @@ banzai login
     helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
     ```
 
-1. Create a 3 broker Kafka Cluster using the [provided](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/kafka.yaml) yaml.
+1. Create a 3-broker Kafka Cluster using [this YAML file](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/infrastructure/kafka.yaml).
 
     This will install 3 brokers with fast SSD. If you would like the brokers in different zones, modify the following configurations to match your environment and use them in the broker configurations:
 
@@ -168,7 +105,7 @@ banzai login
       ...
     ```
 
-2. Create a client container inside the cluster
+1. Create a client container inside the cluster
 
     ```bash
     kubectl create -f - <<EOF
@@ -186,7 +123,7 @@ banzai login
     EOF
     ```
 
-3. Exec into this client and create the `perftest, perftest2, perftes3` topics.
+1. Exec into this client and create the `perftest, perftest2, perftes3` topics.
 
     ```bash
     kubectl exec -it kafka-test -n kafka bash
@@ -199,60 +136,60 @@ Monitoring environment is automatically installed. To monitor the infrastructure
 
 ## Run the tests
 
-1. Run perf test against the cluster, by building the provided Docker [image](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/loadgens/Dockerfile)
+1. Run performance test against the cluster, by building [this Docker image](https://raw.githubusercontent.com/banzaicloud/koperator/master/docs/benchmarks/loadgens/Dockerfile).
 
     ```bash
-    docker build -t yourname/perfload:0.1.0 /loadgens
-    docker push yourname/perfload:0.1.0
+    docker build -t <yourname>/perfload:0.1.0 /loadgens
+    docker push <yourname>/perfload:0.1.0
     ```
 
-1. Submit the perf test application:
+1. Submit the performance testing application:
 
-```yaml
-kubectl create -f - <<EOF
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: loadtest
-  name: perf-load
-  namespace: kafka
-spec:
-  progressDeadlineSeconds: 600
-  replicas: 4
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      app: loadtest
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
-  template:
+    ```yaml
+    kubectl create -f - <<EOF
+    apiVersion: apps/v1
+    kind: Deployment
     metadata:
-      creationTimestamp: null
       labels:
         app: loadtest
+      name: perf-load
+      namespace: kafka
     spec:
-      containers:
-      - args:
-        - -brokers=kafka-0:29092,kafka-1:29092,kafka-2:29092
-        - -topic=perftest
-        - -required-acks=all
-        - -message-size=512
-        - -workers=20
-        - -api-version=3.1.0
-        image: yourorg/yourimage:yourtag
-        imagePullPolicy: Always
-        name: sangrenel
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
-EOF
-```
+      progressDeadlineSeconds: 600
+      replicas: 4
+      revisionHistoryLimit: 10
+      selector:
+        matchLabels:
+          app: loadtest
+      strategy:
+        rollingUpdate:
+          maxSurge: 25%
+          maxUnavailable: 25%
+        type: RollingUpdate
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            app: loadtest
+        spec:
+          containers:
+          - args:
+            - -brokers=kafka-0:29092,kafka-1:29092,kafka-2:29092
+            - -topic=perftest
+            - -required-acks=all
+            - -message-size=512
+            - -workers=20
+            - -api-version=3.1.0
+            image: yourorg/yourimage:yourtag
+            imagePullPolicy: Always
+            name: sangrenel
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+    EOF
+    ```
