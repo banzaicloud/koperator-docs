@@ -6,7 +6,7 @@ weight: 10
 
 
 
-The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.21-1.24 and RedHat OpenShift 4.11.
+The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.21-1.24 and RedHat OpenShift 4.10-4.11.
 
 > The operator supports Kafka 2.6.2-3.1.x.
 
@@ -63,6 +63,87 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     customresourcedefinition.apiextensions.k8s.io/issuers.cert-manager.io created
     customresourcedefinition.apiextensions.k8s.io/orders.acme.cert-manager.io created
     ```
+
+1. If cert-manager is being installed on a RedHat OpenShift cluster of version **4.10** the default security computing profile must be enabled for cert-manager to work.
+
+    1. Create a new `SecurityContextConstraint` object named `restricted-seccomp` which will be a copy of the OpenShift built-in `restricted` `SecurityContextConstraint`, but will also allow the `runtime/default` / `RuntimeDefault` security computing profile [according to the OpenShift documentation]](https://docs.openshift.com/container-platform/4.10/security/seccomp-profiles.html#configuring-default-seccomp-profile_configuring-seccomp-profiles).
+
+        ```bash
+        oc create -f - <<EOF
+        allowHostDirVolumePlugin: false
+        allowHostIPC: false
+        allowHostNetwork: false
+        allowHostPID: false
+        allowHostPorts: false
+        allowPrivilegeEscalation: true
+        allowPrivilegedContainer: false
+        allowedCapabilities: null
+        apiVersion: security.openshift.io/v1
+        defaultAddCapabilities: null
+        fsGroup:
+            type: MustRunAs
+        groups:
+            - system:authenticated
+        kind: SecurityContextConstraints
+        metadata:
+            annotations:
+                include.release.openshift.io/ibm-cloud-managed: "true"
+                include.release.openshift.io/self-managed-high-availability: "true"
+                include.release.openshift.io/single-node-developer: "true"
+                kubernetes.io/description: restricted denies access to all host features and requires pods to be run with a UID, and SELinux context that are allocated to the namespace.  This is the most restrictive SCC and it is used by default for authenticated users.
+                release.openshift.io/create-only: "true"
+            name: restricted-seccomp # ~
+        priority: null
+        readOnlyRootFilesystem: false
+        requiredDropCapabilities:
+            - KILL
+            - MKNOD
+            - SETUID
+            - SETGID
+        runAsUser:
+            type: MustRunAsRange
+        seLinuxContext:
+            type: MustRunAs
+        seccompProfiles: # +
+            - runtime/default # +
+        supplementalGroups:
+            type: RunAsAny
+        users: []
+        volumes:
+            - configMap
+            - downwardAPI
+            - emptyDir
+            - persistentVolumeClaim
+            - projected
+            - secret
+        EOF
+        ```
+
+        Expected output:
+
+        ```bash
+        securitycontextconstraints.security.openshift.io/restricted-seccomp created
+        ```
+
+    1. Then the permissions of the namespace containing the cert-manager service account must be elevated.
+
+        - Using the default `cert-manager` namespace.
+
+            ```bash
+            oc adm policy add-scc-to-group restricted-seccomp system:serviceaccounts:cert-manager
+            ```
+
+        - Using a custom namespace for cert-manager.
+
+            ```bash
+            oc adm policy add-scc-to-group anyuid system:serviceaccounts:{NAMESPACE_FOR_CERT_MANAGER_SERVICE_ACCOUNT}
+            ```
+
+        Expected output:
+
+        ```bash
+        clusterrole.rbac.authorization.k8s.io/system:openshift:scc:restricted-seccomp added: "system:serviceaccounts:{NAMESPACE_FOR_CERT_MANAGER_SERVICE_ACCOUNT}"
+        ```
 
 1. Install cert-manager.
 
@@ -224,6 +305,61 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 ### Install prometheus-operator with Helm {#install-prometheus-operator-with-helm}
 
 {{< kafka-operator >}} uses [Prometheus](https://prometheus.io/) for exporting metrics of the Kafka cluster. It is recommended to deploy a Prometheus instance if you don't one yet.
+
+1. If prometheus-operator is being installed on a RedHat OpenShift cluster of version **4.10** a `SecurityContextConstraints` object `nonroot-v2` with the following configuration needs to be created for Prometheus admission and operator service accounts to work.
+
+    ```bash
+    oc create -f - <<EOF
+    allowHostDirVolumePlugin: false
+    allowHostIPC: false
+    allowHostNetwork: false
+    allowHostPID: false
+    allowHostPorts: false
+    allowPrivilegeEscalation: false
+    allowPrivilegedContainer: false
+    allowedCapabilities:
+        - NET_BIND_SERVICE
+    apiVersion: security.openshift.io/v1
+    defaultAddCapabilities: null
+    fsGroup:
+        type: RunAsAny
+    groups: []
+    kind: SecurityContextConstraints
+    metadata:
+        annotations:
+            include.release.openshift.io/ibm-cloud-managed: "true"
+            include.release.openshift.io/self-managed-high-availability: "true"
+            include.release.openshift.io/single-node-developer: "true"
+            kubernetes.io/description: nonroot provides all features of the restricted SCC but allows users to run with any non-root UID.  The user must specify the UID or it must be specified on the by the manifest of the container runtime. On top of the legacy 'nonroot' SCC, it also requires to drop ALL capabilities and does not allow privilege escalation binaries. It will also default the seccomp profile to runtime/default if unset, otherwise this seccomp profile is required.
+        name: nonroot-v2
+    priority: null
+    readOnlyRootFilesystem: false
+    requiredDropCapabilities:
+        - ALL
+    runAsUser:
+        type: MustRunAsNonRoot
+    seLinuxContext:
+        type: MustRunAs
+    seccompProfiles:
+        - runtime/default
+    supplementalGroups:
+        type: RunAsAny
+    users: []
+    volumes:
+        - configMap
+        - downwardAPI
+        - emptyDir
+        - persistentVolumeClaim
+        - projected
+        - secret
+    EOF
+    ```
+
+    Expected output:
+
+    ```bash
+    securitycontextconstraints.security.openshift.io/nonroot-v2 created
+    ```
 
 1. If prometheus-operator is being installed on a Red Hat OpenShift cluster, the permissions of the Prometheus service accounts must be elevated.
 
