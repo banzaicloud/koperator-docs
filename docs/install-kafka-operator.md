@@ -35,9 +35,9 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     supertubes install -a
     ```
 
-## Install {{< kafka-operator >}} and the requirements independently {#manual-install}
+## Install {{< kafka-operator >}} and its requirements independently {#install-kafka-operator-and-its-requirements-independently}
 
-### Install cert-manager {#install-cert-manager}
+### Install cert-manager with Helm {#install-cert-manager-with-helm}
 
 {{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers. Deploy and configure cert-manager if you haven't already done so.
 
@@ -47,14 +47,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 Install cert-manager and the CustomResourceDefinitions using one of the following methods:
 
-- Directly:
-
     ```bash
-    # Install the CustomResourceDefinitions and cert-manager itself
-    kubectl create -f https://github.com/jetstack/cert-manager/releases/download/v1.6.2/cert-manager.yaml
-    ```
-
-- Using Helm:
 
     ```bash
 
@@ -84,7 +77,7 @@ cert-manager-cainjector-87c85c6ff-q945h   1/1     Running   1          29m
 cert-manager-webhook-64dc9fff44-2p6tx     1/1     Running   0          29m
 ```
 
-### Install Zookeeper {#install-zookeeper}
+### Install zookeeper-operator with Helm {#install-zookeeper-operator-with-helm}
 
 Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper cluster if you don't already have one.
 
@@ -97,6 +90,9 @@ Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper clu
     helm repo update
     helm install zookeeper-operator --namespace=zookeeper --create-namespace pravega/zookeeper-operator
     ```
+
+
+### Deploy a Zookeeper cluster for Kafka {#deploy-a-zookeeper-cluster-for-kafka}
 
 1. Create a Zookeeper cluster.
 
@@ -116,17 +112,9 @@ Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper clu
     zookeeper-operator-54444dbd9d-2tccj   1/1     Running   0          28m
     ```
 
-### Install Prometheus-operator
+### Install prometheus-operator with Helm {#install-prometheus-operator-with-helm}
 
 Install the [Prometheus operator](https://github.com/prometheus-operator/prometheus-operator) and its CustomResourceDefinitions to the `default` namespace.
-
-- Directly:
-
-    ```bash
-    kubectl create -n default -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/bundle.yaml
-    ```
-
-- Using Helm:
 
     Add the prometheus repository to Helm:
 
@@ -156,7 +144,7 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
     --set prometheus.enabled=false
     ```
 
-### Install {{< kafka-operator >}} with Helm {#kafka-operator-helm}
+### Install {{< kafka-operator >}} with Helm {#install-kafka-operator-with-helm}
 
 You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/banzaicloud/koperator/tree/master/charts). Complete the following steps.
 
@@ -192,6 +180,8 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
         ```bash
         oc adm policy add-scc-to-user anyuid system:serviceaccount:{NAMESPACE_FOR_SERVICE_ACCOUNT}:{KAKFA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
         ```
+
+### Deploy a Kafka cluster {#deploy-a-kafka-cluster}
 
 1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/master/config/samples).
 
@@ -233,7 +223,7 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
     prometheus-kafka-prometheus-0             2/2     Running   1          16m
     ```
 
-## Test your deployment
+## Test your deployment {#test-your-deployment}
 
 - For a simple test, see [Test provisioned Kafka Cluster](../test/).
 - For a more in-depth view at using SSL and the `KafkaUser` CRD, see [Securing Kafka With SSL](../ssl/).
