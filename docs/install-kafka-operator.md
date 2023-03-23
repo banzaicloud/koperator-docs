@@ -6,7 +6,7 @@ weight: 10
 
 
 
-The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.20.0+.
+The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.21-1.24.
 
 > The operator supports Kafka 2.6.2-3.1.x.
 
@@ -42,7 +42,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 {{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers and cert-manager is required for TLS-encrypted client connections. It is recommended to deploy and configure a cert-manager instance if there is none in your environment yet.
 
 > Note:
-> - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3-1.6.x
+> - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3-1.9.x
 > - {{< kafka-operator >}} 0.8.x-0.17.0 supports cert-manager 1.3.x
 
 1. Install cert-manager's CustomResourceDefinitions.
