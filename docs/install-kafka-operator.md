@@ -6,7 +6,7 @@ weight: 10
 
 
 
-The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.21-1.24.
+The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.21-1.24 and RedHat OpenShift 4.11.
 
 > The operator supports Kafka 2.6.2-3.1.x.
 
@@ -15,7 +15,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.
 
 ## Prerequisites
 
-- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). Red Hat OpenShift is also supported in {{< kafka-operator >}} version 0.23 and newer, but note that it needs some permissions for certain components to function.
+- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). Red Hat OpenShift is also supported in {{< kafka-operator >}} version 0.24 and newer, but note that it needs some permissions for certain components to function.
 
 > We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Banzai Cloud Supertubes](/products/supertubes/).
 
@@ -42,6 +42,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 {{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers and cert-manager is required for TLS-encrypted client connections. It is recommended to deploy and configure a cert-manager instance if there is none in your environment yet.
 
 > Note:
+> - {{< kafka-operator >}} 0.24.0 and newer versions support cert-manager 1.10.0+ (which is a requirement for RedHat OpenShift)
 > - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3-1.9.x
 > - {{< kafka-operator >}} 0.8.x-0.17.0 supports cert-manager 1.3.x
 
@@ -133,6 +134,26 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 > Note: It is recommended to create a separate Zookeeper deployment for each Kafka cluster. To share the same Zookeeper cluster across multiple Kafka cluster instances, use a unique zk path in the KafkaCluster CR to avoid conflicts (even with previous defunct KafkaCluster instances).
 
+1. If zookeeper-operator is being installed on a Red Hat OpenShift cluster, the permissions of the namespace containing the Zookeeper service account must be elevated.
+
+    - Using the default `zookeeper` namespace.
+
+        ```bash
+        oc adm policy add-scc-to-group anyuid system:serviceaccounts:zookeeper
+        ```
+
+    - Using a custom namespace for Zookeeper.
+
+        ```bash
+        oc adm policy add-scc-to-group anyuid system:serviceaccounts:{NAMESPACE_FOR_ZOOKEEPER_SERVICE_ACCOUNT}
+        ```
+
+    Expected output:
+
+    ```bash
+    clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "system:serviceaccounts:{NAMESPACE_FOR_ZOOKEEPER_SERVICE_ACCOUNT}"
+    ```
+
 1. Install Zookeeper using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
 
     ```bash
@@ -204,31 +225,99 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 {{< kafka-operator >}} uses [Prometheus](https://prometheus.io/) for exporting metrics of the Kafka cluster. It is recommended to deploy a Prometheus instance if you don't one yet.
 
-1. Install the [Prometheus operator](https://github.com/prometheus-operator/prometheus-operator) and its CustomResourceDefinitions to the `prometheus` namespace.
+1. If prometheus-operator is being installed on a Red Hat OpenShift cluster, the permissions of the Prometheus service accounts must be elevated.
+
+    > Note: OpenShift doesn't let you install Prometheus in the `default` namespace due to security considerations.
+
+    - Using the default `prometheus` namespace.
+
+        ```bash
+        oc adm policy add-scc-to-user nonroot-v2 system:serviceaccount:prometheus:prometheus-kube-prometheus-admission
+        oc adm policy add-scc-to-user nonroot-v2 system:serviceaccount:prometheus:prometheus-kube-prometheus-operator
+        oc adm policy add-scc-to-user hostnetwork system:serviceaccount:prometheus:prometheus-operator-prometheus-node-exporter
+        oc adm policy add-scc-to-user node-exporter system:serviceaccount:prometheus:prometheus-operator-prometheus-node-exporter
+        ```
+
+    - Using a custom namespace or service account name for Prometheus.
+
+        ```bash
+        oc adm policy add-scc-to-user nonroot-v2 system:serviceaccount:{NAMESPACE_FOR_PROMETHEUS}:{PROMETHEUS_ADMISSION_SERVICE_ACCOUNT_NAME}
+        oc adm policy add-scc-to-user nonroot-v2 system:serviceaccount:{NAMESPACE_FOR_PROMETHEUS}:{PROMETHEUS_OPERATOR_SERVICE_ACCOUNT_NAME}
+        oc adm policy add-scc-to-user hostnetwork system:serviceaccount:{NAMESPACE_FOR_PROMETHEUS}:{PROMETHEUS_NODE_EXPORTER_SERVICE_ACCOUNT_NAME}
+        oc adm policy add-scc-to-user node-exporter system:serviceaccount:{NAMESPACE_FOR_PROMETHEUS}:{PROMETHEUS_NODE_EXPORTER_SERVICE_ACCOUNT_NAME}
+        ```
+
+    Expected output:
 
     ```bash
-    helm install prometheus \
-    --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack \
-    --version 42.0.1 \
-    --namespace prometheus \
-    --create-namespace \
-    --atomic \
-    --debug \
-    --set prometheusOperator.createCustomResource=true \
-    --set defaultRules.enabled=false \
-    --set alertmanager.enabled=false \
-    --set grafana.enabled=false \
-    --set kubeApiServer.enabled=false \
-    --set kubelet.enabled=false \
-    --set kubeControllerManager.enabled=false \
-    --set coreDNS.enabled=false \
-    --set kubeEtcd.enabled=false \
-    --set kubeScheduler.enabled=false \
-    --set kubeProxy.enabled=false \
-    --set kubeStateMetrics.enabled=false \
-    --set nodeExporter.enabled=false \
-    --set prometheus.enabled=false
+    clusterrole.rbac.authorization.k8s.io/system:openshift:scc:nonroot-v2 added: "{PROMETHEUS_ADMISSION_SERVICE_ACCOUNT_NAME}"
+    clusterrole.rbac.authorization.k8s.io/system:openshift:scc:nonroot-v2 added: "{PROMETHEUS_OPERATOR_SERVICE_ACCOUNT_NAME}"
+    clusterrole.rbac.authorization.k8s.io/system:openshift:scc:hostnetwork added: "{PROMETHEUS_NODE_EXPORTER_SERVICE_ACCOUNT_NAME}"
+    clusterrole.rbac.authorization.k8s.io/system:openshift:scc:node-exporter added: "{PROMETHEUS_NODE_EXPORTER_SERVICE_ACCOUNT_NAME}"
     ```
+
+1. Install the [Prometheus operator](https://github.com/prometheus-operator/prometheus-operator) and its CustomResourceDefinitions to the `prometheus` namespace.
+
+    -  On an OpenShift cluster.
+
+        ```bash
+        helm install \
+        prometheus \
+        --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack \
+        --version 42.0.1 \
+        --namespace prometheus \
+        --create-namespace \
+        --atomic \
+        --debug \
+        --set prometheusOperator.createCustomResource=true \
+        --set defaultRules.enabled=false \
+        --set alertmanager.enabled=false \
+        --set grafana.enabled=false \
+        --set kubeApiServer.enabled=false \
+        --set kubelet.enabled=false \
+        --set kubeControllerManager.enabled=false \
+        --set coreDNS.enabled=false \
+        --set kubeEtcd.enabled=false \
+        --set kubeScheduler.enabled=false \
+        --set kubeProxy.enabled=false \
+        --set kubeStateMetrics.enabled=false \
+        --set nodeExporter.enabled=false \
+        --set prometheus.enabled=false \
+        --set prometheusOperator.containerSecurityContext.capabilities.drop[0]="ALL" \
+        --set prometheusOperator.containerSecurityContext.seccompProfile.type=RuntimeDefault \
+        --set prometheusOperator.admissionWebhooks.createSecretJob.securityContext.allowPrivilegeEscalation=false \
+        --set prometheusOperator.admissionWebhooks.createSecretJob.securityContext.capabilities.drop[0]="ALL" \
+        --set prometheusOperator.admissionWebhooks.createSecretJob.securityContext.seccompProfile.type=RuntimeDefault \
+        --set prometheusOperator.admissionWebhooks.patchWebhookJob.securityContext.allowPrivilegeEscalation=false \
+        --set prometheusOperator.admissionWebhooks.patchWebhookJob.securityContext.capabilities.drop[0]="ALL" \
+        --set prometheusOperator.admissionWebhooks.patchWebhookJob.securityContext.seccompProfile.type=RuntimeDefault
+        ```
+
+    - On a regular Kubernetes cluster.
+
+        ```bash
+        helm install prometheus \
+        --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack \
+        --version 42.0.1 \
+        --namespace prometheus \
+        --create-namespace \
+        --atomic \
+        --debug \
+        --set prometheusOperator.createCustomResource=true \
+        --set defaultRules.enabled=false \
+        --set alertmanager.enabled=false \
+        --set grafana.enabled=false \
+        --set kubeApiServer.enabled=false \
+        --set kubelet.enabled=false \
+        --set kubeControllerManager.enabled=false \
+        --set coreDNS.enabled=false \
+        --set kubeEtcd.enabled=false \
+        --set kubeScheduler.enabled=false \
+        --set kubeProxy.enabled=false \
+        --set kubeStateMetrics.enabled=false \
+        --set nodeExporter.enabled=false \
+        --set prometheus.enabled=false
+        ```
 
     Expected output:
 
@@ -288,6 +377,40 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     customresourcedefinition.apiextensions.k8s.io/kafkatopics.kafka.banzaicloud.io created
     customresourcedefinition.apiextensions.k8s.io/kafkausers.kafka.banzaicloud.io created
     ```
+
+1. If {{< kafka-operator >}} is being installed on a Red Hat OpenShift cluster:
+
+    1. The permissions of the Koperator namespace must be elevated.
+
+        - Using the default `kafka` namespace.
+
+            ```bash
+            oc adm policy add-scc-to-group anyuid system:serviceaccounts:kafka
+            ```
+
+        - Using a custom namespace for Koperator.
+
+            ```bash
+            oc adm policy add-scc-to-group anyuid system:serviceaccounts:{NAMESPACE_FOR_KOPERATOR}
+            ```
+
+        Expected output:
+
+        ```bash
+        clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "system:serviceaccounts:{NAMESPACE_FOR_KOPERATOR}"
+        ```
+
+    1. If the Kafka cluster is going to run in a different namespace than {{< kafka-operator >}}, the permissions of the Kafka cluster broker service account (`ServiceAccountName` provided in the KafkaCluster custom resource) must be elevated.
+
+        ```bash
+        oc adm policy add-scc-to-user anyuid system:serviceaccount:{NAMESPACE_FOR_KAFKA_CLUSTER_BROKER_SERVICE_ACCOUNT}:{KAFKA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
+        ```
+
+        Expected output:
+
+        ```bash
+        clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "system:serviceaccount:{NAMESPACE_FOR_KAFKA_CLUSTER_BROKER_SERVICE_ACCOUNT}:{KAFKA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}"
+        ```
 
 1. Install {{< kafka-operator >}} into the *kafka* namespace:
 
