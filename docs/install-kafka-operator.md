@@ -39,58 +39,146 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 ### Install cert-manager with Helm {#install-cert-manager-with-helm}
 
-{{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers. Deploy and configure cert-manager if you haven't already done so.
+{{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers and cert-manager is required for TLS-encrypted client connections. It is recommended to deploy and configure a cert-manager instance if there is none in your environment yet.
 
 > Note:
 > - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3-1.6.x
 > - {{< kafka-operator >}} 0.8.x-0.17.0 supports cert-manager 1.3.x
 
-Install cert-manager and the CustomResourceDefinitions using one of the following methods:
+1. Install cert-manager's CustomResourceDefinitions.
+
+    kubectl apply \
+    --validate=false \
+    -f https://github.com/jetstack/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml
+    ```
+
+    Expected output:
 
     ```bash
+    customresourcedefinition.apiextensions.k8s.io/certificaterequests.cert-manager.io created
+    customresourcedefinition.apiextensions.k8s.io/certificates.cert-manager.io created
+    customresourcedefinition.apiextensions.k8s.io/challenges.acme.cert-manager.io created
+    customresourcedefinition.apiextensions.k8s.io/clusterissuers.cert-manager.io created
+    customresourcedefinition.apiextensions.k8s.io/issuers.cert-manager.io created
+    customresourcedefinition.apiextensions.k8s.io/orders.acme.cert-manager.io created
+    ```
+
+1. Install cert-manager.
 
     ```bash
+    helm install \
+    cert-manager \
+    --repo https://charts.jetstack.io cert-manager \
+    --version v1.11.0 \
+    --namespace cert-manager \
+    --create-namespace \
+    --atomic \
+    --debug
+    ```
 
-    # Add the jetstack helm repo
-    helm repo add jetstack https://charts.jetstack.io
-    helm repo update
+    Expected output:
 
-    # Install the CustomResourceDefinitions
-    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.6.2/cert-manager.crds.yaml
+    ```bash
+    install.go:194: [debug] Original chart version: "v1.11.0"
+    install.go:211: [debug] CHART PATH: /Users/pregnor/.cache/helm/repository/cert-manager-v1.11.0.tgz
 
-    # Install cert-manager into the cluster
-    # Using helm3
-    helm install cert-manager --namespace cert-manager --create-namespace --version v1.6.2 jetstack/cert-manager
+    # ...
+    NAME: cert-manager
+    LAST DEPLOYED: Thu Mar 23 08:40:07 2023
+    NAMESPACE: cert-manager
+    STATUS: deployed
+    REVISION: 1
+    TEST SUITE: None
+    USER-SUPPLIED VALUES:
+    {}
 
-Verify that the cert-manager pods have been created:
+    COMPUTED VALUES:
+    # ...
+    NOTES:
+    cert-manager v1.11.0 has been deployed successfully!
 
-```bash
-kubectl get pods -n cert-manager
-```
+    In order to begin issuing certificates, you will need to set up a ClusterIssuer
+    or Issuer resource (for example, by creating a 'letsencrypt-staging' issuer).
 
-Expected output:
+    More information on the different types of issuers and how to configure them
+    can be found in our documentation:
 
-```bash
-NAME                                      READY   STATUS    RESTARTS   AGE
-cert-manager-7747db9d88-vgggn             1/1     Running   0          29m
-cert-manager-cainjector-87c85c6ff-q945h   1/1     Running   1          29m
-cert-manager-webhook-64dc9fff44-2p6tx     1/1     Running   0          29m
-```
+    https://cert-manager.io/docs/configuration/
+
+    For information on how to configure cert-manager to automatically provision
+    Certificates for Ingress resources, take a look at the `ingress-shim`
+    documentation:
+
+    https://cert-manager.io/docs/usage/ingress/
+    ```
+
+1. Verify that cert-manager has been deployed and is in running state.
+
+    ```bash
+    kubectl get pods -n cert-manager
+    ```
+
+    Expected output:
+
+    ```bash
+    NAME                                      READY   STATUS    RESTARTS   AGE
+    cert-manager-6b4d84674-4pkh4               1/1     Running   0          117s
+    cert-manager-cainjector-59f8d9f696-wpqph   1/1     Running   0          117s
+    cert-manager-webhook-56889bfc96-x8szj      1/1     Running   0          117s
+    ```
 
 ### Install zookeeper-operator with Helm {#install-zookeeper-operator-with-helm}
 
-Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper cluster if you don't already have one.
+{{< kafka-operator >}} requires [Zookeeper](https://zookeeper.apache.org) for Kafka operations. It is required to deploy zookeeper-operator if your environment doesn't have an instance of it yet and it is also required to create a Zookeeper cluster if there is none in your environment yet for your Kafka cluster.
 
-> Note: You are recommended to create a separate Zookeeper deployment for each Kafka cluster. If you want to share the same Zookeeper cluster across multiple Kafka cluster instances, use a unique zk path in the KafkaCluster CR to avoid conflicts (even with previous defunct KafkaCluster instances).
+> Note: It is recommended to create a separate Zookeeper deployment for each Kafka cluster. To share the same Zookeeper cluster across multiple Kafka cluster instances, use a unique zk path in the KafkaCluster CR to avoid conflicts (even with previous defunct KafkaCluster instances).
 
 1. Install Zookeeper using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
 
     ```bash
-    helm repo add pravega https://charts.pravega.io
-    helm repo update
-    helm install zookeeper-operator --namespace=zookeeper --create-namespace pravega/zookeeper-operator
+    helm install \
+    zookeeper-operator \
+    --repo https://charts.pravega.io zookeeper-operator \
+    --version 0.2.14 \
+    --namespace=zookeeper \
+    --create-namespace \
+    --atomic \
+    --debug
     ```
 
+    Expected output:
+
+    ```bash
+    install.go:194: [debug] Original chart version: "0.2.14"
+    install.go:211: [debug] CHART PATH: /Users/pregnor/.cache/helm/repository/zookeeper-operator-0.2.14.tgz
+
+    # ...
+    NAME: zookeeper-operator
+    LAST DEPLOYED: Thu Mar 23 08:42:42 2023
+    NAMESPACE: zookeeper
+    STATUS: deployed
+    REVISION: 1
+    TEST SUITE: None
+    USER-SUPPLIED VALUES:
+    {}
+
+    COMPUTED VALUES:
+    # ...
+
+    ```
+
+1. Verify that zookeeper-operator has been deployed and is in running state.
+
+    ```bash
+    kubectl get pods --namespace zookeeper
+    ```
+
+    Expected output:
+
+    ```bash
+    NAME                                  READY   STATUS    RESTARTS   AGE
+    zookeeper-operator-5857967dcc-gm5l5   1/1     Running   0          3m22s
+    ```
 
 ### Deploy a Zookeeper cluster for Kafka {#deploy-a-zookeeper-cluster-for-kafka}
 
@@ -98,7 +186,7 @@ Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper clu
 
     {{< include-code "create-zookeeper.sample" "bash" >}}
 
-1. Verify that Zookeeper has been deployed.
+1. Verify that Zookeeper has been deployed and is in running state with the configured number of replicas.
 
     ```bash
     kubectl get pods -n zookeeper
@@ -114,20 +202,18 @@ Kafka requires [Zookeeper](https://zookeeper.apache.org). Deploy a Zookeeper clu
 
 ### Install prometheus-operator with Helm {#install-prometheus-operator-with-helm}
 
-Install the [Prometheus operator](https://github.com/prometheus-operator/prometheus-operator) and its CustomResourceDefinitions to the `default` namespace.
+{{< kafka-operator >}} uses [Prometheus](https://prometheus.io/) for exporting metrics of the Kafka cluster. It is recommended to deploy a Prometheus instance if you don't one yet.
 
-    Add the prometheus repository to Helm:
-
-    ```bash
-    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-    helm repo update
-
-    ```
-
-    Install only the Prometheus-operator:
+1. Install the [Prometheus operator](https://github.com/prometheus-operator/prometheus-operator) and its CustomResourceDefinitions to the `prometheus` namespace.
 
     ```bash
-    helm install prometheus --namespace default prometheus-community/kube-prometheus-stack \
+    helm install prometheus \
+    --repo https://prometheus-community.github.io/helm-charts kube-prometheus-stack \
+    --version 42.0.1 \
+    --namespace prometheus \
+    --create-namespace \
+    --atomic \
+    --debug \
     --set prometheusOperator.createCustomResource=true \
     --set defaultRules.enabled=false \
     --set alertmanager.enabled=false \
@@ -144,68 +230,172 @@ Install the [Prometheus operator](https://github.com/prometheus-operator/prometh
     --set prometheus.enabled=false
     ```
 
+    Expected output:
+
+    ```bash
+    install.go:194: [debug] Original chart version: "45.7.1"
+    install.go:211: [debug] CHART PATH: /Users/pregnor/.cache/helm/repository/kube-prometheus-stack-45.7.1.tgz
+
+    # ...
+    NAME: prometheus
+    LAST DEPLOYED: Thu Mar 23 09:28:29 2023
+    NAMESPACE: prometheus
+    STATUS: deployed
+    REVISION: 1
+    TEST SUITE: None
+    USER-SUPPLIED VALUES:
+    # ...
+
+    COMPUTED VALUES:
+    # ...
+    NOTES:
+    kube-prometheus-stack has been installed. Check its status by running:
+        kubectl --namespace prometheus get pods -l "release=prometheus"
+
+    Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
+    ```
+
+1. Verify that prometheus-operator has been deployed and is in running state.
+
+    ```bash
+    kubectl get pods -n prometheus
+    ```
+
+    Expected output:
+
+    ```bash
+    NAME                                                   READY   STATUS    RESTARTS   AGE
+    prometheus-kube-prometheus-operator-646d5fd7d5-s72jn   1/1     Running   0          15m
+    ```
+
 ### Install {{< kafka-operator >}} with Helm {#install-kafka-operator-with-helm}
 
-You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/banzaicloud/koperator/tree/master/charts). Complete the following steps.
+{{< kafka-operator >}} can be deployed using its [Helm chart](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/charts).
 
 1. Install the {{< kafka-operator >}} CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install). This is performed in a separate step to allow you to uninstall and reinstall {{< kafka-operator >}} without deleting your installed custom resources.
 
     ```bash
-    kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/kafka-operator.crds.yaml
+    kubectl create \
+    --validate=false \
+    -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/kafka-operator.crds.yaml
     ```
 
-1. Add the Banzai Cloud repository to Helm.
+    Expected output:
 
     ```bash
-    helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
-    helm repo update
+    customresourcedefinition.apiextensions.k8s.io/cruisecontroloperations.kafka.banzaicloud.io created
+    customresourcedefinition.apiextensions.k8s.io/kafkaclusters.kafka.banzaicloud.io created
+    customresourcedefinition.apiextensions.k8s.io/kafkatopics.kafka.banzaicloud.io created
+    customresourcedefinition.apiextensions.k8s.io/kafkausers.kafka.banzaicloud.io created
     ```
 
 1. Install {{< kafka-operator >}} into the *kafka* namespace:
 
     ```bash
-    helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
+    helm install \
+    kafka-operator \
+    --repo https://kubernetes-charts.banzaicloud.com kafka-operator \
+    --version {{< param "versionnumbers-sdm.koperatorCurrentversion" >}}
+    --namespace=kafka \
+    --create-namespace \
+    --atomic \
+    --debug
     ```
 
-1. If you are installing {{< kafka-operator >}} on Red Hat OpenShift, set the following permissions.
+    Expected output:
 
-    - Allow {{< kafka-operator >}} components to run as any uid:
+    ```bash
+    install.go:194: [debug] Original chart version: ""
+    install.go:211: [debug] CHART PATH: /Users/pregnor/development/src/github.com/banzaicloud/koperator/kafka-operator-{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}.tgz
 
-        ```bash
-        oc adm policy add-scc-to-group anyuid system:serviceaccounts:kafka
-        ```
+    # ...
+    NAME: kafka-operator
+    LAST DEPLOYED: Thu Mar 23 10:05:11 2023
+    NAMESPACE: kafka
+    STATUS: deployed
+    REVISION: 1
+    TEST SUITE: None
+    USER-SUPPLIED VALUES:
+    # ...
+    ```
 
-    - If the Kafka cluster runs in a different namespace than {{< kafka-operator >}}, set this permission also to the `ServiceAccountName` you use for your Kafka cluster brokers provided in the KafkaCluster custom resource.
+1. Verify that koperator has been deployed and is in running state.
 
-        ```bash
-        oc adm policy add-scc-to-user anyuid system:serviceaccount:{NAMESPACE_FOR_SERVICE_ACCOUNT}:{KAKFA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
-        ```
+    ```bash
+    kubectl get pods -n kafka
+    ```
+
+    Expected output:
+
+    ```bash
+    NAME                                       READY   STATUS    RESTARTS   AGE
+    kafka-operator-operator-8458b45587-286f9   2/2     Running   0          62s
+    ```
 
 ### Deploy a Kafka cluster {#deploy-a-kafka-cluster}
 
-1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/master/config/samples).
+1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples).
 
     {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
 
     - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
 
-        ```bash
-        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster.yaml
-        ```
+    ```bash
+    kubectl create \
+    -n kafka \
+    -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster.yaml
+    ```
 
     - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" %}}.
 
-        ```bash
-        kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/simplekafkacluster_ssl.yaml
-        ```
-
-1. If you have installed the Prometheus operator, create the ServiceMonitors. Prometheus will be installed and configured properly for {{< kafka-operator >}}.
-
     ```bash
-    kubectl create -n kafka -f https://raw.githubusercontent.com/banzaicloud/koperator/master/config/samples/kafkacluster-prometheus.yaml
+    kubectl create \
+    -n kafka \
+    -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster_ssl.yaml
     ```
 
-1. Verify that the Kafka cluster has been created.
+    Expected output:
+
+    ```bash
+    kafkacluster.kafka.banzaicloud.io/kafka created
+    ```
+1. Wait and verify that the Kafka cluster resources have been deployed and are in running state.
+
+    ```bash
+    kubectl get pods -n kafka
+    ```
+
+    Expected output:
+
+    ```bash
+    kafka-0-9brj4                              1/1     Running   0          94s
+    kafka-1-c2spf                              1/1     Running   0          93s
+    kafka-2-p6sg2                              1/1     Running   0          92s
+    kafka-cruisecontrol-776f49fdbb-rjhp8       1/1     Running   0          51s
+    kafka-operator-operator-7d47f65d86-2mx6b   2/2     Running   0          13m
+    ```
+
+1. If prometheus-operator is deployed, create a Prometheus instance and corresponding ServiceMonitors for {{< kafka-operator >}}.
+
+    ```bash
+    kubectl create \
+    -n kafka \
+    -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/kafkacluster-prometheus.yaml
+    ```
+
+    Expected output:
+
+    ```bash
+    clusterrole.rbac.authorization.k8s.io/prometheus created
+    clusterrolebinding.rbac.authorization.k8s.io/prometheus created
+    prometheus.monitoring.coreos.com/kafka-prometheus created
+    prometheusrule.monitoring.coreos.com/kafka-alerts created
+    serviceaccount/prometheus created
+    servicemonitor.monitoring.coreos.com/cruisecontrol-servicemonitor created
+    servicemonitor.monitoring.coreos.com/kafka-servicemonitor created
+    ```
+
+1. Wait and verify that the Kafka cluster Prometheus instance has been deployed and is in running state.
 
     ```bash
     kubectl get pods -n kafka
@@ -220,7 +410,7 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
     kafka-2-lppzr                             1/1     Running   0          15m
     kafka-cruisecontrol-fb659b84b-7cwpn       1/1     Running   0          15m
     kafka-operator-operator-8bb75c7fb-7w4lh   2/2     Running   0          17m
-    prometheus-kafka-prometheus-0             2/2     Running   1          16m
+    prometheus-kafka-prometheus-0             2/2     Running   0          16m
     ```
 
 ## Test your deployment {#test-your-deployment}
