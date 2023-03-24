@@ -4,14 +4,15 @@ shorttitle: Install
 weight: 10
 ---
 
+The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
-
-The operator installs version 3.1.0 of Apache Kafka, and can run on Minikube v0.33.1+ and Kubernetes 1.21-1.24 and RedHat OpenShift 4.10-4.11.
+- Minikube v0.33.1+,
+- Kubernetes 1.21-1.24, and
+- Red Hat OpenShift 4.10-4.11.
 
 > The operator supports Kafka 2.6.2-3.1.x.
 
 {{< include-headless "warning-ebs-csi-driver.md" "supertubes/kafka-operator" >}}
-
 
 ## Prerequisites
 
@@ -42,12 +43,13 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 {{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers and cert-manager is required for TLS-encrypted client connections. It is recommended to deploy and configure a cert-manager instance if there is none in your environment yet.
 
 > Note:
-> - {{< kafka-operator >}} 0.24.0 and newer versions support cert-manager 1.10.0+ (which is a requirement for RedHat OpenShift)
+> - {{< kafka-operator >}} 0.24.0 and newer versions support cert-manager 1.10.0+ (which is a requirement for Red Hat OpenShift)
 > - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3-1.9.x
 > - {{< kafka-operator >}} 0.8.x-0.17.0 supports cert-manager 1.3.x
 
 1. Install cert-manager's CustomResourceDefinitions.
 
+    ```bash
     kubectl apply \
     --validate=false \
     -f https://github.com/jetstack/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml
@@ -64,9 +66,9 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     customresourcedefinition.apiextensions.k8s.io/orders.acme.cert-manager.io created
     ```
 
-1. If cert-manager is being installed on a RedHat OpenShift cluster of version **4.10** the default security computing profile must be enabled for cert-manager to work.
+1. If you are installing cert-manager on a Red Hat OpenShift version **4.10** cluster, the default security computing profile must be enabled for cert-manager to work.
 
-    1. Create a new `SecurityContextConstraint` object named `restricted-seccomp` which will be a copy of the OpenShift built-in `restricted` `SecurityContextConstraint`, but will also allow the `runtime/default` / `RuntimeDefault` security computing profile [according to the OpenShift documentation]](https://docs.openshift.com/container-platform/4.10/security/seccomp-profiles.html#configuring-default-seccomp-profile_configuring-seccomp-profiles).
+    1. Create a new `SecurityContextConstraint` object named `restricted-seccomp` which will be a copy of the OpenShift built-in `restricted` `SecurityContextConstraint`, but will also allow the `runtime/default` / `RuntimeDefault` security computing profile [according to the OpenShift documentation](https://docs.openshift.com/container-platform/4.10/security/seccomp-profiles.html#configuring-default-seccomp-profile_configuring-seccomp-profiles).
 
         ```bash
         oc create -f - <<EOF
@@ -125,15 +127,15 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
         securitycontextconstraints.security.openshift.io/restricted-seccomp created
         ```
 
-    1. Then the permissions of the namespace containing the cert-manager service account must be elevated.
+    1. Elevate the permissions of the namespace containing the cert-manager service account.
 
-        - Using the default `cert-manager` namespace.
+        - Using the default `cert-manager` namespace:
 
             ```bash
             oc adm policy add-scc-to-group restricted-seccomp system:serviceaccounts:cert-manager
             ```
 
-        - Using a custom namespace for cert-manager.
+        - Using a custom namespace for cert-manager:
 
             ```bash
             oc adm policy add-scc-to-group anyuid system:serviceaccounts:{NAMESPACE_FOR_CERT_MANAGER_SERVICE_ACCOUNT}
@@ -211,19 +213,22 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 ### Install zookeeper-operator with Helm {#install-zookeeper-operator-with-helm}
 
-{{< kafka-operator >}} requires [Zookeeper](https://zookeeper.apache.org) for Kafka operations. It is required to deploy zookeeper-operator if your environment doesn't have an instance of it yet and it is also required to create a Zookeeper cluster if there is none in your environment yet for your Kafka cluster.
+{{< kafka-operator >}} requires [Zookeeper](https://zookeeper.apache.org) for Kafka operations. You must:
+
+- Deploy zookeeper-operator if your environment doesn't have an instance of it yet.
+- Create a Zookeeper cluster if there is none in your environment yet for your Kafka cluster.
 
 > Note: It is recommended to create a separate Zookeeper deployment for each Kafka cluster. To share the same Zookeeper cluster across multiple Kafka cluster instances, use a unique zk path in the KafkaCluster CR to avoid conflicts (even with previous defunct KafkaCluster instances).
 
-1. If zookeeper-operator is being installed on a Red Hat OpenShift cluster, the permissions of the namespace containing the Zookeeper service account must be elevated.
+1. If you are installing zookeeper-operator on a Red Hat OpenShift cluster, elevate the permissions of the namespace containing the Zookeeper service account.
 
-    - Using the default `zookeeper` namespace.
+    - Using the default `zookeeper` namespace:
 
         ```bash
         oc adm policy add-scc-to-group anyuid system:serviceaccounts:zookeeper
         ```
 
-    - Using a custom namespace for Zookeeper.
+    - Using a custom namespace for Zookeeper:
 
         ```bash
         oc adm policy add-scc-to-group anyuid system:serviceaccounts:{NAMESPACE_FOR_ZOOKEEPER_SERVICE_ACCOUNT}
@@ -304,9 +309,9 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 ### Install prometheus-operator with Helm {#install-prometheus-operator-with-helm}
 
-{{< kafka-operator >}} uses [Prometheus](https://prometheus.io/) for exporting metrics of the Kafka cluster. It is recommended to deploy a Prometheus instance if you don't one yet.
+{{< kafka-operator >}} uses [Prometheus](https://prometheus.io/) for exporting metrics of the Kafka cluster. It is recommended to deploy a Prometheus instance if you don't already have one.
 
-1. If prometheus-operator is being installed on a RedHat OpenShift cluster of version **4.10** a `SecurityContextConstraints` object `nonroot-v2` with the following configuration needs to be created for Prometheus admission and operator service accounts to work.
+1. If you are installing prometheus-operator on a Red Hat OpenShift version **4.10** cluster, create a `SecurityContextConstraints` object `nonroot-v2` with the following configuration for Prometheus admission and operator service accounts to work.
 
     ```bash
     oc create -f - <<EOF
@@ -361,11 +366,11 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     securitycontextconstraints.security.openshift.io/nonroot-v2 created
     ```
 
-1. If prometheus-operator is being installed on a Red Hat OpenShift cluster, the permissions of the Prometheus service accounts must be elevated.
+1. If you are installing prometheus-operator on a Red Hat OpenShift cluster, elevate the permissions of the Prometheus service accounts.
 
     > Note: OpenShift doesn't let you install Prometheus in the `default` namespace due to security considerations.
 
-    - Using the default `prometheus` namespace.
+    - Using the default `prometheus` namespace:
 
         ```bash
         oc adm policy add-scc-to-user nonroot-v2 system:serviceaccount:prometheus:prometheus-kube-prometheus-admission
@@ -374,7 +379,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
         oc adm policy add-scc-to-user node-exporter system:serviceaccount:prometheus:prometheus-operator-prometheus-node-exporter
         ```
 
-    - Using a custom namespace or service account name for Prometheus.
+    - Using a custom namespace or service account name for Prometheus:
 
         ```bash
         oc adm policy add-scc-to-user nonroot-v2 system:serviceaccount:{NAMESPACE_FOR_PROMETHEUS}:{PROMETHEUS_ADMISSION_SERVICE_ACCOUNT_NAME}
@@ -392,9 +397,9 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     clusterrole.rbac.authorization.k8s.io/system:openshift:scc:node-exporter added: "{PROMETHEUS_NODE_EXPORTER_SERVICE_ACCOUNT_NAME}"
     ```
 
-1. Install the [Prometheus operator](https://github.com/prometheus-operator/prometheus-operator) and its CustomResourceDefinitions to the `prometheus` namespace.
+1. Install the [Prometheus operator](https://github.com/prometheus-operator/prometheus-operator) and its CustomResourceDefinitions into the `prometheus` namespace.
 
-    -  On an OpenShift cluster.
+    - On an OpenShift cluster:
 
         ```bash
         helm install \
@@ -429,7 +434,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
         --set prometheusOperator.admissionWebhooks.patchWebhookJob.securityContext.seccompProfile.type=RuntimeDefault
         ```
 
-    - On a regular Kubernetes cluster.
+    - On a regular Kubernetes cluster:
 
         ```bash
         helm install prometheus \
@@ -514,17 +519,17 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     customresourcedefinition.apiextensions.k8s.io/kafkausers.kafka.banzaicloud.io created
     ```
 
-1. If {{< kafka-operator >}} is being installed on a Red Hat OpenShift cluster:
+1. If you are installing {{< kafka-operator >}} on a Red Hat OpenShift cluster:
 
-    1. The permissions of the Koperator namespace must be elevated.
+    1. Elevate the permissions of the Koperator namespace.
 
-        - Using the default `kafka` namespace.
+        - Using the default `kafka` namespace:
 
             ```bash
             oc adm policy add-scc-to-group anyuid system:serviceaccounts:kafka
             ```
 
-        - Using a custom namespace for Koperator.
+        - Using a custom namespace for Koperator:
 
             ```bash
             oc adm policy add-scc-to-group anyuid system:serviceaccounts:{NAMESPACE_FOR_KOPERATOR}
@@ -536,7 +541,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
         clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "system:serviceaccounts:{NAMESPACE_FOR_KOPERATOR}"
         ```
 
-    1. If the Kafka cluster is going to run in a different namespace than {{< kafka-operator >}}, the permissions of the Kafka cluster broker service account (`ServiceAccountName` provided in the KafkaCluster custom resource) must be elevated.
+    1. If the Kafka cluster is going to run in a different namespace than {{< kafka-operator >}}, elevate the permissions of the Kafka cluster broker service account (`ServiceAccountName` provided in the KafkaCluster custom resource).
 
         ```bash
         oc adm policy add-scc-to-user anyuid system:serviceaccount:{NAMESPACE_FOR_KAFKA_CLUSTER_BROKER_SERVICE_ACCOUNT}:{KAFKA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
@@ -578,7 +583,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     # ...
     ```
 
-1. Verify that koperator has been deployed and is in running state.
+1. Verify that Koperator has been deployed and is in running state.
 
     ```bash
     kubectl get pods -n kafka
@@ -593,31 +598,32 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 ### Deploy a Kafka cluster {#deploy-a-kafka-cluster}
 
-1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples).
+1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in {{% xref "/docs/supertubes/kafka-operator/configurations/kafkacluster/_index.md" %}} and in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples).
 
     {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
 
     - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
 
-    ```bash
-    kubectl create \
-    -n kafka \
-    -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster.yaml
-    ```
+        ```bash
+        kubectl create \
+        -n kafka \
+        -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster.yaml
+        ```
 
     - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" %}}.
 
-    ```bash
-    kubectl create \
-    -n kafka \
-    -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster_ssl.yaml
-    ```
+        ```bash
+        kubectl create \
+        -n kafka \
+        -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster_ssl.yaml
+        ```
 
     Expected output:
 
     ```bash
     kafkacluster.kafka.banzaicloud.io/kafka created
     ```
+
 1. Wait and verify that the Kafka cluster resources have been deployed and are in running state.
 
     ```bash
