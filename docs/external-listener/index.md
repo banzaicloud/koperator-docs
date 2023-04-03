@@ -68,6 +68,22 @@ To configure an external listener that uses the LoadBalancer access method, comp
 
     - To use Envoy, set the `ingressController` field in the `KafkaCluster` custom resource to `envoy`. For an example, [see](https://github.com/banzaicloud/koperator/blob/672b19d49e5c0a22f9658181003beddb56f17d33/config/samples/banzaicloud_v1beta1_kafkacluster.yaml#L12).
 
+      For OpenShift:
+
+      ```yaml
+      spec:
+        # ...
+        envoyConfig:
+          podSecurityContext:
+            runAsGroup: 19090
+            runAsUser: 19090
+        # ...
+        ingressController: "envoy"
+        # ...
+      ```
+
+      For Kubernetes:
+
       ```yaml
       spec:
         ingressController: "envoy"
