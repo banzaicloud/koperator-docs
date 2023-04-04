@@ -14,6 +14,12 @@ Topic creation by default is enabled in Apache Kafka, but if it is configured ot
 
     > Note: The previous command will fail if the cluster has not finished provisioning.
 
+    Expected output:
+
+    ```bash
+    kafkatopic.kafka.banzaicloud.io/my-topic created
+    ```
+
 - To create a sample topic from the CLI you can run the following:
 
     ```bash
@@ -31,19 +37,100 @@ You can use the following commands to send and receive messages within a Kuberne
 
 - Produce messages:
 
-    ```bash
-    kubectl -n kafka run kafka-producer -it --image=ghcr.io/banzaicloud/kafka:2.13-3.1.0 --rm=true --restart=Never -- /opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka-headless:29092 --topic my-topic
-    ```
+    1. Start the producer container
 
-    And type some test messages.
+        ```bash
+        kubectl run \
+        -n kafka \
+        kafka-producer \
+        -it \
+        --image=ghcr.io/banzaicloud/kafka:2.13-3.1.0 \
+        --rm=true \
+        --restart=Never \
+        -- \
+        /opt/kafka/bin/kafka-console-producer.sh \
+        --bootstrap-server kafka-headless:29092 \
+        --topic my-topic
+        ```
+
+    1. Wait for the producer container to run, this may take a couple seconds.
+
+        Expected output:
+
+        ```bash
+        If you don't see a command prompt, try pressing enter.
+        ```
+
+    1. Press enter to get a command prompt.
+
+        Expected output:
+
+        ```bash
+        >
+        ```
+
+    1. Type your messages and press enter, each line will be sent through Kafka.
+
+        Example:
+
+        ```bash
+        > test
+        > message
+        >
+
+    1. Stop the container. (You can CTRL-D out of it.)
+
+        Expected output:
+
+        ```bash
+        pod "kafka-producer" deleted
+        ```
 
 - Consume messages:
 
-    ```bash
-    kubectl -n kafka run kafka-consumer -it --image=ghcr.io/banzaicloud/kafka:2.13-3.1.0 --rm=true --restart=Never -- /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-headless:29092 --topic my-topic --from-beginning
-    ```
+    1. Start the consumer container.
 
-    You should see the messages you have created.
+        ```bash
+        kubectl run \
+        -n kafka \
+        kafka-consumer \
+        -it \
+        --image=ghcr.io/banzaicloud/kafka:2.13-3.1.0 \
+        --rm=true \
+        --restart=Never \
+        -- \
+        /opt/kafka/bin/kafka-console-consumer.sh \
+        --bootstrap-server kafka-headless:29092 \
+        --topic my-topic \
+        --from-beginning
+        ```
+
+    1. Wait for the consumer container to run, this may take a couple seconds.
+
+        Expected output:
+
+        ```bash
+        If you don't see a command prompt, try pressing enter.
+        ```
+
+    1. The messages sent by the producer should be displayed here.
+
+        Example:
+
+        ```bash
+        test
+        message
+        ```
+
+    1. Stop the container. (You can CTRL-C out of it.)
+
+        Expected output:
+
+        ```bash
+        Processed a total of 3 messages
+        pod "kafka-consumer" deleted
+        pod kafka/kafka-consumer terminated (Error)
+        ```
 
 ## Send and receive messages with SSL within a cluster {#internal-ssl}
 
