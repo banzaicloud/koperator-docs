@@ -160,6 +160,32 @@ To configure an external listener that uses the NodePort access method, complete
 
 ### NodePort external IP
 
+The node IP of the node where the broker pod is scheduled will be used in the advertised.listeners broker configuration when the `nodePortNodeAddressType` is specified.  
+Its value determines which IP or domain name of the Kubernetes node will be used, the possible values are: Hostname, ExternalIP, InternalIP, InternalDNS and ExternalDNS.  
+The hostNameOverride and nodePortExternalIP must not be specified in this case.
+
+```yaml
+brokers:
+- id: 0
+  brokerConfig:
+    nodePortNodeAddressType: ExternalIP
+- id: 1
+  brokerConfig:
+    nodePortNodeAddressType: ExternalIP
+- id: 2
+  brokerConfig:
+    nodePortNodeAddressType: ExternalIP
+```
+
+If *hostnameOverride* and *nodePortExternalIP* fields are not set, then broker address is advertised as follows:
+
+- broker 0:
+  - advertised.listeners=EXTERNAL1://16.171.47.211:9094
+- broker 1:
+  - advertised.listeners=EXTERNAL1://16.16.66.201:9094
+- broker 2:
+  - advertised.listeners=EXTERNAL1://16.170.214.51:9094
+
 Kafka brokers can be made accessible on external IPs that are not node IP, but can route into the Kubernetes cluster. These external IPs can be set for each broker in the KafkaCluster custom resource as in the following example:
 
 ```yaml
@@ -196,7 +222,7 @@ If both *hostnameOverride* and *nodePortExternalIP* fields are set:
 - broker 2:
   - advertised.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:9094
 
-> Note: If *nodePortExternalIP* is set, then the *containerPort* from the external listener config is used as a broker port, and is the same for each broker.
+> Note: If *nodePortExternalIP* or *nodePortNodeAddressType* is set, then the *containerPort* from the external listener config is used as a broker port, and is the same for each broker.
 
 ## SASL authentication on external listeners {#sasl}
 
