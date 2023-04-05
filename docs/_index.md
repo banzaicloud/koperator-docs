@@ -6,7 +6,7 @@ cascade:
   module: kafka-operator
   githubEditUrl: "https://github.com/banzaicloud/koperator-docs/edit/master/docs/"
   operatorName: "Koperator"
-  versionnumbers-sdm.koperatorCurrentversion: "0.22.0"
+  versionnumbers-sdm.koperatorCurrentversion: "0.24.0"
 ---
 
 The {{< kafka-operator >}} (formerly called Banzai Cloud Kafka Operator) is a Kubernetes operator to automate provisioning, management, autoscaling and operations of [Apache Kafka](https://kafka.apache.org) clusters deployed to K8s.
