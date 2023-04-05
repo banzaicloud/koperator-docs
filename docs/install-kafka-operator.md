@@ -22,7 +22,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
 ## Install {{< kafka-operator >}} and all requirements using Supertubes
 
-This method uses a command-line tool of the commercial [Banzai Cloud Supertubes](/products/supertubes/) product to install the {{< kafka-operator >}} and its prerequisites. If you'd prefer to install these components manually, see [Install {{< kafka-operator >}} and the requirements independently](#manual-install).
+This method uses a command-line tool of the commercial [Banzai Cloud Supertubes](/products/supertubes/) product to install the {{< kafka-operator >}} and its prerequisites. If you'd prefer to install these components manually, see [Install {{< kafka-operator >}} and the requirements independently](#install-kafka-operator-and-its-requirements-independently).
 
 1. [Register for an evaluation version of Supertubes](/products/try-supertubes/).
 
