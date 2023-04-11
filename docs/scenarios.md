@@ -5,7 +5,7 @@ weight: 400
 
 
 
-As highlighted in the [features section](../features/), we removed the reliance on StatefulSet, we support several different scenarios.
+As highlighted in the [features section]({{< relref "../_index.md#features" >}}), we removed the reliance on StatefulSet, we support several different scenarios.
 
 > Note: this is not a complete list, if you have a specific requirement or question, [contact us](mailto:calisti-support@cisco.com).
 
