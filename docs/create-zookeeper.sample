@@ -5,7 +5,7 @@ metadata:
     name: zookeeper
     namespace: zookeeper
 spec:
-    replicas: 1
+    replicas: 3
     persistence:
         reclaimPolicy: Delete
 EOF
