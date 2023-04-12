@@ -8,7 +8,7 @@ weight: 100
 
 Topic creation by default is enabled in Apache Kafka, but if it is configured otherwise, you'll need to create a topic first.
 
-- You can use the `KafkaTopic` CRD to create a topic called **my-topic** like this:
+- You can use the `KafkaTopic` CR to create a topic called **my-topic** like this:
 
     {{< include-code "create-topic.sample" "yaml" >}}
 
