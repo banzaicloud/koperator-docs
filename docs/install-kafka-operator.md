@@ -76,9 +76,7 @@ Kafka requires [Apache ZooKeeper](https://zookeeper.apache.org). Deploy a ZooKee
 1. Install ZooKeeper using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
 
     ```bash
-    helm repo add pravega https://charts.pravega.io
-    helm repo update
-    helm install zookeeper-operator --namespace=zookeeper --create-namespace pravega/zookeeper-operator
+    helm install zookeeper-operator --repo https://charts.pravega.io --namespace=zookeeper --create-namespace pravega/zookeeper-operator
     ```
 
 1. Create a ZooKeeper cluster.
