@@ -18,7 +18,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
 - A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). Red Hat OpenShift is also supported in {{< kafka-operator >}} version 0.24 and newer, but note that it needs some permissions for certain components to function.
 
-> We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Zookeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Banzai Cloud Supertubes](/products/supertubes/).
+> We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Apache ZooKeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://calisti.app).
 
 ## Install {{< kafka-operator >}} and all requirements using Supertubes
 
@@ -213,12 +213,12 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 ### Install zookeeper-operator with Helm {#install-zookeeper-operator-with-helm}
 
-{{< kafka-operator >}} requires [Zookeeper](https://zookeeper.apache.org) for Kafka operations. You must:
+{{< kafka-operator >}} requires [Apache Zookeeper](https://zookeeper.apache.org) for Kafka operations. You must:
 
 - Deploy zookeeper-operator if your environment doesn't have an instance of it yet.
 - Create a Zookeeper cluster if there is none in your environment yet for your Kafka cluster.
 
-> Note: It is recommended to create a separate Zookeeper deployment for each Kafka cluster. To share the same Zookeeper cluster across multiple Kafka cluster instances, use a unique zk path in the KafkaCluster CR to avoid conflicts (even with previous defunct KafkaCluster instances).
+> Note: You are recommended to create a separate ZooKeeper deployment for each Kafka cluster. If you want to share the same ZooKeeper cluster across multiple Kafka cluster instances, use a unique zk path in the KafkaCluster CR to avoid conflicts (even with previous defunct KafkaCluster instances).
 
 1. If you are installing zookeeper-operator on a Red Hat OpenShift cluster, elevate the permissions of the namespace containing the Zookeeper service account.
 
@@ -240,7 +240,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "system:serviceaccounts:{NAMESPACE_FOR_ZOOKEEPER_SERVICE_ACCOUNT}"
     ```
 
-1. Install Zookeeper using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
+1. Install ZooKeeper using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
 
     ```bash
     helm install \
