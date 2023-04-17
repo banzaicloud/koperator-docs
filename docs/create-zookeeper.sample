@@ -1,4 +1,4 @@
-kubectl create --namespace zookeeper -f - <<EOF
+kubectl create -f - <<EOF
 apiVersion: zookeeper.pravega.io/v1beta1
 kind: ZookeeperCluster
 metadata:
