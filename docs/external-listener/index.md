@@ -68,8 +68,41 @@ To configure an external listener that uses the LoadBalancer access method, comp
 
     The ingress controllers that are currently supported are:
 
-    -  envoy: uses Envoy Proxy as an ingress controller.
-    -  istioingress: uses Istio Gateway as an ingress controller. This is the default controller for Kafka clusters provisioned with [Streaming Data Manager](/docs/overview/), since those clusters run inside an Istio mesh.
+    - `envoy`: uses Envoy proxy as an ingress.
+    - `istioingress`: uses Istio proxy gateway as an ingress. Istio ingress is the default controller for Kafka clusters provisioned with [SDM](/sdm/overview/), since those clusters run inside an Istio mesh.
+
+    - To use Envoy, set the `ingressController` field in the `KafkaCluster` custom resource to `envoy`. For an example, [see](https://github.com/banzaicloud/koperator/blob/672b19d49e5c0a22f9658181003beddb56f17d33/config/samples/banzaicloud_v1beta1_kafkacluster.yaml#L12).
+
+      For OpenShift:
+
+      ```yaml
+      spec:
+        # ...
+        envoyConfig:
+          podSecurityContext:
+            runAsGroup: 19090
+            runAsUser: 19090
+        # ...
+        ingressController: "envoy"
+        # ...
+      ```
+
+      For Kubernetes:
+
+      ```yaml
+      spec:
+        ingressController: "envoy"
+      ```
+
+    - To use Istio ingress controller, set the `ingressController` field to `istioingress`. [Istio operator](https://github.com/banzaicloud/istio-operator) v2 is supported from Koperator version 0.21.0+. Istio operator v2 supports multiple Istio control plane on the same cluster, that is why the corresponding control plane to the gateway must be specified. The `istioControlPlane` field in the `KafkaCluster` custom resource is a reference to that IstioControlPlane resource. For an example, [see](https://github.com/banzaicloud/koperator/blob/672b19d49e5c0a22f9658181003beddb56f17d33/config/samples/kafkacluster-with-istio.yaml#L10).
+
+      ```yaml
+      spec:
+        ingressController: "istioingress"
+        istioControlPlane:
+          name: <name of the IstioControlPlane custom resource>
+          namespace: <namespace of the IstioControlPlane custom resource>
+      ```
 
 1. Configure additional parameters for the ingress controller as needed for your environment, for example, number of replicas, resource requirements and resource limits. You can be configure such parameters using the *envoyConfig* and *istioIngressConfig* fields, respectively.
 1. (Optional) For external access through a static URL instead of the load balancer's public IP, specify the URL in the `hostnameOverride` field of the external listener that resolves to the public IP of the load balancer. The broker address will be advertised as, `advertised.listeners=EXTERNAL1://kafka-1.dev.my.domain:<broker port number>`.
