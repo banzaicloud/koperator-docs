@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting the operator
 linktitle: Troubleshooting
-weight: 400
+weight: 980
 ---
 
 The following tips and commands can help you to troubleshoot your {{< kafka-operator >}} installation.
@@ -187,7 +187,7 @@ status:
 
 If you encounter any problems that the documentation does not address, [file an issue](https://github.com/banzaicloud/koperator/issues) or talk to us on our Slack channel [#kafka-operator](https://banzaicloud.com/invite-slack).
 
-[Commercial support]({{< relref "/sdm/koperator/support.md">}}) is also available for {{< kafka-operator >}}.
+Various [support]({{< relref "/sdm/koperator/support.md">}}) channels are also available for {{< kafka-operator >}}.
 
 Before asking for help, prepare the following information to make troubleshooting faster:
 
