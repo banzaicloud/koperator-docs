@@ -76,7 +76,7 @@ Kafka requires [Apache ZooKeeper](https://zookeeper.apache.org). Deploy a ZooKee
 1. Install ZooKeeper using the [Pravega's Zookeeper Operator](https://github.com/pravega/zookeeper-operator).
 
     ```bash
-    helm install zookeeper-operator --repo https://charts.pravega.io --namespace=zookeeper --create-namespace pravega/zookeeper-operator
+    helm install zookeeper-operator --repo https://charts.pravega.io zookeeper-operator --namespace=zookeeper --create-namespace
     ```
 
 1. Create a ZooKeeper cluster.
@@ -147,17 +147,10 @@ You can deploy {{< kafka-operator >}} using a [Helm chart](https://github.com/ba
     kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/kafka-operator.crds.yaml
     ```
 
-1. Add the following repository to Helm.
-
-    ```bash
-    helm repo add banzaicloud-stable https://kubernetes-charts.banzaicloud.com/
-    helm repo update
-    ```
-
 1. Install {{< kafka-operator >}} into the *kafka* namespace:
 
     ```bash
-    helm install kafka-operator --namespace=kafka --create-namespace banzaicloud-stable/kafka-operator
+    helm install kafka-operator --repo https://kubernetes-charts.banzaicloud.com kafka-operator --namespace=kafka --create-namespace
     ```
 
 1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/master/config/samples).
