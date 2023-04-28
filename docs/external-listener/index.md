@@ -68,8 +68,41 @@ To configure an external listener that uses the LoadBalancer access method, comp
 
     The ingress controllers that are currently supported are:
 
-    -  envoy: uses Envoy Proxy as an ingress controller.
-    -  istioingress: uses Istio Gateway as an ingress controller. This is the default controller for Kafka clusters provisioned with [Streaming Data Manager](/docs/overview/), since those clusters run inside an Istio mesh.
+    - `envoy`: uses Envoy proxy as an ingress.
+    - `istioingress`: uses Istio proxy gateway as an ingress. Istio ingress is the default controller for Kafka clusters provisioned with [SDM](/sdm/overview/), since those clusters run inside an Istio mesh.
+
+    - To use Envoy, set the `ingressController` field in the `KafkaCluster` custom resource to `envoy`. For an example, [see](https://github.com/banzaicloud/koperator/blob/672b19d49e5c0a22f9658181003beddb56f17d33/config/samples/banzaicloud_v1beta1_kafkacluster.yaml#L12).
+
+      For OpenShift:
+
+      ```yaml
+      spec:
+        # ...
+        envoyConfig:
+          podSecurityContext:
+            runAsGroup: 19090
+            runAsUser: 19090
+        # ...
+        ingressController: "envoy"
+        # ...
+      ```
+
+      For Kubernetes:
+
+      ```yaml
+      spec:
+        ingressController: "envoy"
+      ```
+
+    - To use Istio ingress controller, set the `ingressController` field to `istioingress`. [Istio operator](https://github.com/banzaicloud/istio-operator) v2 is supported from Koperator version 0.21.0+. Istio operator v2 supports multiple Istio control plane on the same cluster, that is why the corresponding control plane to the gateway must be specified. The `istioControlPlane` field in the `KafkaCluster` custom resource is a reference to that IstioControlPlane resource. For an example, [see](https://github.com/banzaicloud/koperator/blob/672b19d49e5c0a22f9658181003beddb56f17d33/config/samples/kafkacluster-with-istio.yaml#L10).
+
+      ```yaml
+      spec:
+        ingressController: "istioingress"
+        istioControlPlane:
+          name: <name of the IstioControlPlane custom resource>
+          namespace: <namespace of the IstioControlPlane custom resource>
+      ```
 
 1. Configure additional parameters for the ingress controller as needed for your environment, for example, number of replicas, resource requirements and resource limits. You can be configure such parameters using the *envoyConfig* and *istioIngressConfig* fields, respectively.
 1. (Optional) For external access through a static URL instead of the load balancer's public IP, specify the URL in the `hostnameOverride` field of the external listener that resolves to the public IP of the load balancer. The broker address will be advertised as, `advertised.listeners=EXTERNAL1://kafka-1.dev.my.domain:<broker port number>`.
@@ -132,6 +165,32 @@ To configure an external listener that uses the NodePort access method, complete
 
 ### NodePort external IP
 
+The node IP of the node where the broker pod is scheduled will be used in the advertised.listeners broker configuration when the `nodePortNodeAddressType` is specified.  
+Its value determines which IP or domain name of the Kubernetes node will be used, the possible values are: Hostname, ExternalIP, InternalIP, InternalDNS and ExternalDNS.  
+The hostNameOverride and nodePortExternalIP must not be specified in this case.
+
+```yaml
+brokers:
+- id: 0
+  brokerConfig:
+    nodePortNodeAddressType: ExternalIP
+- id: 1
+  brokerConfig:
+    nodePortNodeAddressType: ExternalIP
+- id: 2
+  brokerConfig:
+    nodePortNodeAddressType: ExternalIP
+```
+
+If *hostnameOverride* and *nodePortExternalIP* fields are not set, then broker address is advertised as follows:
+
+- broker 0:
+  - advertised.listeners=EXTERNAL1://16.171.47.211:9094
+- broker 1:
+  - advertised.listeners=EXTERNAL1://16.16.66.201:9094
+- broker 2:
+  - advertised.listeners=EXTERNAL1://16.170.214.51:9094
+
 Kafka brokers can be made accessible on external IPs that are not node IP, but can route into the Kubernetes cluster. These external IPs can be set for each broker in the KafkaCluster custom resource as in the following example:
 
 ```yaml
@@ -168,7 +227,7 @@ If both *hostnameOverride* and *nodePortExternalIP* fields are set:
 - broker 2:
   - advertised.listeners=EXTERNAL1://kafka-2.external1.kafka.dev.my.domain:9094
 
-> Note: If *nodePortExternalIP* is set, then the *containerPort* from the external listener config is used as a broker port, and is the same for each broker.
+> Note: If *nodePortExternalIP* or *nodePortNodeAddressType* is set, then the *containerPort* from the external listener config is used as a broker port, and is the same for each broker.
 
 ## SASL authentication on external listeners {#sasl}
 
