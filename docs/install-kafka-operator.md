@@ -559,7 +559,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     helm install \
     kafka-operator \
     --repo https://kubernetes-charts.banzaicloud.com kafka-operator \
-    --version {{< param "versionnumbers-sdm.koperatorCurrentversion" >}}
+    --version {{< param "versionnumbers-sdm.koperatorCurrentversion" >}} \
     --namespace=kafka \
     --create-namespace \
     --atomic \
