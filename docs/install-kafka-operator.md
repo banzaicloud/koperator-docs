@@ -582,7 +582,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
 ### Deploy a Kafka cluster {#deploy-a-kafka-cluster}
 
-1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in {{% xref "/docs/supertubes/kafka-operator/configurations/kafkacluster/_index.md" %}} and in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples).
+1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in {{% xref "/sdm/koperator/configurations/kafkacluster/_index.md" %}} and in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples).
 
     {{< include-headless "warning-listener-protocol.md" "sdm/koperator" >}}
 
@@ -594,7 +594,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
         -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster.yaml
         ```
 
-    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/sdm/koperator/ssl.md#enable-ssl" %}}.
+    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/sdm/koperator/ssl.md" %}}.
 
         ```bash
         kubectl create \
