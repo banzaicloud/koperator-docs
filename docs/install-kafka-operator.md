@@ -591,7 +591,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
         ```bash
         kubectl create \
         -n kafka \
-        -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster.yaml
+        -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster.yaml
         ```
 
     - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/sdm/koperator/ssl.md" %}}.
@@ -599,7 +599,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
         ```bash
         kubectl create \
         -n kafka \
-        -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster_ssl.yaml
+        -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster_ssl.yaml
         ```
 
     Expected output:
@@ -660,7 +660,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
     ```bash
     kubectl create \
     -n kafka \
-    -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/kafkacluster-prometheus.yaml
+    -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/kafkacluster-prometheus.yaml
     ```
 
     Expected output:
