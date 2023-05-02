@@ -41,7 +41,7 @@ Alternatively, run the operator on your machine:
 
 Create CR and let the operator set up Kafka in your cluster (you can change the `spec` of `Kafka` for your needs in the yaml file):
 
-> Remember you need Zookeeper server to run Kafka
+> Remember you need an Apache ZooKeeper server to run Kafka
 
 `kubectl create -n kafka -f config/samples/simplekafkacluster.yaml`
 
