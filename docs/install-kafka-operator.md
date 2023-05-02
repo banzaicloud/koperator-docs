@@ -607,7 +607,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
         ```bash
         kubectl create \
         -n kafka \
-        -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster.yaml
+        -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster.yaml
         ```
 
     - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" %}}.
@@ -615,7 +615,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
         ```bash
         kubectl create \
         -n kafka \
-        -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster_ssl.yaml
+        -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster_ssl.yaml
         ```
 
     Expected output:
@@ -676,7 +676,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     ```bash
     kubectl create \
     -n kafka \
-    -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/kafkacluster-prometheus.yaml
+    -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/kafkacluster-prometheus.yaml
     ```
 
     Expected output:
