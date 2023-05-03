@@ -148,7 +148,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
     ```bash
     install.go:194: [debug] Original chart version: "v1.11.0"
-    install.go:211: [debug] CHART PATH: /Users/pregnor/.cache/helm/repository/cert-manager-v1.11.0.tgz
+    install.go:211: [debug] CHART PATH: /Users/<your-username>/.cache/helm/repository/cert-manager-v1.11.0.tgz
 
     # ...
     NAME: cert-manager
@@ -241,7 +241,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
     ```bash
     install.go:194: [debug] Original chart version: "0.2.14"
-    install.go:211: [debug] CHART PATH: /Users/pregnor/.cache/helm/repository/zookeeper-operator-0.2.14.tgz
+    install.go:211: [debug] CHART PATH: /Users/<your-username>/.cache/helm/repository/zookeeper-operator-0.2.14.tgz
 
     # ...
     NAME: zookeeper-operator
@@ -448,7 +448,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
     ```bash
     install.go:194: [debug] Original chart version: "45.7.1"
-    install.go:211: [debug] CHART PATH: /Users/pregnor/.cache/helm/repository/kube-prometheus-stack-45.7.1.tgz
+    install.go:211: [debug] CHART PATH: /Users/<your-username>/.cache/helm/repository/kube-prometheus-stack-45.7.1.tgz
 
     # ...
     NAME: prometheus
@@ -554,7 +554,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
     ```bash
     install.go:194: [debug] Original chart version: ""
-    install.go:211: [debug] CHART PATH: /Users/pregnor/development/src/github.com/banzaicloud/koperator/kafka-operator-{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}.tgz
+    install.go:211: [debug] CHART PATH: /Users/<your-username>/development/src/github.com/banzaicloud/koperator/kafka-operator-{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}.tgz
 
     # ...
     NAME: kafka-operator
