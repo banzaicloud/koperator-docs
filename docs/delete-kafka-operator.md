@@ -33,10 +33,28 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
 
 1. Delete KafkaCluster Custom Resource (CR) that represent the Kafka cluster and Cruise Control.
 
+    ```bash
+    kubectl delete kafkaclusters -n kafka kafka
     ```
-    kubectl delete kafkacluster kafka -n kafka
+
+    Example output:
+
     ```
-    Wait for the Kafka resources (Pods, PersistentVolumeClaims, Configmaps, etc) to be removed
+    kafkacluster.kafka.banzaicloud.io/kafka deleted
+    ```
+    
+    Wait for the Kafka resources (Pods, PersistentVolumeClaims, Configmaps, etc) to be removed.
+
+    ```
+    kubectl get pods -n kafka
+    ```
+
+    Expected output:
+
+    ```
+    NAME                                       READY   STATUS    RESTARTS   AGE
+    kafka-operator-operator-8458b45587-286f9   2/2     Running   0          62s
+    ```
 
     You would also need to delete other Koperator-managed CRs (if any) following the same fashion
 
