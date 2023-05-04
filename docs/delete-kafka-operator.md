@@ -73,7 +73,7 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
     release "kafka-operator" uninstalled
     ```
 
-1. Delete Koperator Custom Resource Definitions (CRDs)
+1. Delete Koperator Custom Resource Definitions (CRDs).
     ```
     kubectl delete -f https://github.com/banzaicloud/koperator/releases/download/v0.24.1/kafka-operator.crds.yaml
     ```
