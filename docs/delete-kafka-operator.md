@@ -75,7 +75,7 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
 
 1. Delete Koperator Custom Resource Definitions (CRDs).
     ```
-    kubectl delete -f https://github.com/banzaicloud/koperator/releases/download/v0.24.1/kafka-operator.crds.yaml
+    kubectl delete -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/kafka-operator.crds.yaml
     ```
 
 ## Uninstall Zookeeper Operator
