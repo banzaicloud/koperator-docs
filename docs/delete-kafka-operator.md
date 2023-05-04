@@ -78,6 +78,28 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
     kubectl delete -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/kafka-operator.crds.yaml
     ```
 
+## Uninstall Prometheus operator
+
+1. Uninstall the prometheus-operator deployment.
+
+    ```
+    helm uninstall -n prometheus prometheus
+    ```
+
+    Expected output:
+
+    ```
+    release "prometheus" uninstalled
+    ```
+
+1. If no other cluster resources uses prometheus-operator CRDs, delete the prometheus-operator's CRDs.
+
+    > Note: Red Hat OpenShift clusters require those CRDs to function so do not delete those on such clusters.
+
+    ```
+    kubectl get crd | grep 'monitoring.coreos.com'| awk '{print $1};' | xargs kubectl delete crd
+    ```
+
 ## Uninstall Zookeeper Operator
 
 1. Delete Zookeeper CR
