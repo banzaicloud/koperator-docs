@@ -139,29 +139,6 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
     kubectl delete customresourcedefinition zookeeperclusters.zookeeper.pravega.io
     ```
 
-## Uninstall Prometheus Operator
-
-### Uninstall directly
-
-1. Delete CR (if any) managed by Prometheus Operator via `kubectl delete`, wait for relevant resources to be removed.
-
-1. Uninstall Prometheus Operator and its CRDs:
-    ```
-    kubectl delete -n default -f https://raw.githubusercontent.com/coreos/prometheus-operator/master/bundle.yaml
-    ```
-
-### Uninstall with Helm
-
-1. Uninstall Prometheus Operator deployment:
-    ```
-    helm uninstall prometheus -n default
-    ```
-
-1. Delete Prometheus Operator's CRDs:
-    ```
-    kubectl get crd | grep 'monitoring.coreos.com'| awk '{print $1};' | xargs kubectl delete crd
-    ```
-
 ## Uninstall Cert-Manager
 
 ### Uninstall with Helm
