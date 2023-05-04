@@ -1,5 +1,5 @@
 ---
-title: Kafka cluster configuration
+title: KafkaCluster CR configuration
 shorttitle: KafkaCluster
 weight: 7000
 ---
