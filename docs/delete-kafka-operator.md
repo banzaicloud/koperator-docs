@@ -102,7 +102,7 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
 
 ## Uninstall Zookeeper Operator
 
-1. Delete Zookeeper CR
+1. Delete Zookeeper CR.
 
     ```
     kubectl delete zookeeperclusters -n zookeeper zookeeper
