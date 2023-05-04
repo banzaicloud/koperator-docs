@@ -143,10 +143,18 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
 
 ### Uninstall with Helm
 
-1. Uninstall Cert-Manager deployment:
+1. Uninstall cert-manager deployment.
+
     ```
-    helm uninstall cert-manager -n cert-manager
+    helm uninstall -n cert-manager cert-manager
     ```
+
+    Expected output:
+
+    ```
+    release "cert-manager" uninstalled
+    ```
+
 1. If no other cluster resource uses cert-manager CRDs, delete cert-manager's CRDs:
 
     ```
