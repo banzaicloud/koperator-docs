@@ -105,9 +105,27 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
 1. Delete Zookeeper CR
 
     ```
-    kubectl delete zookeepercluster zookeeper -n zookeeper
+    kubectl delete zookeeperclusters -n zookeeper zookeeper
     ```
-    Wait for the Zookeeper resources (Deployment, PersistentVolumeClaims, Configmaps, etc) to be removed
+
+    Expected output:
+
+    ```
+    zookeeperclusters.zookeeper.pravega.io/zookeeper deleted
+    ```
+
+    Wait for the Zookeeper resources (Deployment, PersistentVolumeClaims, Configmaps, etc) to be removed.
+
+    ```
+    kubectl get pods -n zookeeper
+    ```
+
+    Expected output:
+
+    ```
+    NAME                                  READY   STATUS    RESTARTS   AGE
+    zookeeper-operator-5857967dcc-gm5l5   1/1     Running   0          3m22s
+    ```
 
 1. Uninstall Zookeeper Operator deployment
 
