@@ -1,6 +1,6 @@
 ---
-title: KafkaCluster CR templates
-shorttitle: KafkaCluster CR templates
+title: KafkaCluster CR Examples
+shorttitle: KafkaCluster CR Examples
 weight: 7000
 ---
 
