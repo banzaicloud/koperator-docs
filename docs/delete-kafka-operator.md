@@ -127,7 +127,7 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
     zookeeper-operator-5857967dcc-gm5l5   1/1     Running   0          3m22s
     ```
 
-1. Uninstall Zookeeper Operator deployment
+1. Uninstall the zookeeper-operator deployment.
 
     ```
     helm uninstall zookeeper-operator -n zookeeper
