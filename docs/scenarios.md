@@ -23,7 +23,7 @@ To remove the #1 Broker from the cluster, you need to lower the number of broker
 
 Apache Kafka is a stateful application, where Brokers create/form a cluster with other Brokers. Every Broker is uniquely configurable ({{< kafka-operator >}} supports heterogenous environments, in which no nodes are the same, act the same or have the same specifications - from the infrastructure up through the Brokers' Envoy configuration). Kafka has lots of Broker configs, which can be used to fine tune specific brokers, and {{< kafka-operator >}} did not want to limit these to ALL Brokers in a StatefulSet. {{< kafka-operator >}} supports unique Broker configs.
 
-*In each of the three scenarios lister above, {{< kafka-operator >}} does not use StatefulSet, relying, instead, on Pods, PVCs and ConfigMaps. With {{< kafka-operator >}}, StatefulSet is very convenient starting point, as it handles roughly 80% of scenarios but introduces huge limitations when running Kafka on Kubernetes in production.*
+*In each of the three scenarios lister above, {{< kafka-operator >}} does not use StatefulSet, relying, instead, on Pods, PVCs and ConfigMaps. While using StatefulSet is a very convenient starting point, as it handles roughly 80% of scenarios, it also introduces huge limitations when running Kafka on Kubernetes in production.*
 
 ## Monitoring based control
 
