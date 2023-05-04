@@ -147,7 +147,19 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
     ```
     helm uninstall cert-manager -n cert-manager
     ```
-1. Delete Cert-Manager's CRDs:
+1. If no other cluster resource uses cert-manager CRDs, delete cert-manager's CRDs:
+
     ```
-    kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.6.2/cert-manager.crds.yaml
+    kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml
+    ```
+
+    Expected output:
+
+    ```
+    customresourcedefinition.apiextensions.k8s.io/certificaterequests.cert-manager.io deleted
+    customresourcedefinition.apiextensions.k8s.io/certificates.cert-manager.io deleted
+    customresourcedefinition.apiextensions.k8s.io/challenges.acme.cert-manager.io deleted
+    customresourcedefinition.apiextensions.k8s.io/clusterissuers.cert-manager.io deleted
+    customresourcedefinition.apiextensions.k8s.io/issuers.cert-manager.io deleted
+    customresourcedefinition.apiextensions.k8s.io/orders.acme.cert-manager.io deleted
     ```
