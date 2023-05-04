@@ -61,7 +61,7 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
     > Note: KafkaCluster, KafkaTopic and KafkaUser custom resources are protected with Kubernetes finalizers, so those won’t be actually deleted from Kubernetes until the {{< kafka-operator >}} removes those finalizers. After the {{< kafka-operator >}} has finished cleaning up everything, it removes the finalizers. In case you delete the {{< kafka-operator >}} deployment before it cleans up everything, you need to remove the finalizers manually.
 
 
-1. Uninstall Koperator deployment
+1. Uninstall Koperator deployment.
 
     ```
     helm uninstall kafka-operator -n kafka
