@@ -164,15 +164,6 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
 
 ## Uninstall Cert-Manager
 
-### Uninstall directly
-
-1. Delete CR (if any) managed by Cert-Manager via `kubectl delete`, wait for relevant resources to be removed.
-
-1. Uninstall Cert-Manager and its CRDs:
-    ```
-    kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.6.2/cert-manager.yaml
-    ```
-
 ### Uninstall with Helm
 
 1. Delete CR (if any) managed by Cert-Manager via `kubectl delete`, wait for relevant resources to be removed
