@@ -10,7 +10,7 @@ Koperator provides convenient ways of configuring Kafka resources through [Kuber
 
 List of our custom resources:
 
-- [KafkaCluster templates]({{< relref "kafkacluster-cr-templates/_index.md" >}})
+- [KafkaCluster]({{< relref "kafkacluster-cr/_index.md" >}})
 - [KafkaTopic]({{< relref "../topics.md" >}})
 - KafkaUser
 
