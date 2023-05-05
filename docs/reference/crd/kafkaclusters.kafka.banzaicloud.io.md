@@ -125,6 +125,132 @@ KafkaCluster is the Schema for the kafkaclusters API
 
 <div class="property depth-1">
 <div class="property-header">
+<h3 id="v1beta1-.spec.additionalPorts">.spec.additionalPorts</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>Custom ports to expose in the container. Example use case: a custom kafka distribution, that includes an integrated metrics api endpoint</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-2">
+<div class="property-header">
+<h3 id="v1beta1-.spec.additionalPorts[*]">.spec.additionalPorts[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>ContainerPort represents a network port in a single container.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.additionalPorts[*].containerPort">.spec.additionalPorts[*].containerPort</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">integer</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Number of port to expose on the pod&rsquo;s IP address. This must be a valid port number, 0 &lt; x &lt; 65536.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.additionalPorts[*].hostIP">.spec.additionalPorts[*].hostIP</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>What host IP to bind the external port to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.additionalPorts[*].hostPort">.spec.additionalPorts[*].hostPort</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">integer</span>
+
+</div>
+
+<div class="property-description">
+<p>Number of port to expose on the host. If specified, this must be a valid port number, 0 &lt; x &lt; 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.additionalPorts[*].name">.spec.additionalPorts[*].name</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.additionalPorts[*].protocol">.spec.additionalPorts[*].protocol</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>Protocol for port. Must be UDP, TCP, or SCTP. Defaults to &ldquo;TCP&rdquo;.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-1">
+<div class="property-header">
 <h3 id="v1beta1-.spec.alertManagerConfig">.spec.alertManagerConfig</h3>
 </div>
 <div class="property-body">
@@ -10134,6 +10260,24 @@ KafkaCluster is the Schema for the kafkaclusters API
 
 <div class="property depth-4">
 <div class="property-header">
+<h3 id="v1beta1-.spec.brokers[*].brokerConfig.nodePortNodeAddressType">.spec.brokers[*].brokerConfig.nodePortNodeAddressType</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>When &ldquo;hostNameOverride&rdquo; and brokerConfig.nodePortExternalIP are empty and NodePort access method is selected for an external listener the NodePortNodeAdddressType defines the Kafka broker&rsquo;s Kubernetes node&rsquo;s address type that shall be used in the advertised.listeners property. <a href="https://kubernetes.io/docs/concepts/architecture/nodes/#addresses">https://kubernetes.io/docs/concepts/architecture/nodes/#addresses</a> The NodePortNodeAddressType&rsquo;s possible values can be Hostname, ExternalIP, InternalIP, InternalDNS,ExternalDNS</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
 <h3 id="v1beta1-.spec.brokers[*].brokerConfig.nodeSelector">.spec.brokers[*].brokerConfig.nodeSelector</h3>
 </div>
 <div class="property-body">
@@ -16440,6 +16584,2140 @@ KafkaCluster is the Schema for the kafkaclusters API
 
 <div class="property-description">
 <p>CruiseControlConfig defines the config for Cruise Control</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-2">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity">.spec.cruiseControlConfig.affinity</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>Affinity is a group of affinity scheduling rules.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity">.spec.cruiseControlConfig.affinity.nodeAffinity</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>Describes node affinity scheduling rules for the pod.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding &ldquo;weight&rdquo; to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-5">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*]">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it&rsquo;s a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>A node selector term, associated with the corresponding weight.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>A list of node selector requirements by node&rsquo;s labels.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions[*]">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions[*].key">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>The label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions[*].operator">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions[*].values">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions[*].values[*]">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchExpressions[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>A list of node selector requirements by node&rsquo;s fields.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields[*]">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields[*].key">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>The label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields[*].operator">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields[*].values">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields[*].values[*]">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].preference.matchFields[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].weight">.spec.cruiseControlConfig.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].weight</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">integer</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-5">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Required. A list of node selector terms. The terms are ORed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*]">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>A list of node selector requirements by node&rsquo;s labels.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions[*]">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions[*].key">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>The label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions[*].operator">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions[*].values">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions[*].values[*]">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchExpressions[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>A list of node selector requirements by node&rsquo;s fields.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*]">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*].key">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>The label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*].operator">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*].values">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*].values[*]">.spec.cruiseControlConfig.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[*].matchFields[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity">.spec.cruiseControlConfig.affinity.podAffinity</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding &ldquo;weight&rdquo; to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-5">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*]">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Required. A pod affinity term, associated with the corresponding weight.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label query over a set of resources, in this case pods.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>matchExpressions is a list of label selector requirements. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*]">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].key">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>key is the label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].operator">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>operator represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].values">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-11">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].values[*]">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchLabels">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchLabels</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is &ldquo;key&rdquo;, the operator is &ldquo;In&rdquo;, and the values array contains only &ldquo;value&rdquo;. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label query over the set of namespaces that the term applies to. The term is applied to the union of the namespaces selected by this field and the ones listed in the namespaces field. null selector and null or empty namespaces list means &ldquo;this pod&rsquo;s namespace&rdquo;. An empty selector ({}) matches all namespaces.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>matchExpressions is a list of label selector requirements. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*]">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].key">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>key is the label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].operator">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>operator represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].values">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-11">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].values[*]">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchLabels">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchLabels</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is &ldquo;key&rdquo;, the operator is &ldquo;In&rdquo;, and the values array contains only &ldquo;value&rdquo;. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaces">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaces</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>namespaces specifies a static list of namespace names that the term applies to. The term is applied to the union of the namespaces listed in this field and the ones selected by namespaceSelector. null or empty namespaces list and null namespaceSelector means &ldquo;this pod&rsquo;s namespace&rdquo;.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaces[*]">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaces[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.topologyKey">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.topologyKey</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].weight">.spec.cruiseControlConfig.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].weight</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">integer</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>weight associated with matching the corresponding podAffinityTerm, in the range 1-100.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-5">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*]">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label query over a set of resources, in this case pods.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>matchExpressions is a list of label selector requirements. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*]">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].key">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>key is the label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].operator">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>operator represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].values">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].values[*]">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchLabels">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchLabels</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is &ldquo;key&rdquo;, the operator is &ldquo;In&rdquo;, and the values array contains only &ldquo;value&rdquo;. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label query over the set of namespaces that the term applies to. The term is applied to the union of the namespaces selected by this field and the ones listed in the namespaces field. null selector and null or empty namespaces list means &ldquo;this pod&rsquo;s namespace&rdquo;. An empty selector ({}) matches all namespaces.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>matchExpressions is a list of label selector requirements. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*]">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].key">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>key is the label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].operator">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>operator represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].values">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].values[*]">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchLabels">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchLabels</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is &ldquo;key&rdquo;, the operator is &ldquo;In&rdquo;, and the values array contains only &ldquo;value&rdquo;. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaces">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaces</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>namespaces specifies a static list of namespace names that the term applies to. The term is applied to the union of the namespaces listed in this field and the ones selected by namespaceSelector. null or empty namespaces list and null namespaceSelector means &ldquo;this pod&rsquo;s namespace&rdquo;.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaces[*]">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaces[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].topologyKey">.spec.cruiseControlConfig.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].topologyKey</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity">.spec.cruiseControlConfig.affinity.podAntiAffinity</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>The scheduler will prefer to schedule pods to nodes that satisfy the anti-affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling anti-affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding &ldquo;weight&rdquo; to the sum if the node has pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most preferred.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-5">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Required. A pod affinity term, associated with the corresponding weight.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label query over a set of resources, in this case pods.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>matchExpressions is a list of label selector requirements. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].key">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>key is the label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].operator">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>operator represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].values">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-11">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].values[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchExpressions[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchLabels">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.labelSelector.matchLabels</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is &ldquo;key&rdquo;, the operator is &ldquo;In&rdquo;, and the values array contains only &ldquo;value&rdquo;. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label query over the set of namespaces that the term applies to. The term is applied to the union of the namespaces selected by this field and the ones listed in the namespaces field. null selector and null or empty namespaces list means &ldquo;this pod&rsquo;s namespace&rdquo;. An empty selector ({}) matches all namespaces.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>matchExpressions is a list of label selector requirements. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].key">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>key is the label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].operator">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>operator represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].values">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-11">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].values[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchExpressions[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchLabels">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaceSelector.matchLabels</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is &ldquo;key&rdquo;, the operator is &ldquo;In&rdquo;, and the values array contains only &ldquo;value&rdquo;. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaces">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaces</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>namespaces specifies a static list of namespace names that the term applies to. The term is applied to the union of the namespaces listed in this field and the ones selected by namespaceSelector. null or empty namespaces list and null namespaceSelector means &ldquo;this pod&rsquo;s namespace&rdquo;.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaces[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.namespaces[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.topologyKey">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].podAffinityTerm.topologyKey</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].weight">.spec.cruiseControlConfig.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[*].weight</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">integer</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>weight associated with matching the corresponding podAffinityTerm, in the range 1-100.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>If the anti-affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the anti-affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to a pod label update), the system may or may not try to eventually evict the pod from its node. When there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are intersected, i.e. all terms must be satisfied.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-5">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> matches that of any node on which a pod of the set of pods is running</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label query over a set of resources, in this case pods.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>matchExpressions is a list of label selector requirements. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].key">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>key is the label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].operator">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>operator represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].values">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].values[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchExpressions[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchLabels">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].labelSelector.matchLabels</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is &ldquo;key&rdquo;, the operator is &ldquo;In&rdquo;, and the values array contains only &ldquo;value&rdquo;. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label query over the set of namespaces that the term applies to. The term is applied to the union of the namespaces selected by this field and the ones listed in the namespaces field. null selector and null or empty namespaces list means &ldquo;this pod&rsquo;s namespace&rdquo;. An empty selector ({}) matches all namespaces.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>matchExpressions is a list of label selector requirements. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-8">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].key">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].key</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>key is the label key that the selector applies to.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].operator">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].operator</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>operator represents a key&rsquo;s relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-9">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].values">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].values</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-10">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].values[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchExpressions[*].values[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchLabels">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaceSelector.matchLabels</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is &ldquo;key&rdquo;, the operator is &ldquo;In&rdquo;, and the values array contains only &ldquo;value&rdquo;. The requirements are ANDed.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaces">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaces</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>namespaces specifies a static list of namespace names that the term applies to. The term is applied to the union of the namespaces listed in this field and the ones selected by namespaceSelector. null or empty namespaces list and null namespaceSelector means &ldquo;this pod&rsquo;s namespace&rdquo;.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-7">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaces[*]">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].namespaces[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-6">
+<div class="property-header">
+<h3 id="v1beta1-.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].topologyKey">.spec.cruiseControlConfig.affinity.podAntiAffinity.requiredDuringSchedulingIgnoredDuringExecution[*].topologyKey</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.</p>
 
 </div>
 
@@ -28424,6 +30702,454 @@ KafkaCluster is the Schema for the kafkaclusters API
 
 <div class="property depth-2">
 <div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext">.spec.envoyConfig.podSecurityContext</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>PodSecurityContext holds pod-level security attributes and common container settings for the Envoy pods.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.fsGroup">.spec.envoyConfig.podSecurityContext.fsGroup</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">integer</span>
+
+</div>
+
+<div class="property-description">
+<p>A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
+ 1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR&rsquo;d with rw-rw&mdash;-
+ If unset, the Kubelet will not modify the ownership and permissions of any volume. Note that this field cannot be set when spec.os.name is windows.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.fsGroupChangePolicy">.spec.envoyConfig.podSecurityContext.fsGroupChangePolicy</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are &ldquo;OnRootMismatch&rdquo; and &ldquo;Always&rdquo;. If not specified, &ldquo;Always&rdquo; is used. Note that this field cannot be set when spec.os.name is windows.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.runAsGroup">.spec.envoyConfig.podSecurityContext.runAsGroup</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">integer</span>
+
+</div>
+
+<div class="property-description">
+<p>The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container. Note that this field cannot be set when spec.os.name is windows.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.runAsNonRoot">.spec.envoyConfig.podSecurityContext.runAsNonRoot</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">boolean</span>
+
+</div>
+
+<div class="property-description">
+<p>Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.runAsUser">.spec.envoyConfig.podSecurityContext.runAsUser</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">integer</span>
+
+</div>
+
+<div class="property-description">
+<p>The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container. Note that this field cannot be set when spec.os.name is windows.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.seLinuxOptions">.spec.envoyConfig.podSecurityContext.seLinuxOptions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container. Note that this field cannot be set when spec.os.name is windows.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.seLinuxOptions.level">.spec.envoyConfig.podSecurityContext.seLinuxOptions.level</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>Level is SELinux level label that applies to the container.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.seLinuxOptions.role">.spec.envoyConfig.podSecurityContext.seLinuxOptions.role</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>Role is a SELinux role label that applies to the container.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.seLinuxOptions.type">.spec.envoyConfig.podSecurityContext.seLinuxOptions.type</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>Type is a SELinux type label that applies to the container.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.seLinuxOptions.user">.spec.envoyConfig.podSecurityContext.seLinuxOptions.user</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>User is a SELinux user label that applies to the container.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.seccompProfile">.spec.envoyConfig.podSecurityContext.seccompProfile</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>The seccomp options to use by the containers in this pod. Note that this field cannot be set when spec.os.name is windows.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.seccompProfile.localhostProfile">.spec.envoyConfig.podSecurityContext.seccompProfile.localhostProfile</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet&rsquo;s configured seccomp profile location. Must only be set if type is &ldquo;Localhost&rdquo;.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.seccompProfile.type">.spec.envoyConfig.podSecurityContext.seccompProfile.type</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>type indicates which kind of seccomp profile will be applied. Valid options are:
+ Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.supplementalGroups">.spec.envoyConfig.podSecurityContext.supplementalGroups</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>A list of groups applied to the first process run in each container, in addition to the container&rsquo;s primary GID.  If unspecified, no groups will be added to any container. Note that this field cannot be set when spec.os.name is windows.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.supplementalGroups[*]">.spec.envoyConfig.podSecurityContext.supplementalGroups[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">integer</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.sysctls">.spec.envoyConfig.podSecurityContext.sysctls</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">array</span>
+
+</div>
+
+<div class="property-description">
+<p>Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch. Note that this field cannot be set when spec.os.name is windows.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.sysctls[*]">.spec.envoyConfig.podSecurityContext.sysctls[*]</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>Sysctl defines a kernel parameter to be set</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-5">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.sysctls[*].name">.spec.envoyConfig.podSecurityContext.sysctls[*].name</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Name of a property to set</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-5">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.sysctls[*].value">.spec.envoyConfig.podSecurityContext.sysctls[*].value</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>Value of a property to set</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-3">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.windowsOptions">.spec.envoyConfig.podSecurityContext.windowsOptions</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">object</span>
+
+</div>
+
+<div class="property-description">
+<p>The Windows specific settings applied to all containers. If unspecified, the options within a container&rsquo;s SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. Note that this field cannot be set when spec.os.name is linux.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.windowsOptions.gmsaCredentialSpec">.spec.envoyConfig.podSecurityContext.windowsOptions.gmsaCredentialSpec</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>GMSACredentialSpec is where the GMSA admission webhook (<a href="https://github.com/kubernetes-sigs/windows-gmsa">https://github.com/kubernetes-sigs/windows-gmsa</a>) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.windowsOptions.gmsaCredentialSpecName">.spec.envoyConfig.podSecurityContext.windowsOptions.gmsaCredentialSpecName</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>GMSACredentialSpecName is the name of the GMSA credential spec to use.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.windowsOptions.hostProcess">.spec.envoyConfig.podSecurityContext.windowsOptions.hostProcess</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">boolean</span>
+
+</div>
+
+<div class="property-description">
+<p>HostProcess determines if a container should be run as a &lsquo;Host Process&rsquo; container. This field is alpha-level and will only be honored by components that enable the WindowsHostProcessContainers feature flag. Setting this field without the feature flag will result in errors when validating the Pod. All of a Pod&rsquo;s containers must have the same effective HostProcess value (it is not allowed to have a mix of HostProcess containers and non-HostProcess containers).  In addition, if HostProcess is true then HostNetwork must also be set to true.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-4">
+<div class="property-header">
+<h3 id="v1beta1-.spec.envoyConfig.podSecurityContext.windowsOptions.runAsUserName">.spec.envoyConfig.podSecurityContext.windowsOptions.runAsUserName</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+
+</div>
+
+<div class="property-description">
+<p>The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-2">
+<div class="property-header">
 <h3 id="v1beta1-.spec.envoyConfig.priorityClassName">.spec.envoyConfig.priorityClassName</h3>
 </div>
 <div class="property-body">
@@ -30481,6 +33207,11 @@ KafkaCluster is the Schema for the kafkaclusters API
 <span class="property-required">Required</span>
 </div>
 
+<div class="property-description">
+<p>externalStartingPort is added to each broker ID to get the port number that will be used for external access to the broker. The choice of broker ID and externalStartingPort must satisfy 0 &lt; broker ID + externalStartingPort &lt;= 65535 If accessMethod is Nodeport and externalStartingPort is set to 0 then the broker IDs are not added and the Nodeport port numbers will be chosen automatically by the K8s Service controller</p>
+
+</div>
+
 </div>
 </div>
 
@@ -31108,6 +33839,24 @@ KafkaCluster is the Schema for the kafkaclusters API
 <div class="property-body">
 <div class="property-meta">
 <span class="property-type">string</span>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-1">
+<div class="property-header">
+<h3 id="v1beta1-.spec.removeUnusedIngressResources">.spec.removeUnusedIngressResources</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">boolean</span>
+
+</div>
+
+<div class="property-description">
+<p>RemoveUnusedIngressResources when true, the unnecessary resources from the previous ingress state will be removed. when false, they will be kept so the Kafka cluster remains available for those Kafka clients which are still using the previous ingress setting.</p>
 
 </div>
 
