@@ -125,11 +125,23 @@ How to setup the environment for the Kafka Performance Test.
 
 1. Exec into this client and create the `perftest, perftest2, perftes3` topics.
 
+    For internal listeners exposed by a headless service (`KafkaCluster.spec.headlessServiceEnabled` is set to `true`):
+
+    ```bash
+
+    kubectl exec -it kafka-test -n kafka bash
+    ./opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-headless.kafka:29092 --topic perftest --create --replication-factor 3 --partitions 3
+    ./opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-headless.kafka:29092 --topic perftest2 --create --replication-factor 3 --partitions 3
+    ./opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-headless.kafka:29092 --topic perftest3 --create --replication-factor 3 --partitions 3
+    ```
+
+    For internal listeners exposed by a regular service (`KafkaCluster.spec.headlessServiceEnabled` set to `false`):
+
     ```bash
     kubectl exec -it kafka-test -n kafka bash
-    ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest --create --replication-factor 3 --partitions 3
-    ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest2 --create --replication-factor 3 --partitions 3
-    ./opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic perftest3 --create --replication-factor 3 --partitions 3
+    ./opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-all-broker.kafka:29092 --topic perftest --create --replication-factor 3 --partitions 3
+    ./opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-all-broker.kafka:29092 --topic perftest2 --create --replication-factor 3 --partitions 3
+    ./opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-all-broker.kafka:29092 --topic perftest3 --create --replication-factor 3 --partitions 3
     ```
 
 Monitoring environment is automatically installed. To monitor the infrastructure we used the official Node Exporter dashboard available with id `1860`.
