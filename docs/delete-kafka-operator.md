@@ -133,7 +133,7 @@ In case you want to delete {{< kafka-operator >}} from your cluster, note that b
     helm uninstall zookeeper-operator -n zookeeper
     ```
 
-1. Delete Zookeeper Operator's CRDs
+1. If no other cluster resource uses Zookeeper CRDs, delete Zookeeper Operator's CRDs
 
     ```
     kubectl delete customresourcedefinition zookeeperclusters.zookeeper.pravega.io
