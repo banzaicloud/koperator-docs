@@ -22,8 +22,16 @@ Topic creation by default is enabled in Apache Kafka, but if it is configured ot
 
 - To create a sample topic from the CLI you can run the following:
 
+    For internal listeners exposed by a headless service (`KafkaCluster.spec.headlessServiceEnabled `set to `true`):
+
     ```bash
-    kubectl -n kafka run kafka-topics -it --image=ghcr.io/banzaicloud/kafka:2.13-3.1.0 --rm=true --restart=Never -- /opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper-client.zookeeper:2181 --topic my-topic --create --partitions 1 --replication-factor 1
+    kubectl -n kafka run kafka-topics -it --image=ghcr.io/banzaicloud/kafka:2.13-3.1.0 --rm=true --restart=Never -- /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-headless.kafka:29092 --topic my-topic --create --partitions 1 --replication-factor 1
+    ```
+
+    For internal listeners exposed by a regular service (`KafkaCluster.spec.headlessServiceEnabled` set to `false`):
+
+    ```bash
+    kubectl -n kafka run kafka-topics -it --image=ghcr.io/banzaicloud/kafka:2.13-3.1.0 --rm=true --restart=Never -- /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-all-broker.kafka:29092 --topic my-topic --create --partitions 1 --replication-factor 1
     ```
 
 After you have created a topic, produce and consume some messages:
