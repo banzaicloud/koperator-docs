@@ -249,6 +249,24 @@ KafkaTopic is the Schema for the kafkatopics API
 
 <div class="property depth-1">
 <div class="property-header">
+<h3 id="v1alpha1-.status.managedBy">.status.managedBy</h3>
+</div>
+<div class="property-body">
+<div class="property-meta">
+<span class="property-type">string</span>
+<span class="property-required">Required</span>
+</div>
+
+<div class="property-description">
+<p>ManagedBy describes who is the manager of the Kafka topic. When its value is not &ldquo;koperator&rdquo; then modifications to the topic configurations of the KafkaTopic CR will not be propagated to the Kafka topic. Manager of the Kafka topic can be changed by adding the &ldquo;managedBy: <manager>&rdquo; annotation to the KafkaTopic CR.</p>
+
+</div>
+
+</div>
+</div>
+
+<div class="property depth-1">
+<div class="property-header">
 <h3 id="v1alpha1-.status.state">.status.state</h3>
 </div>
 <div class="property-body">
