@@ -1,6 +1,8 @@
 ---
-title: Kafka cluster configuration
-shorttitle: KafkaCluster
+title: KafkaCluster CR configuration
+shorttitle: KafkaCluster CR
+aliases:
+  - /sdm/koperator/configurations/kafkacluster
 weight: 7000
 ---
 
