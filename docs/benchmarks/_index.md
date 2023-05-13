@@ -125,7 +125,7 @@ How to setup the environment for the Kafka Performance Test.
 
 1. Exec into this client and create the `perftest, perftest2, perftes3` topics.
 
-    For internal listeners exposed by a headless service (`KafkaCluster.spec.headlessServiceEnabled `set to `true`):
+    For internal listeners exposed by a headless service (`KafkaCluster.spec.headlessServiceEnabled` is set to `true`):
 
     ```bash
 
