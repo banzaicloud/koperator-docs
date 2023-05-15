@@ -20,7 +20,7 @@ The following example enables SSL and automatically generates the certificates:
 
 {{< include-code "enable-ssl.sample" "yaml" >}}
 
-If `sslSecrets.create` is `false`, the operator will look for the secret at `sslSecrets.tlsSecretName` in the same namespace of the **KafkaCluster** custom resource and expect these values:
+If `sslSecrets.create` is `false`, the operator will look for the secret at `sslSecrets.tlsSecretName` in the namespace of the **KafkaCluster** custom resource and expect these values:
 
 | Key          | Value              |
 |:------------:|:-------------------|
