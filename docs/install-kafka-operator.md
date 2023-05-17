@@ -582,7 +582,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
 ### Deploy a Kafka cluster {#deploy-a-kafka-cluster}
 
-1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in {{% xref "/sdm/koperator/configurations/kafkacluster/_index.md" %}} and in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples).
+1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in {{% xref "/sdm/koperator/configurations/kafkacluster-cr/_index.md" %}} and in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples).
 
     {{< include-headless "warning-listener-protocol.md" "sdm/koperator" >}}
 
