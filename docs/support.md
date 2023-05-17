@@ -3,14 +3,8 @@ title: Support
 weight: 800
 ---
 
-## Support
-
 {{% include-headless "doc/kafka-operator-supertubes-intro.md" %}}
 
-### Community support
+## Community support
 
-If you encounter problems while using the {{< kafka-operator >}} the documentation does not address, [open an issue](https://github.com/banzaicloud/koperator/issues) or talk to us on the Banzai Cloud Slack channel [#kafka-operator](/invite-slack/).
-
-### Commercial support
-
-If you are using {{< kafka-operator >}} in a production environment and [require commercial support, contact Banzai Cloud](/contact/), the company backing the development of {{< kafka-operator >}}.
+If you encounter problems while using {{< kafka-operator >}} that the documentation does not address, [open an issue](https://github.com/banzaicloud/kafka-operator/issues) or talk to us in our Slack channel [#kafka-operator](https://eti.cisco.com/slack).

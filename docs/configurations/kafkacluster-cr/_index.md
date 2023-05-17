@@ -1,6 +1,8 @@
 ---
-title: Kafka cluster configuration
-shorttitle: KafkaCluster
+title: KafkaCluster CR configuration
+shorttitle: KafkaCluster CR
+aliases:
+  - /docs/supertubes/kafka-operator/configurations/kafkacluster/
 weight: 7000
 ---
 
