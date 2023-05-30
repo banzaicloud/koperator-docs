@@ -62,7 +62,7 @@ How to setup the environment for the Kafka Performance Test.
     apiVersion: zookeeper.pravega.io/v1beta1
     kind: ZookeeperCluster
     metadata:
-      name: zookeeper
+      name: zookeeper-server
       namespace: zookeeper
     spec:
       replicas: 3
