@@ -32,7 +32,7 @@ The {{< kafka-operator >}} (formerly called Banzai Cloud Kafka Operator) is a Ku
 
 ## Motivation
 
-Apache Kafka predates Kubernetes and was designed mostly for `static` on-premise environments. State management, node identity, failover, etc all come part and parcel with Kafka, so making it work properly on Kubernetes and on an underlying dynamic environment can be a challenge.
+Apache Kafka predates Kubernetes and was designed mostly for `static` on-premises environments. State management, node identity, failover, etc all come part and parcel with Kafka, so making it work properly on Kubernetes and on an underlying dynamic environment can be a challenge.
 
 There are already several approaches to operating Apache Kafka on Kubernetes, however, we did not find them appropriate for use in a highly dynamic environment, nor capable of meeting our customers' needs. At the same time, there is substantial interest within the Kafka community for a solution which enables Kafka on Kubernetes, both in the open source and closed source space.
 >We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](#features) and some of the [scenarios](scenarios/) which were driving us to create the {{< kafka-operator >}}.
@@ -42,7 +42,7 @@ Finally, our motivation is to build an open source solution and a community whic
 ## Koperator features {#features}
 
 ### Design motivations
-Kafka is a stateful application. The first piece of the puzzle is the Broker, which is a simple server capable of creating/forming a cluster with other Brokers. Every Broker has his own **unique** configuration which differs slightly from all others - the most relevant of which is the ***unique broker ID***.
+Kafka is a stateful application. The first piece of the puzzle is the Broker, which is a simple server capable of creating/forming a cluster with other Brokers. Every Broker has its own **unique** configuration which differs slightly from all others - the most relevant of which is the ***unique broker ID***.
 
 All Kafka on Kubernetes operators use [StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/) to create a Kafka Cluster. Just to quickly recap from the K8s docs:
 
