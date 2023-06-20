@@ -43,6 +43,7 @@ listenersConfig:
       # ingressControllerTargetPort sets which port the ingress controller uses to handle the external client traffic through the "anyCastPort", default is 29092
       # valid range: 1023 < x < 65536
       # this doesn't have impact if using NodePort to expose the Kafka cluster
+      # if specified, the ingressControllerTargetPort cannot collide with the reserved envoy ports (if using envoy) and the external broker port numbers
       ingressControllerTargetPort: 3000
     - type: "plaintext"
       name: "external2"
@@ -67,10 +68,10 @@ To configure an external listener that uses the LoadBalancer access method, comp
           externalStartingPort: 19090
           containerPort: 9094
           accessMethod: LoadBalancer
-          # set which port clients can use to reach all the brokers of the Kafka cluster, default is 29092
+          # anyCastPort sets which port clients can use to reach all the brokers of the Kafka cluster, default is 29092
           # valid range: 0 < x < 65536
           anyCastPort: 443
-          # set which port the ingress controller uses to handle the external client traffic through the "anyCastPort", default is 29092
+          # ingressControllerTargetPort sets which port the ingress controller uses to handle the external client traffic through the "anyCastPort", default is 29092
           # valid range: 1023 < x < 65536
           # if specified, the ingressControllerTargetPort cannot collide with the reserved envoy ports (if using envoy) and the external broker port numbers
          ingressControllerTargetPort: 3000
