@@ -36,7 +36,7 @@ listenersConfig:
       name: "external1"
       externalStartingPort: 19090
       containerPort: 9094
-      # set which port clients can use to reach all the brokers of the Kafka cluster, default is 29092
+      # anyCastPort sets which port clients can use to reach all the brokers of the Kafka cluster, default is 29092
       # valid range: 0 < x < 65536
       # this doesn't have impact if using NodePort to expose the Kafka cluster
       anyCastPort: 443
