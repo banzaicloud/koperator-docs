@@ -40,7 +40,7 @@ listenersConfig:
       # valid range: 0 < x < 65536
       # this doesn't have impact if using NodePort to expose the Kafka cluster
       anyCastPort: 443
-      # set which port the ingress controller uses to handle the external client traffic through the "anyCastPort", default is 29092
+      # ingressControllerTargetPort sets which port the ingress controller uses to handle the external client traffic through the "anyCastPort", default is 29092
       # valid range: 1023 < x < 65536
       # this doesn't have impact if using NodePort to expose the Kafka cluster
       ingressControllerTargetPort: 3000
