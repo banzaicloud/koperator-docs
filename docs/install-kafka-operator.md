@@ -303,7 +303,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
     ```bash
     NAME                                  READY   STATUS    RESTARTS   AGE
-    zookeeper-0                           1/1     Running   0          27m
+    zookeeper-server-0                    1/1     Running   0          27m
     zookeeper-operator-54444dbd9d-2tccj   1/1     Running   0          28m
     ```
 

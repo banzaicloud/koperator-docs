@@ -105,13 +105,13 @@ In case you want to delete the {{< kafka-operator >}} from your cluster, note th
 1. Delete Zookeeper CR.
 
     ```
-    kubectl delete zookeeperclusters -n zookeeper zookeeper
+    kubectl delete zookeeperclusters -n zookeeper zookeeper-server
     ```
 
     Expected output:
 
     ```
-    zookeeperclusters.zookeeper.pravega.io/zookeeper deleted
+    zookeeperclusters.zookeeper.pravega.io/zookeeper-server deleted
     ```
 
     Wait for the Zookeeper resources (Deployment, PersistentVolumeClaims, Configmaps, etc) to be removed.
