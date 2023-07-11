@@ -3,7 +3,7 @@ title: Koperator capablities
 weight: 400
 ---
 
-As highlighted in the [features section]({{< relref "../_index.md#features" >}}), {{< kafka-operator >}} removed the reliance on StatefulSet,and supports several different usecases.
+As highlighted in the [features section]({{< relref "/sdm/koperator/_index.md#features" >}}), {{< kafka-operator >}} removed the reliance on StatefulSet,and supports several different usecases.
 
 > Note: This is not a complete list, if you have a specific requirement or question, see our [support]({{< relref "/sdm/koperator/support.md">}}) options.
 

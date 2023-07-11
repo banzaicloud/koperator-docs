@@ -484,7 +484,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
 ### Install {{< kafka-operator >}} with Helm {#install-kafka-operator-with-helm}
 
-{{< kafka-operator >}} can be deployed using its [Helm chart](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/charts).
+{{< kafka-operator >}} can be deployed using its [Helm chart](https://github.com/banzaicloud/koperator/tree/master/charts).
 
 1. Install the {{< kafka-operator >}} CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install). This is performed in a separate step to allow you to uninstall and reinstall {{< kafka-operator >}} without deleting your installed custom resources.
 
@@ -582,7 +582,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
 ### Deploy a Kafka cluster {#deploy-a-kafka-cluster}
 
-1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in {{% xref "/sdm/koperator/configurations/kafkacluster-cr/_index.md" %}} and in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples).
+1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in {{% xref "/sdm/koperator/configurations/kafkacluster-cr/_index.md" %}} and in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/master/config/samples).
 
     {{< include-headless "warning-listener-protocol.md" "sdm/koperator" >}}
 
