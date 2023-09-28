@@ -12,40 +12,24 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
 > The operator supports Kafka 2.6.2-3.1.x.
 
-{{< include-headless "warning-ebs-csi-driver.md" "supertubes/kafka-operator" >}}
+{{< include-headless "warning-ebs-csi-driver.md" >}}
 
 ## Prerequisites
 
-- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). Red Hat OpenShift is also supported in {{< kafka-operator >}} version 0.24 and newer, but note that it needs some permissions for certain components to function.
+- A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). Red Hat OpenShift is also supported in Koperator version 0.24 and newer, but note that it needs some permissions for certain components to function.
 
-> We believe in the `separation of concerns` principle, thus the {{< kafka-operator >}} does not install nor manage Apache ZooKeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://calisti.app).
+> We believe in the `separation of concerns` principle, thus the Koperator does not install nor manage Apache ZooKeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://calisti.app).
 
-## Install {{< kafka-operator >}} and all requirements using Supertubes
-
-This method uses a command-line tool of the commercial [Banzai Cloud Supertubes](/products/supertubes/) product to install the {{< kafka-operator >}} and its prerequisites. If you'd prefer to install these components manually, see [Install {{< kafka-operator >}} and the requirements independently](#install-kafka-operator-and-its-requirements-independently).
-
-1. [Register for an evaluation version of Supertubes](/products/try-supertubes/).
-
-1. Install the [Supertubes](/docs/supertubes/overview/) CLI tool for your environment by running the following command:
-
-    {{< include-headless "download-supertubes.md" >}}
-
-1. Run the following command:
-
-    ```bash
-    supertubes install -a
-    ```
-
-## Install {{< kafka-operator >}} and its requirements independently {#install-kafka-operator-and-its-requirements-independently}
+## Install Koperator and its requirements independently {#install-kafka-operator-and-its-requirements-independently}
 
 ### Install cert-manager with Helm {#install-cert-manager-with-helm}
 
-{{< kafka-operator >}} uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers and cert-manager is required for TLS-encrypted client connections. It is recommended to deploy and configure a cert-manager instance if there is none in your environment yet.
+Koperator uses [cert-manager](https://cert-manager.io) for issuing certificates to clients and brokers and cert-manager is required for TLS-encrypted client connections. It is recommended to deploy and configure a cert-manager instance if there is none in your environment yet.
 
 > Note:
-> - {{< kafka-operator >}} 0.24.0 and newer versions support cert-manager 1.10.0+ (which is a requirement for Red Hat OpenShift)
-> - {{< kafka-operator >}} 0.18.1 and newer supports cert-manager 1.5.3-1.9.x
-> - {{< kafka-operator >}} 0.8.x-0.17.0 supports cert-manager 1.3.x
+> - Koperator 0.24.0 and newer versions support cert-manager 1.10.0+ (which is a requirement for Red Hat OpenShift)
+> - Koperator 0.18.1 and newer supports cert-manager 1.5.3-1.9.x
+> - Koperator 0.8.x-0.17.0 supports cert-manager 1.3.x
 
 1. Install cert-manager's CustomResourceDefinitions.
 
@@ -213,7 +197,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 ### Install zookeeper-operator with Helm {#install-zookeeper-operator-with-helm}
 
-{{< kafka-operator >}} requires [Apache Zookeeper](https://zookeeper.apache.org) for Kafka operations. You must:
+Koperator requires [Apache Zookeeper](https://zookeeper.apache.org) for Kafka operations. You must:
 
 - Deploy zookeeper-operator if your environment doesn't have an instance of it yet.
 - Create a Zookeeper cluster if there is none in your environment yet for your Kafka cluster.
@@ -309,7 +293,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 ### Install prometheus-operator with Helm {#install-prometheus-operator-with-helm}
 
-{{< kafka-operator >}} uses [Prometheus](https://prometheus.io/) for exporting metrics of the Kafka cluster. It is recommended to deploy a Prometheus instance if you don't already have one.
+Koperator uses [Prometheus](https://prometheus.io/) for exporting metrics of the Kafka cluster. It is recommended to deploy a Prometheus instance if you don't already have one.
 
 1. If you are installing prometheus-operator on a Red Hat OpenShift version **4.10** cluster, create a `SecurityContextConstraints` object `nonroot-v2` with the following configuration for Prometheus admission and operator service accounts to work.
 
@@ -498,16 +482,16 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     prometheus-kube-prometheus-operator-646d5fd7d5-s72jn   1/1     Running   0          15m
     ```
 
-### Install {{< kafka-operator >}} with Helm {#install-kafka-operator-with-helm}
+### Install Koperator with Helm {#install-kafka-operator-with-helm}
 
-{{< kafka-operator >}} can be deployed using its [Helm chart](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/charts).
+Koperator can be deployed using its [Helm chart](https://github.com/banzaicloud/koperator/tree/{{< param "latest_version" >}}/charts).
 
-1. Install the {{< kafka-operator >}} CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install). This is performed in a separate step to allow you to uninstall and reinstall {{< kafka-operator >}} without deleting your installed custom resources.
+1. Install the Koperator CustomResourceDefinition resources (adjust the version number to the Koperator release you want to install). This is performed in a separate step to allow you to uninstall and reinstall Koperator without deleting your installed custom resources.
 
     ```bash
     kubectl create \
     --validate=false \
-    -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/kafka-operator.crds.yaml
+    -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "latest_version" >}}/kafka-operator.crds.yaml
     ```
 
     Expected output:
@@ -519,7 +503,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     customresourcedefinition.apiextensions.k8s.io/kafkausers.kafka.banzaicloud.io created
     ```
 
-1. If you are installing {{< kafka-operator >}} on a Red Hat OpenShift cluster:
+1. If you are installing Koperator on a Red Hat OpenShift cluster:
 
     1. Elevate the permissions of the Koperator namespace.
 
@@ -541,7 +525,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
         clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "system:serviceaccounts:{NAMESPACE_FOR_KOPERATOR}"
         ```
 
-    1. If the Kafka cluster is going to run in a different namespace than {{< kafka-operator >}}, elevate the permissions of the Kafka cluster broker service account (`ServiceAccountName` provided in the KafkaCluster custom resource).
+    1. If the Kafka cluster is going to run in a different namespace than Koperator, elevate the permissions of the Kafka cluster broker service account (`ServiceAccountName` provided in the KafkaCluster custom resource).
 
         ```bash
         oc adm policy add-scc-to-user anyuid system:serviceaccount:{NAMESPACE_FOR_KAFKA_CLUSTER_BROKER_SERVICE_ACCOUNT}:{KAFKA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}
@@ -553,13 +537,13 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
         clusterrole.rbac.authorization.k8s.io/system:openshift:scc:anyuid added: "system:serviceaccount:{NAMESPACE_FOR_KAFKA_CLUSTER_BROKER_SERVICE_ACCOUNT}:{KAFKA_CLUSTER_BROKER_SERVICE_ACCOUNT_NAME}"
         ```
 
-1. Install {{< kafka-operator >}} into the *kafka* namespace:
+1. Install Koperator into the *kafka* namespace:
 
     ```bash
     helm install \
     kafka-operator \
     --repo https://kubernetes-charts.banzaicloud.com kafka-operator \
-    --version {{< param "versionnumbers-sdm.koperatorCurrentversion" >}} \
+    --version {{< param "latest_version" >}} \
     --namespace=kafka \
     --create-namespace \
     --atomic \
@@ -570,7 +554,7 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
     ```bash
     install.go:194: [debug] Original chart version: ""
-    install.go:211: [debug] CHART PATH: /Users/pregnor/development/src/github.com/banzaicloud/koperator/kafka-operator-{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}.tgz
+    install.go:211: [debug] CHART PATH: /Users/pregnor/development/src/github.com/banzaicloud/koperator/kafka-operator-{{< param "latest_version" >}}.tgz
 
     # ...
     NAME: kafka-operator
@@ -598,24 +582,24 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
 
 ### Deploy a Kafka cluster {#deploy-a-kafka-cluster}
 
-1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in {{% xref "/docs/supertubes/kafka-operator/configurations/kafkacluster-cr/_index.md" %}} and in the [{{< kafka-operator >}} repository](https://github.com/banzaicloud/koperator/tree/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples).
+1. Create the Kafka cluster using the KafkaCluster custom resource. You can find various examples for the custom resource in {{% xref "/docs/configurations/kafkacluster-cr/_index.md" %}} and in the [Koperator repository](https://github.com/banzaicloud/koperator/tree/{{< param "latest_version" >}}/config/samples).
 
-    {{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
+    {{< include-headless "warning-listener-protocol.md" >}}
 
     - To create a sample Kafka cluster that allows unencrypted client connections, run the following command:
 
         ```bash
         kubectl create \
         -n kafka \
-        -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster.yaml
+        -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "latest_version" >}}/config/samples/simplekafkacluster.yaml
         ```
 
-    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/supertubes/kafka-operator/ssl.md#enable-ssl" %}}.
+    - To create a sample Kafka cluster that allows TLS-encrypted client connections, run the following command. For details on the configuration parameters related to SSL, see {{% xref "/docs/ssl.md#enable-ssl" %}}.
 
         ```bash
         kubectl create \
         -n kafka \
-        -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/simplekafkacluster_ssl.yaml
+        -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "latest_version" >}}/config/samples/simplekafkacluster_ssl.yaml
         ```
 
     Expected output:
@@ -671,12 +655,12 @@ This method uses a command-line tool of the commercial [Banzai Cloud Supertubes]
     kafka-operator-operator-7d47f65d86-2mx6b   2/2     Running   0          13m
     ```
 
-1. If prometheus-operator is deployed, create a Prometheus instance and corresponding ServiceMonitors for {{< kafka-operator >}}.
+1. If prometheus-operator is deployed, create a Prometheus instance and corresponding ServiceMonitors for Koperator.
 
     ```bash
     kubectl create \
     -n kafka \
-    -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/kafkacluster-prometheus.yaml
+    -f https://raw.githubusercontent.com/banzaicloud/koperator/v{{< param "latest_version" >}}/config/samples/kafkacluster-prometheus.yaml
     ```
 
     Expected output:

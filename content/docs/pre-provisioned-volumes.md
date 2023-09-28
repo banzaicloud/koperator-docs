@@ -5,9 +5,9 @@ weight: 300
 ---
 
 
-This guide describes how to configure `KafkaCluster` to deploy Apache Kafka clusters which use pre-provisioned volumes instead of dynamically provisioned ones. Using static volumes is useful in environments where dynamic volume provisioning is not supported. {{< kafka-operator >}} uses [persistent volume claim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) Kubernetes resources to dynamically provision volumes for the Kafka broker log directories.
+This guide describes how to configure `KafkaCluster` to deploy Apache Kafka clusters which use pre-provisioned volumes instead of dynamically provisioned ones. Using static volumes is useful in environments where dynamic volume provisioning is not supported. Koperator uses [persistent volume claim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) Kubernetes resources to dynamically provision volumes for the Kafka broker log directories.
 
- Kubernetes provides a feature which allows binding persistent volume claims to existing persistent volumes either through the `volumeName` or the `selector` field. This allows {{< kafka-operator >}} to use pre-created [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes) as Kafka broker log directories instead of dynamically provisioning persistent volumes. For this binding to work:
+ Kubernetes provides a feature which allows binding persistent volume claims to existing persistent volumes either through the `volumeName` or the `selector` field. This allows Koperator to use pre-created [persistent volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes) as Kafka broker log directories instead of dynamically provisioning persistent volumes. For this binding to work:
 
 - the configuration fields specified under `storageConfigs.pvcSpec` (such as `accessModes`, `storageClassName`) must match the specification of the pre-created persistent volume, and
 - the `resources.requests.storage` must fit onto the capacity of the persistent volume.

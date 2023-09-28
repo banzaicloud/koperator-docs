@@ -4,11 +4,11 @@ shorttitle: Troubleshooting
 weight: 980
 ---
 
-The following tips and commands can help you to troubleshoot your {{< kafka-operator >}} installation.
+The following tips and commands can help you to troubleshoot your Koperator installation.
 
 ## First things to do
 
-1. Verify that the {{< kafka-operator >}} pod is running. Issue the following command: `kubectl get pods -n kafka|grep kafka-operator`
+1. Verify that the Koperator pod is running. Issue the following command: `kubectl get pods -n kafka|grep kafka-operator`
     The output should include a running pod, for example:
 
     ```bash
@@ -46,8 +46,6 @@ The following tips and commands can help you to troubleshoot your {{< kafka-oper
     ```bash
     kubectl get pods -n zookeeper
     ```
-
-{{< toc >}}
 
 ## Check the KafkaCluster configuration
 
@@ -189,16 +187,16 @@ status:
 
 If you encounter any problems that the documentation does not address, [file an issue](https://github.com/banzaicloud/koperator/issues) or talk to us on the Banzai Cloud Slack channel [#kafka-operator](https://slack.banzaicloud.io/).
 
-Various [support]({{< relref "/docs/supertubes/kafka-operator/support.md">}}) channels are also available for {{< kafka-operator >}}.
+Various [support]({{< relref "/docs/support.md">}}) channels are also available for Koperator.
 
 Before asking for help, prepare the following information to make troubleshooting faster:
 
-- {{< kafka-operator >}} version
+- Koperator version
 - Kubernetes version (**kubectl version**)
-- Helm/chart version (if you installed the {{< kafka-operator >}} with Helm)
-- {{< kafka-operator >}} logs, for example **kubectl logs kafka-operator-operator-6968c67c7b-9d2xq manager -n kafka** and **kubectl logs kafka-operator-operator-6968c67c7b-9d2xq kube-rbac-proxy -n kafka**
+- Helm/chart version (if you installed the Koperator with Helm)
+- Koperator logs, for example **kubectl logs kafka-operator-operator-6968c67c7b-9d2xq manager -n kafka** and **kubectl logs kafka-operator-operator-6968c67c7b-9d2xq kube-rbac-proxy -n kafka**
 - Kafka broker logs
-- {{< kafka-operator >}} configuration
+- Koperator configuration
 - Kafka cluster configuration (**kubectl describe KafkaCluster kafka -n kafka**)
 - ZooKeeper configuration (**kubectl describe ZookeeperCluster zookeeper-server -n zookeeper**)
 - ZooKeeper logs (**kubectl logs zookeeper-operator-5c9b597bcc-vkdz9 -n zookeeper**)

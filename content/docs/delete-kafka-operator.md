@@ -4,19 +4,19 @@ shorttitle: Uninstall
 weight: 950
 ---
 
-In case you want to delete the {{< kafka-operator >}} from your cluster, note that because of dependencies between the various components, they must be deleted in specific order.
+In case you want to delete the Koperator from your cluster, note that because of dependencies between the various components, they must be deleted in specific order.
 
-{{< warning >}}It’s important to delete the {{< kafka-operator >}} deployment as the last step.
+{{< warning >}}It’s important to delete the Koperator deployment as the last step.
 {{< /warning >}}
 
 ## Uninstall Koperator
 
-1. Delete the Prometheus instance used by the Kafka cluster. If you used the sample Prometheus instance from the {{< kafka-operator >}} repository you can use the following command, otherwise do this step manually according to the way you deployed the Prometheus instance.
+1. Delete the Prometheus instance used by the Kafka cluster. If you used the sample Prometheus instance from the Koperator repository you can use the following command, otherwise do this step manually according to the way you deployed the Prometheus instance.
 
     ```
     kubectl delete \
         -n kafka \
-        -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/config/samples/kafkacluster-prometheus.yaml
+        -f https://raw.githubusercontent.com/banzaicloud/koperator/{{< param "latest_version" >}}/config/samples/kafkacluster-prometheus.yaml
     ```
 
     Expected output:
@@ -58,7 +58,7 @@ In case you want to delete the {{< kafka-operator >}} from your cluster, note th
 
     You would also need to delete other Koperator-managed CRs (if any) following the same fashion
 
-    > Note: KafkaCluster, KafkaTopic and KafkaUser custom resources are protected with Kubernetes finalizers, so those won’t be actually deleted from Kubernetes until the {{< kafka-operator >}} removes those finalizers. After the {{< kafka-operator >}} has finished cleaning up everything, it removes the finalizers. In case you delete the {{< kafka-operator >}} deployment before it cleans up everything, you need to remove the finalizers manually.
+    > Note: KafkaCluster, KafkaTopic and KafkaUser custom resources are protected with Kubernetes finalizers, so those won’t be actually deleted from Kubernetes until the Koperator removes those finalizers. After the Koperator has finished cleaning up everything, it removes the finalizers. In case you delete the Koperator deployment before it cleans up everything, you need to remove the finalizers manually.
 
 
 1. Uninstall Koperator deployment.
@@ -75,7 +75,7 @@ In case you want to delete the {{< kafka-operator >}} from your cluster, note th
 
 1. Delete Koperator Custom Resource Definitions (CRDs).
     ```
-    kubectl delete -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/kafka-operator.crds.yaml
+    kubectl delete -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "latest_version" >}}/kafka-operator.crds.yaml
     ```
 
 ## Uninstall Prometheus operator

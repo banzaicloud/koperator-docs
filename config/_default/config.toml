@@ -18,7 +18,7 @@ enableGitInfo = true
 
 [languages]
 [languages.en]
-title = "Bank-Vaults"
+title = "Koperator"
 description = "Documentation for Koperator"
 languageName ="English"
 # Weight used for sorting.
@@ -56,7 +56,6 @@ weight = 1
   product_name = "Koperator"
 
   latest_version = "0.25.1" # Used in some installation commands
-  latest_operator_version = "0.25.1"
 
   ###############################################################################
   # Docsy-theme specific config customizations

@@ -1,21 +1,14 @@
 ---
 title: Koperator
-img: /docs/supertubes/kafka-operator/img/kafka-operator-arch.png
+img: /img/kafka-operator-arch.png
 weight: 700
-aliases:
-  - /docs/supertubes/kafka-operator/features/
-cascade:
-  module: kafka-operator
-  githubEditUrl: "https://github.com/banzaicloud/koperator-docs/edit/master/docs/"
-  operatorName: "Koperator"
-  versionnumbers-sdm.koperatorCurrentversion: "0.24.1"
 ---
 
-The {{< kafka-operator >}} (formerly called Banzai Cloud Kafka Operator) is a Kubernetes operator to automate provisioning, management, autoscaling and operations of [Apache Kafka](https://kafka.apache.org) clusters deployed to K8s.
+The Koperator (formerly called Banzai Cloud Kafka Operator) is a Kubernetes operator to automate provisioning, management, autoscaling and operations of [Apache Kafka](https://kafka.apache.org) clusters deployed to K8s.
 
 ## Overview
 
-[Apache Kafka](https://kafka.apache.org) is an open-source distributed streaming platform, and some of the main features of the **{{< kafka-operator >}}** are:
+[Apache Kafka](https://kafka.apache.org) is an open-source distributed streaming platform, and some of the main features of the **Koperator** are:
 
 - the provisioning of secure and production-ready Kafka clusters
 - **fine grained** broker configuration support
@@ -27,9 +20,9 @@ The {{< kafka-operator >}} (formerly called Banzai Cloud Kafka Operator) is a Ku
 - graceful rolling upgrade
 - advanced topic and user management via CRD
 
-![{{< kafka-operator >}} architecture](./img/kafka-operator-arch.png)
+![Koperator architecture](./img/kafka-operator-arch.png)
 
-{{% include-headless "doc/kafka-operator-supertubes-intro.md" %}}
+{{% include-headless "kafka-operator-intro.md" %}}
 
 ## Motivation
 
@@ -37,7 +30,7 @@ Apache Kafka predates Kubernetes and was designed mostly for `static` on-premise
 
 There are already several approaches to operating Apache Kafka on Kubernetes, however, we did not find them appropriate for use in a highly dynamic environment, nor capable of meeting our customers' needs. At the same time, there is substantial interest within the Kafka community for a solution which enables Kafka on Kubernetes, both in the open source and closed source space.
 
-> We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](#features) and some of the [scenarios](scenarios/) which were driving us to create the {{< kafka-operator >}}.
+> We took a different approach to what's out there - we believe for a good reason - please read on to understand more about our [design motivations](#features) and some of the [scenarios](scenarios/) which were driving us to create the Koperator.
 
 Finally, our motivation is to build an open source solution and a community which drives the innovation and features of this operator. We are long term contributors and active community members of both Apache Kafka and Kubernetes, and we hope to recreate a similar community around this operator.
 
@@ -65,9 +58,9 @@ Using StatefulSet we **lose:**
 - to remove a specific Broker from a cluster (StatefulSet always removes the most recently created Broker)
 - to use multiple, different Persistent Volumes for each Broker
 
-{{< kafka-operator >}} uses `simple` Pods, ConfigMaps, and PersistentVolumeClaims, instead of StatefulSet. Using these resources allows us to build an Operator which is better suited to manage Apache Kafka.
+Koperator uses `simple` Pods, ConfigMaps, and PersistentVolumeClaims, instead of StatefulSet. Using these resources allows us to build an Operator which is better suited to manage Apache Kafka.
 
-With the {{< kafka-operator >}} you can:
+With the Koperator you can:
 
 - modify the configuration of unique Brokers
 - remove specific Brokers from clusters
@@ -77,7 +70,7 @@ With the {{< kafka-operator >}} you can:
 
 ### Fine Grained Broker Configuration Support
 
-We needed to be able to react to events in a fine-grained way for each Broker - and not in the limited way StatefulSet does (which, for example, removes the most recently created Brokers). Some of the available solutions try to overcome these deficits by placing scripts inside the container to generate configurations at runtime, whereas the {{< kafka-operator >}}'s configurations are deterministically placed in specific Configmaps.
+We needed to be able to react to events in a fine-grained way for each Broker - and not in the limited way StatefulSet does (which, for example, removes the most recently created Brokers). Some of the available solutions try to overcome these deficits by placing scripts inside the container to generate configurations at runtime, whereas the Koperator's configurations are deterministically placed in specific Configmaps.
 
 ### Graceful Kafka Cluster Scaling with the help of our CruiseControlOperation custom resource
 
@@ -85,7 +78,7 @@ We know how to operate Apache Kafka at scale (we are contributors and have been 
 
 ### External Access via LoadBalancer
 
-The {{< kafka-operator >}} externalizes access to Apache Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
+The Koperator externalizes access to Apache Kafka using a dynamically (re)configured Envoy proxy. Using Envoy allows us to use **a single** LoadBalancer, so there's no need for a LoadBalancer for each Broker.
 
 ![Kafka External Access](./img/kafka-external.png)
 
@@ -98,11 +91,11 @@ The operator can provision the required secrets and certificates for you, or you
 
 ### Monitoring via Prometheus
 
-The {{< kafka-operator >}} exposes Cruise-Control and Kafka JMX metrics to Prometheus.
+The Koperator exposes Cruise-Control and Kafka JMX metrics to Prometheus.
 
 ### Reacting on Alerts
 
-{{< kafka-operator >}} acts as a **Prometheus Alert Manager**. It receives alerts defined in Prometheus, and creates actions based on Prometheus alert annotations.
+Koperator acts as a **Prometheus Alert Manager**. It receives alerts defined in Prometheus, and creates actions based on Prometheus alert annotations.
 
 Currently, there are three default actions (which can be extended):
 

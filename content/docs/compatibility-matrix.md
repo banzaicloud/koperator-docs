@@ -4,7 +4,7 @@ shorttitle: Supported versions
 weight: 770
 ---
 
-This page shows you the list of supported {{< kafka-operator >}} versions, and the versions of other components they are compatible with.
+This page shows you the list of supported Koperator versions, and the versions of other components they are compatible with.
 
 ## Compatibility matrix
 
@@ -21,7 +21,7 @@ This page shows you the list of supported {{< kafka-operator >}} versions, and t
 |v0.23.0|2.6.2+|0.16.1|2.5.101|2.15.3|[link](https://github.com/banzaicloud/koperator/blob/v0.23.0/config/samples/simplekafkacluster.yaml)|+|
 |v0.24.0|2.6.2+|0.16.1|2.5.101|2.15.3|[link](https://github.com/banzaicloud/koperator/blob/v0.24.0/config/samples/simplekafkacluster.yaml)|+|
 
-## Available {{< kafka-operator >}} images
+## Available Koperator images
 
 |Image|Go version|
 |-|-|

@@ -4,17 +4,17 @@ shorttitle: SSL
 weight: 300
 ---
 
-The {{< kafka-operator >}} makes securing your Apache Kafka cluster with SSL simple.
+The Koperator makes securing your Apache Kafka cluster with SSL simple.
 
 ## Enable SSL encryption in Apache Kafka {#enable-ssl}
 
-To create an Apache Kafka cluster which has listener(s) with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can either provide your own CA certificate and the corresponding private key, or let the operator to create them for you from your cluster configuration. Using **sslSecrets**, {{< kafka-operator >}} generates client and server certificates signed using CA. The server certificate is shared across listeners. The client certificate is used by the {{< kafka-operator >}}, Cruise Control, and Cruise Control Metrics Reporter to communicate Kafka brokers using listener with SSL enabled.
+To create an Apache Kafka cluster which has listener(s) with SSL encryption enabled, you must enable SSL encryption and configure the secrets in the **listenersConfig** section of your **KafkaCluster** Custom Resource. You can either provide your own CA certificate and the corresponding private key, or let the operator to create them for you from your cluster configuration. Using **sslSecrets**, Koperator generates client and server certificates signed using CA. The server certificate is shared across listeners. The client certificate is used by the Koperator, Cruise Control, and Cruise Control Metrics Reporter to communicate Kafka brokers using listener with SSL enabled.
 
-Providing custom certificates per listener is supported from {{< kafka-operator >}} version 0.21.0+. Having configurations where certain external listeners use user provided certificates while others rely on the auto-generated ones provided by {{< kafka-operator >}} are also supported. See details below.
+Providing custom certificates per listener is supported from Koperator version 0.21.0+. Having configurations where certain external listeners use user provided certificates while others rely on the auto-generated ones provided by Koperator are also supported. See details below.
 
 ## Using auto-generated certificates (**ssLSecrets**)
 
-{{< include-headless "warning-listener-protocol.md" "supertubes/kafka-operator" >}}
+{{< include-headless "warning-listener-protocol.md" >}}
 
 The following example enables SSL and automatically generates the certificates:
 
@@ -45,7 +45,7 @@ The certificates in the listener configuration must be in JKS format.
 
 ### Listeners used for internal broker or controller communication
 
-In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml), SSL is enabled for all listeners, and user-provided server certificates. In that case, when a custom certificate is used for a listener which is used for internal broker or controller communication, you must also specify the client certificate. The client certificate will be used by {{< kafka-operator >}}, Cruise Control, Cruise Control Metrics Reporter to communicate on SSL. The **clientSSLCertSecret** key is a reference to the Kubernetes secret where the custom client SSL certificate can be provided. The client certificate must be signed by the same CA authority as the server certificate for the corresponding listener. The **clientSSLCertSecret** has to be in the **KafkaCluster** custom resource spec field.
+In [this **KafkaCluster** custom resource](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml), SSL is enabled for all listeners, and user-provided server certificates. In that case, when a custom certificate is used for a listener which is used for internal broker or controller communication, you must also specify the client certificate. The client certificate will be used by Koperator, Cruise Control, Cruise Control Metrics Reporter to communicate on SSL. The **clientSSLCertSecret** key is a reference to the Kubernetes secret where the custom client SSL certificate can be provided. The client certificate must be signed by the same CA authority as the server certificate for the corresponding listener. The **clientSSLCertSecret** has to be in the **KafkaCluster** custom resource spec field.
 The client secret must contain the keystore and truststore JKS files and the password for them in base64 encoded format.
 
 In the server secret the following keys must be set:
@@ -82,12 +82,12 @@ Kafka listeners use 2-way-SSL mutual authentication, so you must properly set th
     - kafka-headless
 
 - **For internal listeners which are exposed by a normal service** (kafka-all-broker), CNAME must be "kafka-all-broker.kafka.svc.cluster.local"
-- **For external listeners**, you need to use the advertised load balancer hostname as CNAME. The hostname need to be specified in the **KafkaCluster** custom resource with **hostnameOverride**, and the **accessMethod** has to be "LoadBalancer". For details about this override, see Step 5 in {{% xref "/docs/supertubes/kafka-operator/external-listener/index.md#loadbalancer" %}}.
+- **For external listeners**, you need to use the advertised load balancer hostname as CNAME. The hostname need to be specified in the **KafkaCluster** custom resource with **hostnameOverride**, and the **accessMethod** has to be "LoadBalancer". For details about this override, see Step 5 in {{% xref "/docs/external-listener/index.md#loadbalancer" %}}.
 
 ## Using Kafka ACLs with SSL
 
-> Note: {{< kafka-operator >}} provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product.
-> {{< include-headless "doc/kafka-operator-supertubes-intro.md" >}}
+> Note: Koperator provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product.
+> {{< include-headless "kafka-operator-intro.md" >}}
 
 If you choose not to enable ACLs for your Apache Kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.
 You can leave the `topicGrants` out as they will not have any effect.

@@ -30,7 +30,7 @@ How to setup the environment for the Kafka Performance Test.
 
 1. Create a test cluster with 3 nodes for ZooKeeper, 3 for Kafka, 1 Master node and 2 node for clients.
 
-    {{< include-headless "warning-ebs-csi-driver.md" "supertubes/kafka-operator" >}}
+    {{< include-headless "warning-ebs-csi-driver.md" >}}
 
     Once your cluster is up and running you can set up the Kubernetes infrastructure.
 
@@ -69,10 +69,10 @@ How to setup the environment for the Kafka Performance Test.
     EOF
     ```
 
-1. Install the {{< kafka-operator >}} CustomResourceDefinition resources (adjust the version number to the {{< kafka-operator >}} release you want to install) and the corresponding version of {{< kafka-operator >}}, the Operator for managing Apache Kafka on Kubernetes.
+1. Install the Koperator CustomResourceDefinition resources (adjust the version number to the Koperator release you want to install) and the corresponding version of Koperator, the Operator for managing Apache Kafka on Kubernetes.
 
     ```bash
-    kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "versionnumbers-sdm.koperatorCurrentversion" >}}/kafka-operator.crds.yaml
+    kubectl create --validate=false -f https://github.com/banzaicloud/koperator/releases/download/v{{< param "latest_version" >}}/kafka-operator.crds.yaml
     ```
 
     ```bash

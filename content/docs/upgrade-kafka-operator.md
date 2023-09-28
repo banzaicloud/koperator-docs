@@ -4,9 +4,9 @@ shorttitle: Upgrade
 weight: 15
 ---
 
-When upgrading your {{< kafka-operator >}} deployment to a new version, complete the following steps.
+When upgrading your Koperator deployment to a new version, complete the following steps.
 
-1. Download the CRDs for the new release from the [{{< kafka-operator >}} releases page](https://github.com/banzaicloud/koperator/releases). They are included in the assets of the release.
+1. Download the CRDs for the new release from the [Koperator releases page](https://github.com/banzaicloud/koperator/releases). They are included in the assets of the release.
 
     {{< warning >}}**Hazard of data loss** Do not delete the old CRD from the cluster. Deleting the CRD removes your Kafka cluster.{{< /warning >}}
 
@@ -16,7 +16,7 @@ When upgrading your {{< kafka-operator >}} deployment to a new version, complete
     kubectl replace --validate=false -f https://github.com/banzaicloud/koperator/releases/download/<versionnumber>/kafka-operator.crds.yaml
     ```
 
-1. Update your {{< kafka-operator >}} deployment by running:
+1. Update your Koperator deployment by running:
 
     ```bash
     helm repo update
