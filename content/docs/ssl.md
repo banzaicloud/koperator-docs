@@ -86,7 +86,6 @@ Kafka listeners use 2-way-SSL mutual authentication, so you must properly set th
 
 ## Using Kafka ACLs with SSL
 
-> Note: Koperator provides only basic ACL support. For a more complete and robust solution, consider using the [Streaming Data Manager](https://banzaicloud.com/products/supertubes/) product.
 > {{< include-headless "kafka-operator-intro.md" >}}
 
 If you choose not to enable ACLs for your Apache Kafka cluster, you may still use the `KafkaUser` resource to create new certificates for your applications.

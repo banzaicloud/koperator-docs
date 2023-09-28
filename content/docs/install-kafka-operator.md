@@ -18,7 +18,7 @@ The operator installs version 3.1.0 of Apache Kafka, and can run on:
 
 - A Kubernetes cluster (minimum 6 vCPU and 10 GB RAM). Red Hat OpenShift is also supported in Koperator version 0.24 and newer, but note that it needs some permissions for certain components to function.
 
-> We believe in the `separation of concerns` principle, thus the Koperator does not install nor manage Apache ZooKeeper or cert-manager. If you would like to have a fully automated and managed experience of Apache Kafka on Kubernetes, try [Cisco Streaming Data Manager](https://calisti.app).
+> We believe in the `separation of concerns` principle, thus the Koperator does not install nor manage Apache ZooKeeper or cert-manager.
 
 ## Install Koperator and its requirements independently {#install-kafka-operator-and-its-requirements-independently}
 

@@ -80,7 +80,7 @@ To configure an external listener that uses the LoadBalancer access method, comp
 1. Set the ingress controller. The ingress controllers that are currently supported for load balancing are:
 
     - `envoy`: uses Envoy proxy as an ingress.
-    - `istioingress`: uses Istio proxy gateway as an ingress. Istio ingress is the default controller for Kafka clusters provisioned with [SDM](/docs/supertubes/overview/), since those clusters run inside an Istio mesh.
+    - `istioingress`: uses Istio proxy gateway as an ingress.
 
     Configure the ingress controller you want to use:
 
