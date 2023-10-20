@@ -21,7 +21,7 @@ This is a very simple KafkaCluster CR with Prometheus monitoring enabled.
 
 ## Kafka cluster with ACL, SSL, and rack awareness
 
-You can read more details about rack awareness [here]({{< relref "../../../rackawareness/index.md" >}}).
+You can read more details about rack awareness [here]({{< relref "../../rackawareness/index.md" >}}).
 
 - [Use SSL and rack awareness](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups.yaml)
 
@@ -33,7 +33,7 @@ You can read more details about rack awareness [here]({{< relref "../../../racka
 ## Kafka cluster with custom SSL certificates for external listeners
 
 You can specify custom SSL certificates for listeners.  
-For details about SSL configuration, see {{% xref "../../../ssl.md" %}}.
+For details about SSL configuration, see {{% xref "../../ssl.md" %}}.
 
 - [Use custom SSL certificate for an external listener](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_external_ssl_customcert.yaml)
 - [Use custom SSL certificate for controller and inter-broker communication](https://github.com/banzaicloud/koperator/blob/master/config/samples/kafkacluster_with_ssl_groups_customcert.yaml). In this case you also need to provide the client SSL certificate for Koperator.  
@@ -42,7 +42,7 @@ For details about SSL configuration, see {{% xref "../../../ssl.md" %}}.
 ## Kafka cluster with SASL
 
 You can use SASL authentication on the listeners.
-For details, see {{% xref "../../../external-listener/index.md" %}}.
+For details, see {{% xref "../../external-listener/index.md" %}}.
 
 - [Use SASL authentication on the listeners](https://github.com/banzaicloud/koperator/blob/master/config/samples/simplekafkacluster_with_sasl.yaml)
 
@@ -63,7 +63,7 @@ You can use Istio as the ingress controller for your external listeners. It requ
 You can set custom advertised IP address for brokers.  
 This is useful when you're advertising the brokers on an IP address different from the Kubernetes node IP address.  
 You can also set custom advertised address for external listeners.  
-For details, see {{% xref "../../../external-listener/index.md" %}}.
+For details, see {{% xref "../../external-listener/index.md" %}}.
 
 - [Custom advertised address for external listeners](https://github.com/banzaicloud/koperator/blob/master/config/samples/simplekafkacluster-with-nodeport-external.yaml)
 
