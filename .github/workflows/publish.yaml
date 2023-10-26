@@ -34,11 +34,6 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install dependencies
-        run: |
-          cd themes/docsy
-          npm install
-
       - name: Set up PostCSS
         run: npm install --save-dev autoprefixer postcss-cli postcss
 
